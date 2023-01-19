@@ -30,7 +30,7 @@ router.post('/addRole', adminController.addRole);
 router.get('/roles', adminController.getRoles);
 router.post('/assignRole', adminController.assignRoleToUser);
 
-
+router.get('/hr', adminController.getHr);
 
 
 

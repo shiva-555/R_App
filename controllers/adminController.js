@@ -11,6 +11,7 @@ const responseFormatter = require('../utils/responseFormatter');
 const axios = require('axios');
 const logger = require('../utils/logger');
 
+
 //! Not Tested 
 exports.createAppUser = async (req, res) => {
     let user, role, assignment;
@@ -227,30 +228,30 @@ exports.createMailRemainder = async (req, res, next) => {
     return res.status(201).json(responseFormatter.responseFormatter(template, 'Email Template data created successfully', 'success', 201));
 };
 
-exports.updateMailRemainder = async(req, res, next) => {
+exports.updateMailRemainder = async (req, res, next) => {
     let template;
 
 
     console.log(req.body);
     console.log(req.params)
 
-    try{
+    try {
         template = await Template.findByPk(req.params.templateId);
-    }catch(e){
-        logger.error('Error Occured while finding Email Template in Admin Controller %s:'. JSON.stringify(e));
+    } catch (e) {
+        logger.error('Error Occured while finding Email Template in Admin Controller %s:'.JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error Occured', 'error', 500));
     }
 
-    if(!template){
+    if (!template) {
         return res.status(404).json(responseFormatter.responseFormatter({}, 'No such Email Template', 'unSuccessful', 400));
     }
 
     req.body.lastModifiedById = req.user.userId;
-    
-    try{
+
+    try {
         template = await template.update(req.body);
     }
-    catch(e){
+    catch (e) {
         logger.error('Error Occured while updating Email Template in Admin Controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error Occured', 'error', 500));
     }
@@ -259,7 +260,7 @@ exports.updateMailRemainder = async(req, res, next) => {
 
 };
 
-exports.getMailRemainder = async(req, res, next) => {
+exports.getMailRemainder = async (req, res, next) => {
     let template;
 
     try {
@@ -277,25 +278,25 @@ exports.getMailRemainder = async(req, res, next) => {
 };
 
 // ! copy pasted as it is
-exports.statusMailRemainder = async(req, res, next) => {
+exports.statusMailRemainder = async (req, res, next) => {
     let emailTemplate, searchCriteria;
 
-     // client req query
-     if (req.query.type === 'reminderTemplate') {
+    // client req query
+    if (req.query.type === 'reminderTemplate') {
         searchCriteria = {
-            candidateStatusId:req.params.status_id,
+            candidateStatusId: req.params.status_id,
             templateType: 'isReminder',
             // status: 'Active'
         }
-    } 
+    }
 
     if (req.query.type === 'generalTemplate') {
         searchCriteria = {
-            candidateStatusId:req.params.status_id,
+            candidateStatusId: req.params.status_id,
             templateType: 'general',
             // status: 'Active'
         }
-    } 
+    }
 
     try {
         emailTemplate = await Template.findAll({
@@ -304,7 +305,7 @@ exports.statusMailRemainder = async(req, res, next) => {
                 all: true
             }
 
-           });
+        });
     } catch (e) {
         console.log(e);
         logger.error('Error occurred while finding Status in getMailRemainder Status controller %s:', JSON.stringify(e));
@@ -314,21 +315,21 @@ exports.statusMailRemainder = async(req, res, next) => {
     return res.status(200).json(responseFormatter.responseFormatter(emailTemplate, 'Status id fetched successfully', 'success', 200));
 };
 
-exports.updateCandidateStatus = async(req, res, next) => {
+exports.updateCandidateStatus = async (req, res, next) => {
 
     let candidate;
-    try{
+    try {
         candidate = await Candidate.findByPk(req.params.candidate_id);
-    } catch(e){
+    } catch (e) {
         logger.error('Error occured while finding candidate in updateCandidate controller %s:', JSON.stringify(e));
-        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error Occurred while finding candidate', 'error', 500));   
+        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error Occurred while finding candidate', 'error', 500));
     }
 
-    if(!candidate) {
+    if (!candidate) {
         return res.status(404).json(responseFormatter.responseFormatter({}, 'No such candidate', 'unSuccessful', 404));
     }
 
-    if(req.user.roleAssignments.role.roleName === 'Admin'){
+    if (req.user.roleAssignments.role.roleName === 'Admin') {
         try {
             candidate = await candidate.update({ status: 'Inactive' });
         } catch (e) {
@@ -336,7 +337,7 @@ exports.updateCandidateStatus = async(req, res, next) => {
             return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while updating status', 'error', 500));
         }
     }
-    
+
     return res.status(200).json(responseFormatter.responseFormatter(candidate, 'Candidate Status Updated Successfully', 'success', 200));
 }
 
@@ -359,7 +360,7 @@ exports.addRole = async (req, res, next) => {
     let role;
 
     try {
-        role = await Role.findOne({where: {role: req.body.role.trim()}});
+        role = await Role.findOne({ where: { role: req.body.role.trim() } });
     } catch (e) {
         logger.error('Error occurred while finding role in addRole controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while updating status', 'error', 500));
@@ -379,7 +380,7 @@ exports.addRole = async (req, res, next) => {
     } else {
         return res.status(400).json(responseFormatter.responseFormatter({}, 'Role Already Exist', 'bad request', 400));
     }
-   
+
     return res.status(201).json(responseFormatter.responseFormatter(role, 'Role Added Successfully', 'success', 201));
 };
 
@@ -387,12 +388,12 @@ exports.getRoles = async (req, res, next) => {
     let roles;
 
     try {
-        roles = await Role.findAll({where: {status: 'Active'}});
+        roles = await Role.findAll({ where: { status: 'Active' } });
     } catch (e) {
         logger.error('Error occurred while finding roles in getRoles controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while updating status', 'error', 500));
     }
-   
+
     return res.status(200).json(responseFormatter.responseFormatter(roles, 'Roles fetched Successfully', 'success', 200));
 };
 
@@ -408,7 +409,7 @@ exports.assignRoleToUser = async (req, res, next) => {
 
     console.log(user);
     try {
-        role = await Role.findOne({where: {roleId: req.body.role.trim()}});
+        role = await Role.findOne({ where: { roleId: req.body.role.trim() } });
     } catch (e) {
         logger.error('Error occurred while finding role in assignRoleToUser controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while updating status', 'error', 500));
@@ -424,11 +425,13 @@ exports.assignRoleToUser = async (req, res, next) => {
     }
 
     try {
-        assignment = await RoleAssignment.findOne({where: {
-            userId: user.userId,
-            roleId: role.roleId,
-            status: 'Active'
-        }});
+        assignment = await RoleAssignment.findOne({
+            where: {
+                userId: user.userId,
+                roleId: role.roleId,
+                status: 'Active'
+            }
+        });
     } catch (e) {
         logger.error('Error occurred while finding role assignment in assignRoleToUser controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while updating status', 'error', 500));
@@ -452,3 +455,34 @@ exports.assignRoleToUser = async (req, res, next) => {
 
     return res.status(201).json(responseFormatter.responseFormatter(assignment, 'Role Added Successfully', 'success', 201));
 };
+
+
+exports.getHr = async (req, res, next) => {
+    let hr
+    try {
+        hr = await User.findAll({
+            include: [{
+                model: RoleAssignment,
+                as: 'roleAssignments',
+                required: true,
+                include: [{
+                    
+                        model: Role,
+                        as: 'role',
+                        required: true,
+                        where: {
+                            roleName: 'HR'
+                        }
+                    
+
+                }]
+            }]
+        })
+        return res.status(200).json(responseFormatter.responseFormatter(hr, 'Hr fetched Successfully', 'success', 200));
+    }
+    catch (e) {
+        console.log(e);
+        logger.error('Error occurred while finding Hr in getHR controller %s:', JSON.stringify(e));
+        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred while finding status', 'error', 500));
+    }
+}

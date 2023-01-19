@@ -230,6 +230,7 @@ exports.createCandidate = async (req, res) => {
     let checkJob, checkCandidate, candidate, isJobRequisitionAssinged, candidateRole;
 
     try {
+        console.log(req.body.jobId);
         checkJob = await JobRequisition.findByPk(req.body.jobId);
     } catch (e) {
         logger.error('Error occurred while finding job in createCandidate controller %s:', JSON.stringify(e));

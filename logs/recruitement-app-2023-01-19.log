@@ -1,0 +1,140 @@
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:06.175Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:06.735Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:25.482Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:25.905Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:36.926Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:37.453Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:44.676Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:31:56.250Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:32:00.079Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:32:18.989Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:32:19.747Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:33:35.604Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'User.role\' in \'where clause\'","sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';"},"sql":"SELECT `userId`, `displayName`, `email`, `mobile`, `city`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `parentId` FROM `Users` AS `User` WHERE `User`.`role` = \'HR\' AND `User`.`Status` = \'Active\';","parameters":{}}:',
+  timestamp: '2023-01-19T07:33:36.458Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'split')",
+  level: 'error',
+  timestamp: '2023-01-19T08:18:25.257Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'split')",
+  level: 'error',
+  timestamp: '2023-01-19T08:18:37.506Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-19T10:59:19.549Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:25:41.782Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:25:42.439Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:29:02.317Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:29:02.850Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:29:53.130Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:30:04.828Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:42:48.006Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-19T13:48:39.926Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {}:',
+  timestamp: '2023-01-19T14:52:24.982Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {}:',
+  timestamp: '2023-01-19T14:52:25.625Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {}:',
+  timestamp: '2023-01-19T14:53:58.031Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding Hr in getHR controller {}:',
+  timestamp: '2023-01-19T14:53:58.778Z'
+}
