@@ -87,8 +87,10 @@ const Candidates = () => {
   const [ref] = useHookWithRefCallback();
 
   useEffect(() => {
+    document.body.style.zoom = "80%";
     if (candidateStatuses?.data?.data) {
-      setAfterSelectStatuses(candidateStatuses.data.data.filter((status) => (status.display_text === 'Offered' || status.display_text === 'Doc Verification In Progress' || status.display_text === 'Disqualified' || status.display_text === 'Hold' || status.display_text === 'Selected')));
+      console.log(candidateStatuses?.data?.data.slice(0,2));
+      // setAfterSelectStatuses(candidateStatuses.data.data.filter((status) => (status.display_text === 'Offered' || status.display_text === 'Doc Verification In Progress' || status.display_text === 'Disqualified' || status.display_text === 'Hold' || status.display_text === 'Selected')));
     }
   }, [candidateStatuses?.data?.data]);
 
@@ -113,7 +115,7 @@ const Candidates = () => {
 
   const handleChange = (e) => {
 
-    if (e.target.name === 'job_id') {
+    if (e.target.name === 'jobId') {
       if (e.target.value === '') {
       } else {
         let job = jobs?.data?.data?.filter((job) => job.jobId === e.target.value)[0]
@@ -125,6 +127,8 @@ const Candidates = () => {
       ...form,
       [e.target.name]: e.target.value
     });
+
+    console.log(form);
 
   }
 
@@ -138,7 +142,7 @@ const Candidates = () => {
       formData.append(key, form[key]);
     });
 
-
+    
     if (parseInt(form.expected_ctc) <= parseInt(form.current_ctc)) {
       alert('Current CTC should be less than Expected CTC');
       return;
@@ -163,8 +167,6 @@ const Candidates = () => {
 
   }
 
-
-console.log(form);
   return (
     <>
       <Box m={8} mt={15} sx={{ boxShadow: 1 }} >
@@ -301,17 +303,15 @@ console.log(form);
                 padding: '10px', backgroundColor: "cornflowerblue",
                 fontWeight: 700, fontSize: "20px",
               }} > Add Candidate Details </h2>
-              <hr />
               <form onSubmit={(e) => handlesubmit(e)}>
                 <Box sx={{
-                  padding: "30px",
+                  padding: "10px",
                   display: 'grid',
                   gap: 3,
                   gridTemplateColumns: 'repeat(4, 3fr)',
                   border: '#4774ce'
                 }}>
                   <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                    <h3>Candidate Name</h3>
                     <TextField
 
                       labelId="input-candidate-name-label"
@@ -328,7 +328,6 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                    <h3>Candidate Email</h3>
                     <TextField
                       required
                       labelId="input-candidate-email-label"
@@ -345,8 +344,6 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300 }} size="small">
-
-                    <h3>Candidate Phone Number</h3>
                     <TextField
                       required
                       labelId="input-candidate-phone-number"
@@ -401,10 +398,10 @@ console.log(form);
                         <MenuItem key={gen.metaDataId} value={gen.metaDataId}>{gen.displayText.gender}</MenuItem>
                       )}
                     </Select>
-                  </FormControl> 
+                  </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Is Candidate Fresher?</h3>
+                    Is Candidate Fresher?
                     <RadioGroup
                       row
                       aria-labelledby="input-radio-buttons-group-fresher-label"
@@ -413,13 +410,13 @@ console.log(form);
                       onChange={(e) => handleChange(e)}
 
                     >
-                      <FormControlLabel value="true" control={<Radio required={true}/>} label="Yes" />
-                      <FormControlLabel value="false" control={<Radio required={true}/>} label="No" />
+                      <FormControlLabel value="true" control={<Radio required={true} />} label="Yes" />
+                      <FormControlLabel value="false" control={<Radio required={true} />} label="No" />
                     </RadioGroup>
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Company Name</h3>
+                    Company Name
                     <TextField
                       required
                       labelId="input-candidate-name-label"
@@ -437,7 +434,7 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Current CTC</h3>
+                    Current CTC
                     <TextField
                       required
                       labelId="input-candidate-current_ctc-label"
@@ -457,7 +454,7 @@ console.log(form);
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
 
-                    <h3>Expected CTC</h3>
+                    Expected CTC
                     <TextField
                       required
                       labelId="input-candidate-expected-label"
@@ -476,7 +473,7 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Notice period in Days</h3>
+                    Notice period in Days
 
                     <TextField
                       required
@@ -494,11 +491,12 @@ console.log(form);
                     />
                   </FormControl>
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 4.5, }} size="small">
-                    <h3>Candidate LWD</h3>
+                    Candidate LWD
                     <TextField
                       required
                       inputFormat="DD/MM/YYYY"
                       type='date'
+                      size='small'
                       name="candidateLastWorkingDate"
                       value={value1}
                       onChange={(e) => handleChange(e)}
@@ -518,7 +516,7 @@ console.log(form);
                       onChange={(e) => handleChange(e)}
                     >
                       <MenuItem key="" value=""> Select Status</MenuItem>
-                      {candidateStatuses?.data && candidateStatuses?.data?.data.map((status) =>
+                      {candidateStatuses?.data && candidateStatuses?.data?.data.slice(0,2).map((status) =>
                         <MenuItem key={status.metaDataId} value={status.metaDataId}>{status.displayText.status}</MenuItem>
 
                       )}
@@ -526,7 +524,7 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-                    <h3>Source</h3>
+                    Source
                     <RadioGroup
                       row
                       aria-labelledby="input-radio-buttons-group-source-label"
@@ -536,14 +534,14 @@ console.log(form);
                     >
                       {sources?.data && sources.data.data.map((source) =>
                         <>
-                          <FormControlLabel value={source.metaDataId} control={<Radio required={true}/>} label={source.displayText.source} />
+                          <FormControlLabel value={source.metaDataId} control={<Radio required={true} />} label={source.displayText.source} />
                         </>
                       )}
                     </RadioGroup>
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 320, marginTop: 2, }} size="small">
-                    <h3>Job Location</h3>
+                    Job Location
                     <RadioGroup
                       row
                       aria-labelledby="input-radio-buttons-group-job-location-label"
@@ -553,14 +551,14 @@ console.log(form);
                     >
                       {jobLocations?.data && jobLocations.data.data.map((location) =>
                         <>
-                          <FormControlLabel value={location.metaDataId} control={<Radio required={true}/>} label={location.displayText.location} />
+                          <FormControlLabel value={location.metaDataId} control={<Radio required={true} />} label={location.displayText.location} />
                         </>
                       )}
                     </RadioGroup>
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Total Experience</h3>
+                    Total Experience
                     <TextField
                       required
                       labelId="input-total-experience-label"
@@ -575,7 +573,7 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                    <h3>Relevant Experience</h3>
+                    Relevant Experience
                     <TextField
                       required
                       labelId="input-total-experience-label"
@@ -591,26 +589,28 @@ console.log(form);
                   </FormControl>
 
                   <FormControl variant="standard" sx={{ width: 300, }} size="small">
-                    <h3>Identified date</h3>
+                    Identified date
                     <TextField
                       required
                       inputFormat="DD/MM/YYYY"
                       type='date'
                       name="identifiedDate"
                       value={value1}
+                      size='small'
                       onChange={(e) => handleChange(e)}
                     >
                     </TextField>
                   </FormControl>
                   <FormControl variant="standard" sx={{ width: 300 }} size="small">
 
-                    <h3>Calling Date</h3>
+                    Calling Date
 
                     <TextField
                       inputFormat="DD/MM/YYYY"
                       type='date'
                       name="candidateCallingDate"
                       value={value1}
+                      size='small'
                       onChange={(e) => handleChange(e)}
                     >
 
@@ -621,8 +621,9 @@ console.log(form);
 
                     <TextField
                       id='attachment_path'
-                      name='documents'
+                      name='file'
                       required type="file"
+                      size='small'
                       accept=".doc,.docx,application/pdf"
                       onChange={(e) => {
                         if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {

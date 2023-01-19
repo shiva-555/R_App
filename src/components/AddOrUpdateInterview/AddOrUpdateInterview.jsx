@@ -47,12 +47,12 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
         if (!editMode) {
             setForm({ jobId: candidate?.jobTitle?.jobId, interviewRound: interviewRound + 1, interviewStatus: 'Scheduled' });
         } else {
-            setShowFinalSelected(interview.interviewStatus === 'Selected');
+            setShowFinalSelected(interview?.interviewStatus === 'Selected');
         }
 
         if (interviewStatuses?.data) {
             if (!editMode) {
-                setStatuses(interviewStatuses?.data?.filter((status) => status.displayText.status === 'Scheduled'));
+                setStatuses(interviewStatuses?.data?.filter((status) => status?.displayText.status === 'Scheduled'));
             }
         }
 
@@ -60,7 +60,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
             setEditMode(false);
             setIsModalOpen(false);
         }
-    }, [isModalOpen, editMode, candidate, scheduleInterview.isSuccess, updateInterview.isSuccess]);
+    }, [isModalOpen, editMode, candidate, scheduleInterview.isSuccess, updateInterview.isSuccess, interviewStatuses?.data]);
 
     if (scheduleInterview.isLoading || updateInterview.isLoading) {
         return <SpinLoader />
@@ -98,11 +98,9 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
 
         })
 
-
         if (interviewBody && !editMode) form.interviewBody = interviewBody;
         if ((interviewBody !== interview?.interviewBody) && editMode) form.interviewBody = interviewBody;
 
-        console.log(form)
         if (editMode) {
             updateInterview.mutate({ formData: form, candidate_id: candidate.candidateId, interview_id: interview.interviewId });
         } else {
@@ -116,7 +114,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
         setOpen(false)
     };
 
-    console.log(interview?.interviwDate)
+    console.log(interviewStatuses?.data)
 
     return (
         <>
@@ -155,7 +153,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                             name='candidate_name'
                                             variant="filled"
                                             readOnly
-                                            value={candidate.candidateName}
+                                            value={candidate?.candidateName}
                                             onChange={(e) => handleChange(e)} />
                                     </FormControl>
                                 </Grid>
@@ -172,7 +170,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                             name='candidate_email'
                                             readOnly
                                             type="email"
-                                            value={candidate.candidateEmail}
+                                            value={candidate?.candidateEmail}
                                             variant="filled"
                                             onChange={(e) => handleChange(e)} />
                                     </FormControl>
@@ -288,24 +286,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                         </Select>
                                     </FormControl>
                                 </Grid>
-                                {/* <Grid item xs='auto'>
-                                    <h3>Time</h3>
-                                    <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <TimePicker
-                                                label="Time"
-                                                name="interview_start_time"
-                                                defaultValue={interview?.interview_start_time ? interview?.interview_start_time : ''}
-                                                value={filters?.interview_start_time}
-                                                onChange={(newTime) => {
-                                                    setFilter({ ...filters, interview_start_time: newTime });
-                                                }}
-                                                renderInput={(params) => <TextField {...params} />}
-                                            />
-                                        </LocalizationProvider>
-
-                                    </FormControl>
-                                </Grid> */}
+    
                                 <Grid Item xs='auto'>
                                     <FormControl variant="standard" sx={{ width: 300 }} size="small">
                                         <h3>Panel Email</h3>

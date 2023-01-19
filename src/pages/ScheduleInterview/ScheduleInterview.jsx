@@ -21,7 +21,7 @@ const ScheduleInterview = () => {
   const { candidate_id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [id, setId] = useState('');
-  const [editMode, setEditMode] = useState(true);
+  const [editMode, setEditMode] = useState(false);
   const { useCandidate } = useCandidates();
   const candidate = useCandidate(candidate_id);
   const { interviewStatuses } = useMetaData();
@@ -31,8 +31,6 @@ const ScheduleInterview = () => {
     return <SpinLoader />
   }
 
-  console.log(candidate);
-
   return (
     <div className='scheduleInterview-block'>
 
@@ -41,8 +39,8 @@ const ScheduleInterview = () => {
       } interviewRound={candidate?.data.data.interviews.length ? candidate?.data.data.interviews.length : 0} />}
 
       <AddCircleOutlineIcon className='scheduleInterview-block__icon ' onClick={(e) => {
-        let candidateStatus = candidate.data.data.candidateStatus.displayText.status;
-        let isFinalSelected = candidate?.data.data?.interviews.some((interview) => interview.isFinalSelected === 'true');
+        let candidateStatus = candidate?.data?.data.candidateStatus.displayText.status;
+        let isFinalSelected = candidate?.data.data?.interviews.some((interview) => interview?.isFinalSelected === 'true');
         let selected = candidate?.data.data?.interviews[candidate?.data.data?.interviews.length - 1]?.interviewStatus === 'Selected';
         let cancelled = candidate?.data.data?.interviews[candidate?.data.data?.interviews.length - 1]?.interviewStatus === 'Cancelled';
         if (candidateStatus === 'Rejected' || candidateStatus === 'Disqualified' || candidateStatus === 'Back Out' || candidateStatus === 'Selected' || candidateStatus === 'Joined' || candidateStatus === 'Offered' || candidateStatus === 'Screening') {

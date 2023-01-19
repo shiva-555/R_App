@@ -28,6 +28,8 @@ const AppRoutes = () => {
         return <SpinLoader />
     }    
 
+    document.body.style.zoom = "80%";
+
     return (
     <UserContext.Provider value={user.data}>
         <Router>

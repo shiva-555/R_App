@@ -71,7 +71,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
     }
 
 
-
+    console.log(candidate);
     return (
         <>
             <Dialog
@@ -124,7 +124,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                             <Grid item xs='auto'>
                                                 <label>Bank statements of last 3 months (PDF)</label>
                                                 {
-                                                    candidate?.documents?.filter((doc) => doc.candidateDocumentName === 'Bank Statement')[0] ?
+                                                    candidate?.documents?.filter((doc) => doc.documentName === 'Bank Statement')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Bank Statement' onClick={(e) => downloadDocument(e)}>Download</Button>
                                                             <Button variant='contained' name='Bank Statement' onClick={(e) => handleDelete(e)}>Download</Button>
@@ -141,7 +141,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
 
                                                 <label>Offer or Appointment letter</label>
                                                 {
-                                                    candidate?.documents?.filter((doc) => doc.candidateDocumentName === 'Offer Letter')[0] ?
+                                                    candidate?.documents?.filter((doc) => doc.documentName === 'Offer Letter')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Offer Letter' onClick={(e) => downloadDocument(e)}>Download</Button>
                                                             <Button variant='contained' name='Offer Letter' onClick={(e) => handleDelete(e)}>Download</Button>
@@ -157,7 +157,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
 
                                                 <label>Adhaar Card</label>
                                                 {
-                                                    candidate?.documents?.filter((doc) => doc.candidateDocumentName === 'Adhaar Card')[0] ?
+                                                    candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => downloadDocument(e)}>Download</Button>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Download</Button>
@@ -175,7 +175,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                             <Grid item xs='auto'>
                                                 <label>Adhaar Card</label>
                                                 {
-                                                    candidate?.documents?.filter((doc) => doc.candidate_document_name === 'Adhaar Card')[0] ?
+                                                    candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => downloadDocument(e)}>Download</Button>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Download</Button>
@@ -198,7 +198,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                 <>
                                                     <Button variant='contained' onClick={(e) => {
                                                         if (!isExperienced) {
-                                                            updateCandidate.mutate({ id: candidate.candidate_id, formData: { candidateStatusId: statuses.filter((status) => status.displayText.status === 'Doc Verification Completed')[0].metaDataId } });
+                                                            updateCandidate.mutate({ id: candidate.candidateId, formData: { candidateStatusId: statuses.filter((status) => status.displayText.status === 'Doc Verification Completed')[0].metaDataId } });
                                                             setshowDocument(false);
                                                         }
                                                     }}>Ok</Button>
@@ -219,7 +219,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                 <>
                                                     <Button variant='contained' onClick={(e) => {
                                                         if (!isExperienced) {
-                                                            updateCandidate.mutate({ id: candidate.candidate_id, formData: { candidateStatusId: statuses.filter((status) => status.displayText.status === 'Doc Verification Completed')[0].metaDataId } });
+                                                            updateCandidate.mutate({ id: candidate.candidateId, formData: { candidateStatusId: statuses.filter((status) => status.displayText.status === 'Doc Verification Completed')[0].metaDataId } });
                                                             setshowDocument(false);
                                                         }
                                                     }}>Ok</Button>

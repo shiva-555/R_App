@@ -207,12 +207,26 @@ export const useUsers = (role) => {
         return data;
     });
 
+    const HR = useQuery('HR', async () => {
+        const token = await acquireToken(instance, accounts);
+        const client = axios.create({
+            baseURL: baseURL,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const { data } = await client.get(`/hr`);
+        return data;
+
+    });
+
     return {
         user,
         // appUsers,
         // tenantUsers,
         // guestUsers,
         recruiters,
+        HR,
         // hiringManagers,
         // createAppUser,
         // useUpdateAppUser

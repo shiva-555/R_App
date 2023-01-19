@@ -3,6 +3,7 @@ import React, { useState, useEffect, } from 'react';
 import { useJobs } from '../../helpers/hooks/jobsHooks';
 import { useMetaData } from '../../helpers/hooks/metaDataHooks';
 import { useCandidates } from '../../helpers/hooks/candidatesHooks';
+import { useUsers } from '../../helpers/hooks/userHooks';
 import ReactQuill from 'react-quill';
 
 import OnBoardingForm from '../../components/OnBoardingForm/OnBoardingForm';
@@ -39,7 +40,7 @@ const Candidate = () => {
   const [showDocument, setshowDocument] = useState(false);
   const [remark1, setRemark] = useState();
   const [value1, setValue1] = useState();
-
+  const { HR } = useUsers()
 
   const handleChange = (e) => {
     console.log()
@@ -119,7 +120,11 @@ const Candidate = () => {
     }
   }
 
-  console.log(form?.file)
+  useEffect(() => {
+    document.body.style.zoom = "80%";
+  }, []);
+
+  console.log(candidate);
   return (
     <>
       {showDocument &&
@@ -139,7 +144,7 @@ const Candidate = () => {
             <h2 style={{
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
               color: "white", fontWeight: 500, fontSize: "18px",
-            }} > Candidate Basic Details </h2>
+            }} > Personal Details </h2>
             <hr />
             <Grid container m={2} gap={5}>
               <Grid Item xs='auto'>
@@ -266,23 +271,26 @@ const Candidate = () => {
               <Grid item xs='auto'>
                 <h3>Candidate LWD</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-                  <TextField
+
+                  <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     inputFormat="DD/MM/YYYY"
-                    type='date'
+                    type="date"
+                    id="candidateLastWorkingDate"
                     name="candidateLastWorkingDate"
-                    defaultValue={moment(candidate?.data?.data?.candidateLastWorkingDate).utc().format('YYYY-DD-MM').toString()}
-                    value={value1}
-                    onChange={(e) => handleChange(e)}
-                  >
-                  </TextField>
+                    defaultValue={
+                      candidate?.data?.data.candidateLastWorkingDate
+                        ? new Date(candidate?.data?.data.candidateLastWorkingDate).toISOString().split('T')[0]
+                        : ''
+                    } onChange={(e) => handleChange(e)} />
                 </FormControl>
               </Grid>
               <Grid item xs='auto'>
                 <h3>Identified date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-                  <label>Identified Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="identifiedDate"
                     name="identifiedDate"
@@ -337,7 +345,7 @@ const Candidate = () => {
             <h2 style={{
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
               color: "white", fontWeight: 500, fontSize: "18px",
-            }}  >Candidate Other Details</h2>
+            }}  >Professional Details</h2>
             <hr />
 
             <Grid container m={2} gap={5}>
@@ -484,20 +492,48 @@ const Candidate = () => {
                 </FormControl>
               </Grid>
 
+              {/* <Grid item xs='auto'>
+                {
+                  candidate?.data?.data?.documents.some((document) => document?.documentName === 'resume') ?
+                    <>
+                      <Button onClick={(e) => window.open(candidate?.documents.filter(document => document?.documentName === 'resume')[0].downloadLink, '_blank', 'noopener,noreferrer')}>Download</Button>
+                    </>
+                    :
+                    <FormControl variant="standard" sx={{ width: 300, mt: 3 }} size="small">
+
+                      <TextField
+                        id='attachment_path'
+                        name='documents'
+                        required type="file"
+                        size='small'
+                        accept=".doc,.docx,application/pdf"
+
+                        onChange={(e) => {
+                          if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {
+                            setForm({ ...form, [e.target.name]: e.target.files[0] });
+                          } else {
+                            alert('Document type should be PDf or Word only');
+                            e.target.value = ''
+                          }
+                        }}
+                      />
+                    </FormControl>
+                }
+              </Grid> */}
             </Grid>
 
             <h2 style={{
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
               color: "white", fontWeight: 500, fontSize: "18px",
-            }}>Candidates schedule Dates</h2>
+            }}> Interview schedule Details</h2>
             <hr />
             <Grid container m={2} gap={5}>
               <Grid item xs='auto'>
                 <h3>Calling Date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-                  <label>Calling Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="candidateCallingDate"
                     name="candidateCallingDate"
@@ -513,9 +549,8 @@ const Candidate = () => {
                 <h3>Selected or Rejected Date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-
-                  <label>selectedRejectedDate Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="selectedRejectedDate"
                     name="selectedRejectedDate"
@@ -533,9 +568,8 @@ const Candidate = () => {
                 <h3>document verification initiated on</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-
-                  <label>documentVerificationInitiatedOn Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="documentVerificationInitiatedOn"
                     name="documentVerificationInitiatedOn"
@@ -553,8 +587,8 @@ const Candidate = () => {
                 <h3>Offer Date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-                  <label>offer Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="offerDate"
                     name="offerDate"
@@ -571,11 +605,8 @@ const Candidate = () => {
               <Grid item xs='auto'>
                 <h3>Tentative Date of Joining</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-
-
-
-                  <label>offer Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="joiningDate"
                     name="joiningDate"
@@ -591,11 +622,8 @@ const Candidate = () => {
               <Grid item xs='auto'>
                 <h3>Joining Date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-
-
-
-                  <label>offer Date</label>
                   <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
                     id="tentativeDateOfJoining"
                     name="tentativeDateOfJoining"
@@ -610,14 +638,10 @@ const Candidate = () => {
               </Grid>
             </Grid>
 
-
-
-
-
             <h2 style={{
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
               color: "white", fontWeight: 500, fontSize: "18px",
-            }}   > Recruiter </h2>
+            }}   > Recruiter Details</h2>
             <hr />
             <Grid container m={2} gap={5}>
 
@@ -701,6 +725,40 @@ const Candidate = () => {
                   </Select>
                 </FormControl>
               </Grid>
+
+
+              {/* <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">
+                  <InputLabel id="select-hr">HR</InputLabel>
+                  <Select
+                    labelId="select-hr"
+                    id="HR"
+                    name='hrId'
+                    label='HR'
+                    variant="filled"
+                    required
+                    onChange={(e) => handleChange(e)}
+                    margin='normal'
+                    defaultValue={candidate?.data?.data?.hrId}>
+                    <MenuItem key="" value=""> Select HR</MenuItem>
+                    {HR?.data.map((h) => {
+                      return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid> */}
+
+
+            </Grid>
+
+            <h2 style={{
+              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
+              color: "white", fontWeight: 500, fontSize: "18px",
+            }}   > Documents </h2>
+            <hr />
+
+            <Grid container m={2} gap={5}>
+
               <Grid item xs='auto'>
                 <h3>Upload File</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
@@ -724,6 +782,7 @@ const Candidate = () => {
 
               </Grid>
 
+
               <Grid item xs='auto'>
                 <h3>Upload documents</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
@@ -731,10 +790,7 @@ const Candidate = () => {
                   <Button variant='contained' onClick={(e) => setshowDocument(true)}>Uploaded documents</Button>
                 </FormControl>
               </Grid>
-
-
             </Grid>
-
             {showOnBoarding &&
 
               <>
@@ -859,6 +915,8 @@ const Candidate = () => {
                 </Grid>
               </>
             }
+
+
 
             {/* {window.localStorage.getItem('role') === 'HR' && 
 
