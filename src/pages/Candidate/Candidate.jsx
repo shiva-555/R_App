@@ -120,11 +120,16 @@ const Candidate = () => {
     }
   }
 
-  useEffect(() => {
-    document.body.style.zoom = "80%";
-  }, []);
 
-  console.log(candidate);
+  const array = [2, 5, 9];
+
+  console.log(candidateStatuses?.data?.data);
+  
+
+
+  
+  console.log(window.localStorage.getItem('role'));
+  
   return (
     <>
       {showDocument &&
@@ -151,7 +156,6 @@ const Candidate = () => {
                 <FormControl variant="standard" sx={{ width: 300 }} size="small">
                   <h3>Candidate Name</h3>
                   <TextField
-
                     labelId="input-candidate-name-label"
                     id="outlined-required"
                     label="Candidate Name"
@@ -205,7 +209,6 @@ const Candidate = () => {
               </Grid>
               <Grid item xs='auto'>
                 <h3>Gender</h3>
-
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
                   <InputLabel id="select-gender-label">Gender</InputLabel>
                   <Select
@@ -229,6 +232,73 @@ const Candidate = () => {
                 </FormControl>
 
 
+              </Grid>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+                  <h3>Is Candidate Fresher?</h3>
+                  <RadioGroup
+                    row
+                    required
+                    aria-labelledby="input-radio-buttons-group-fresher-label"
+                    name="candidateType"
+                    variant="filled"
+                    defaultValue={candidate?.data?.data?.candidateType}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    <FormControlLabel value="true" control={<Radio required={true} />} label="Yes" />
+                    <FormControlLabel value="false" control={<Radio required={true} />} label="No" />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <h2 style={{
+              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
+              color: "white", fontWeight: 500, fontSize: "18px",
+            }}  >Professional Details</h2>
+            <hr />
+
+            <Grid container m={2} gap={5}>
+
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300 }} size="small">
+                  <h3>Current CTC</h3>
+                  <TextField
+                    required
+                    labelId="input-candidate-current_ctc-label"
+                    id="outlined-required"
+                    label="Current CTC"
+                    placeholder='Enter Current CTC'
+
+                    size='small'
+                    margin='normal'
+                    type='number'
+                    name='currentCTC'
+                    variant="filled"
+                    defaultValue={candidate?.data?.data.currentCTC}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300 }} size="small">
+                  <h3>Expected CTC</h3>
+                  <TextField
+                    required
+                    labelId="input-candidate-current_ctc-label"
+                    id="outlined-required"
+                    label="Expected CTC"
+                    placeholder='Enter Expected CTC'
+                    InputProps={{ inputProps: { min: "300000", max: Infinity, step: "1" } }}
+                    size='small'
+                    margin='normal'
+                    type='number'
+                    name='expectedCTC'
+                    variant="filled"
+                    defaultValue={candidate?.data?.data.expectedCTC}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs='auto'>
                 <FormControl variant="standard" sx={{ width: 300 }} size="small">
@@ -286,23 +356,6 @@ const Candidate = () => {
                 </FormControl>
               </Grid>
               <Grid item xs='auto'>
-                <h3>Identified date</h3>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-
-                  <input
-                    style={{ width: 300, height: 50, fontSize: 15 }}
-                    type="date"
-                    id="identifiedDate"
-                    name="identifiedDate"
-                    defaultValue={
-                      candidate?.data?.data.identifiedDate
-                        ? new Date(candidate?.data?.data.identifiedDate).toISOString().split('T')[0]
-                        : ''
-                    } onChange={(e) => handleChange(e)} />
-
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
                 <FormControl variant="standard" sx={{ width: 300 }} size="small">
                   <h3>Notice period in Days</h3>
                   <TextField
@@ -320,175 +373,6 @@ const Candidate = () => {
                     // defaultValue={candidate?.data?.data.notice_period_in_days}
                     onChange={(e) => handleChange(e)}
                   />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-                  <h3>Is Candidate Fresher?</h3>
-                  <RadioGroup
-                    row
-                    required
-                    aria-labelledby="input-radio-buttons-group-fresher-label"
-                    name="candidateType"
-                    variant="filled"
-                    defaultValue={candidate?.data?.data?.candidateType}
-                    onChange={(e) => handleChange(e)}
-                  >
-                    <FormControlLabel value="true" control={<Radio required={true} />} label="Yes" />
-                    <FormControlLabel value="false" control={<Radio required={true} />} label="No" />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-            </Grid>
-
-
-            <h2 style={{
-              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
-              color: "white", fontWeight: 500, fontSize: "18px",
-            }}  >Professional Details</h2>
-            <hr />
-
-            <Grid container m={2} gap={5}>
-              <Grid item xs='auto'>
-
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 4.5 }} size="small">
-                  <InputLabel id="select-job-title-label">Job Title</InputLabel>
-                  <Select
-                    labelId="select-job-title-label"
-                    id="select-job-label"
-                    variant="filled"
-                    name='jobId'
-                    required
-                    defaultValue={candidate?.data?.data.jobId}
-
-                    onChange={(e) => handleChange(e)}
-                    margin='normal'
-                  >
-                    <MenuItem key="" value=""> Select Job Title</MenuItem>
-                    {jobs?.data && jobs?.data?.data.map((job) => {
-
-                      if (job?.status === 'Active') {
-                        return <MenuItem key={job.jobId} value={job.jobId}>{job.jobTitle}</MenuItem>
-                      }
-                    })}
-                  </Select>
-                </FormControl>
-
-
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                  <h3>Company Name</h3>
-                  <TextField
-                    required
-                    labelId="input-candidate-name-label"
-                    id="outlined-required"
-                    placeholder='Enter Company Name'
-                    size='small'
-
-                    margin='normal'
-                    name='company'
-                    variant="filled"
-                    value={candidate?.data?.data.company}
-                    onChange={(e) => handleChange(e)}
-                    disabled={true}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                  <h3>Current CTC</h3>
-                  <TextField
-                    required
-                    labelId="input-candidate-current_ctc-label"
-                    id="outlined-required"
-                    label="Current CTC"
-                    placeholder='Enter Current CTC'
-
-                    size='small'
-                    margin='normal'
-                    type='number'
-                    name='currentCTC'
-                    variant="filled"
-                    defaultValue={candidate?.data?.data.currentCTC}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                  <h3>Expected CTC</h3>
-                  <TextField
-                    required
-                    labelId="input-candidate-current_ctc-label"
-                    id="outlined-required"
-                    label="Expected CTC"
-                    placeholder='Enter Expected CTC'
-                    InputProps={{ inputProps: { min: "300000", max: Infinity, step: "1" } }}
-                    size='small'
-                    margin='normal'
-                    type='number'
-                    name='expectedCTC'
-                    variant="filled"
-                    defaultValue={candidate?.data?.data.expectedCTC}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                  <h3>Offered Salary</h3>
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Offered Salary"
-                    placeholder='Enter Offered Salary'
-                    InputProps={{ inputProps: { min: "300000", max: Infinity, step: "1" } }}
-                    size='small'
-                    margin='normal'
-                    type='number'
-                    name='offeredSalary'
-                    variant="filled"
-                    defaultValue={candidate?.data?.data.offeredSalary}
-                    onChange={(e) => handleChange(e)} />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, }} size="small">
-                  <h3>Source</h3>
-                  <RadioGroup
-                    row
-                    aria-labelledby="input-radio-buttons-group-source-label"
-                    name="sourceId"
-                    variant="filled"
-                    defaultValue={candidate?.data?.data?.sourceId}
-                    onChange={(e) => handleChange(e)}
-                  >
-                    {sources?.data && sources.data.data.map((source) =>
-                      <>
-                        <FormControlLabel value={source.metaDataId} control={<Radio required={true} />} label={source.displayText.source} />
-                      </>
-                    )}
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 320, }} size="small">
-                  <h3>Job Location</h3>
-                  <RadioGroup
-                    row
-                    aria-labelledby="input-radio-buttons-group-job-location-label"
-                    name="jobLocationId"
-                    variant="filled"
-                    defaultValue={candidate?.data?.data?.jobLocationId}
-                    onChange={(e) => handleChange(e)}
-                  >
-                    {jobLocations?.data && jobLocations.data.data.map((location) =>
-                      <>
-                        <FormControlLabel value={location.metaDataId} control={<Radio required={true} />} label={location.displayText.location} />
-                      </>
-                    )}
-                  </RadioGroup>
                 </FormControl>
               </Grid>
 
@@ -528,6 +412,89 @@ const Candidate = () => {
             }}> Interview schedule Details</h2>
             <hr />
             <Grid container m={2} gap={5}>
+
+              <Grid item xs='auto'>
+                <h3>Job Title</h3>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2 }} size="small">
+                  <Select
+                    labelId="select-job-title-label"
+                    id="select-job-label"
+                    variant="filled"
+                    margin='normal'
+                    name='jobId'
+                    required
+                    defaultValue={candidate?.data?.data.jobId}
+
+                    onChange={(e) => handleChange(e)}
+                  >
+                    <MenuItem key="" value=""> Select Job Title</MenuItem>
+                    {jobs?.data && jobs?.data?.data.map((job) => {
+
+                      if (job?.status === 'Active') {
+                        return <MenuItem key={job.jobId} value={job.jobId}>{job.jobTitle}</MenuItem>
+                      }
+                    })}
+                  </Select>
+                </FormControl>
+
+
+              </Grid>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300 }} size="small">
+                  <h3>Company Name</h3>
+                  <TextField
+                    required
+                    labelId="input-candidate-name-label"
+                    id="outlined-required"
+                    placeholder='Enter Company Name'
+                    size='small'
+                    margin='normal'
+                    name='company'
+                    variant="filled"
+                    value={candidate?.data?.data.company}
+                    onChange={(e) => handleChange(e)}
+                    disabled={true}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 320, }} size="small">
+                  <h3>Job Location</h3>
+                  <RadioGroup
+                    row
+                    aria-labelledby="input-radio-buttons-group-job-location-label"
+                    name="jobLocationId"
+                    variant="filled"
+                    defaultValue={candidate?.data?.data?.jobLocationId}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {jobLocations?.data && jobLocations.data.data.map((location) =>
+                      <>
+                        <FormControlLabel value={location.metaDataId} control={<Radio required={true} />} label={location.displayText.location} />
+                      </>
+                    )}
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300, }} size="small">
+                  <h3>Source</h3>
+                  <RadioGroup
+                    row
+                    aria-labelledby="input-radio-buttons-group-source-label"
+                    name="sourceId"
+                    variant="filled"
+                    defaultValue={candidate?.data?.data?.sourceId}
+                    onChange={(e) => handleChange(e)}
+                  >
+                    {sources?.data && sources.data.data.map((source) =>
+                      <>
+                        <FormControlLabel value={source.metaDataId} control={<Radio required={true} />} label={source.displayText.source} />
+                      </>
+                    )}
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
               <Grid item xs='auto'>
                 <h3>Calling Date</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
@@ -540,6 +507,23 @@ const Candidate = () => {
                     defaultValue={
                       candidate?.data?.data.candidateCallingDate
                         ? new Date(candidate?.data?.data.candidateCallingDate).toISOString().split('T')[0]
+                        : ''
+                    } onChange={(e) => handleChange(e)} />
+
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
+                <h3>Identified date</h3>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+
+                  <input
+                    style={{ width: 300, height: 50, fontSize: 15 }}
+                    type="date"
+                    id="identifiedDate"
+                    name="identifiedDate"
+                    defaultValue={
+                      candidate?.data?.data.identifiedDate
+                        ? new Date(candidate?.data?.data.identifiedDate).toISOString().split('T')[0]
                         : ''
                     } onChange={(e) => handleChange(e)} />
 
@@ -603,6 +587,24 @@ const Candidate = () => {
 
               </Grid>
               <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300 }} size="small">
+                  <h3>Offered Salary</h3>
+                  <TextField
+                    required
+                    id="outlined-required"
+                    label="Offered Salary"
+                    placeholder='Enter Offered Salary'
+                    InputProps={{ inputProps: { min: "300000", max: Infinity, step: "1" } }}
+                    size='small'
+                    margin='normal'
+                    type='number'
+                    name='offeredSalary'
+                    variant="filled"
+                    defaultValue={candidate?.data?.data.offeredSalary}
+                    onChange={(e) => handleChange(e)} />
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
                 <h3>Tentative Date of Joining</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
                   <input
@@ -636,59 +638,12 @@ const Candidate = () => {
 
                 </FormControl>
               </Grid>
-            </Grid>
-
-            <h2 style={{
-              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
-              color: "white", fontWeight: 500, fontSize: "18px",
-            }}   > Recruiter Details</h2>
-            <hr />
-            <Grid container m={2} gap={5}>
-
               <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-                  <h3>Recruiter</h3>
-                  <TextField
-                    required
-                    labelId="input-recruiter-label"
-                    id="outlined-required"
-                    placeholder='Enter Recruiter Name'
-                    size='small'
-                    margin='normal'
-                    name='createdById'
-                    variant="filled"
-                    value={candidate?.data?.data?.createdById}
-                    disabled={true}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-                  <h3>Reporting Manager</h3>
-                  <TextField
-
-                    labelId="input-reporting-manager-label"
-                    id="reporting_manager_id"
-                    label="Reporting Manager"
-                    placeholder='Enter Reporting Manager'
-                    size='small'
-                    margin='normal'
-                    name='reportingManager'
-                    variant="filled"
-                    defaultValue={candidate?.data?.data.reportingManager}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 6, }} size="small">
-                  <InputLabel id="demo-simple-select-label">BackOut / Disqualified Reason</InputLabel>
-
+                <h3>BackOut / Other Reason</h3>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 3, }} size="small">
                   <Select
                     labelId="demo-simple-select-label"
                     id="backout_reason_id"
-                    label="BackOut / Disqualified Reason"
                     size='small'
                     margin='normal'
                     name='backoutReasonId'
@@ -705,11 +660,24 @@ const Candidate = () => {
                 </FormControl>
               </Grid>
               <Grid item xs='auto'>
-
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+                  <h3>Reporting Manager</h3>
+                  <TextField
+                    id="reporting_manager_id"
+                    placeholder='Enter Reporting Manager'
+                    size='small'
+                    margin='normal'
+                    name='reportingManager'
+                    variant="filled"
+                    defaultValue={candidate?.data?.data.reportingManager}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs='auto'>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 6 }} size="small">
                   <InputLabel id="select-status-label">Status</InputLabel>
                   <Select
-                    labelId="select-status-label"
                     id="candidate_status_id"
                     size='small'
                     margin='normal'
@@ -725,77 +693,11 @@ const Candidate = () => {
                   </Select>
                 </FormControl>
               </Grid>
-
-
-              {/* <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">
-                  <InputLabel id="select-hr">HR</InputLabel>
-                  <Select
-                    labelId="select-hr"
-                    id="HR"
-                    name='hrId'
-                    label='HR'
-                    variant="filled"
-                    required
-                    onChange={(e) => handleChange(e)}
-                    margin='normal'
-                    defaultValue={candidate?.data?.data?.hrId}>
-                    <MenuItem key="" value=""> Select HR</MenuItem>
-                    {HR?.data.map((h) => {
-                      return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid> */}
-
-
             </Grid>
 
-            <h2 style={{
-              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
-              color: "white", fontWeight: 500, fontSize: "18px",
-            }}   > Documents </h2>
-            <hr />
-
-            <Grid container m={2} gap={5}>
-
-              <Grid item xs='auto'>
-                <h3>Upload File</h3>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-
-                  <TextField
-                    id='attachment_path'
-                    name='file'
-                    required
-                    type="file"
-                    accept=".doc,.docx,application/pdf"
-                    onChange={(e) => {
-                      if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {
-                        setForm({ ...form, [e.target.name]: e.target.files[0] });
-                      } else {
-                        alert('Document type should be PDf or Word only');
-                        e.target.value = ''
-                      }
-                    }}
-                  />
-                </FormControl>
-
-              </Grid>
-
-
-              <Grid item xs='auto'>
-                <h3>Upload documents</h3>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
-
-                  <Button variant='contained' onClick={(e) => setshowDocument(true)}>Uploaded documents</Button>
-                </FormControl>
-              </Grid>
-            </Grid>
             {showOnBoarding &&
 
               <>
-
-
                 <h2 style={{
                   marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
                   color: "white", fontWeight: 500, fontSize: "18px",
@@ -916,7 +818,93 @@ const Candidate = () => {
               </>
             }
 
+            <h2 style={{
+              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
+              color: "white", fontWeight: 500, fontSize: "18px",
+            }}>Recruiter / HR </h2>
+            <hr />
+            
+            <Grid container m={2} gap={5}>
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+                  <h3>Recruiter</h3>
+                  <TextField
+                    required
+                    labelId="input-recruiter-label"
+                    id="outlined-required"
+                    placeholder='Enter Recruiter Name'
+                    size='small'
+                    margin='normal'
+                    name='createdById'
+                    variant="filled"
+                    value={candidate?.data?.data?.createdById}
+                    disabled={true}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </FormControl>
+              </Grid>
 
+
+              <Grid item xs='auto'>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">
+                  <InputLabel id="select-hr">HR</InputLabel>
+                  <Select
+                    labelId="select-hr"
+                    id="HR"
+                    name='hrId'
+                    label='HR'
+                    variant="filled"
+                    required
+                    onChange={(e) => handleChange(e)}
+                    margin='normal'
+                    defaultValue={candidate?.data?.data?.hrId}>
+                    <MenuItem key="" value=""> Select HR</MenuItem>
+                    {HR?.data?.data?.map((h) => {
+                      return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+
+            </Grid>
+            <h2 style={{
+              marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
+              color: "white", fontWeight: 500, fontSize: "18px",
+            }}   > Documents </h2>
+            <hr />
+            <Grid container m={2} gap={5}>
+
+              <Grid item xs='auto'>
+                <h3>Upload Resume</h3>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+
+                  <TextField
+                    id='attachment_path'
+                    name='file'
+                    required
+                    type="file"
+                    accept=".doc,.docx,application/pdf"
+                    onChange={(e) => {
+                      if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {
+                        setForm({ ...form, [e.target.name]: e.target.files[0] });
+                      } else {
+                        alert('Document type should be PDf or Word only');
+                        e.target.value = ''
+                      }
+                    }}
+                  />
+                </FormControl>
+
+              </Grid>
+              <Grid item xs='auto'>
+                <h3>Upload Documents</h3>
+                <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
+
+                  <Button variant='contained' onClick={(e) => setshowDocument(true)}>Uploaded documents</Button>
+                </FormControl>
+              </Grid>
+            </Grid>
 
             {/* {window.localStorage.getItem('role') === 'HR' && 
 

@@ -6,7 +6,8 @@ import SpinLoader from '../../components/SpinLoader/SpinLoader';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useCandidates } from '../../helpers/hooks/candidatesHooks';
 import { useMetaData } from '../../helpers/hooks/metaDataHooks';
-import Swal from 'sweetalert2'
+import Box from '@mui/material/Box';
+
 
 //!::::::::::::::::
 import Chip from '@mui/material/Chip';
@@ -32,7 +33,7 @@ const ScheduleInterview = () => {
   }
 
   return (
-    <div className='scheduleInterview-block'>
+    <Box m={8} mt={20} sx={{ boxShadow: 1 }} >
 
       {isModalOpen && <AddOrUpdateInterview setIsModalOpen={setIsModalOpen} interviewStatuses={interviewStatuses.data} candidate={candidate.data.data} editMode={editMode} setEditMode={setEditMode} interview={
         editMode ? candidate?.data.data.interviews?.filter((interview) => interview.interview_id === id)[0] : undefined
@@ -123,7 +124,7 @@ const ScheduleInterview = () => {
           } interviewRound={candidate?.data?.data?.interviews.length ? candidate?.data.data.interviews.length : 0} />
       } */}
 
-    </div>
+    </Box>
 
   )
 }

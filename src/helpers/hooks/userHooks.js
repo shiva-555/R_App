@@ -11,9 +11,11 @@ if (process.env.NODE_ENV === 'production') {
     baseURL = 'http://localhost:5000';
 }
 
-export const useUsers = (role) => {
+export const useUsers = () => {
     const {instance, accounts} = useMsal();
     const queryClient = useQueryClient();
+    const role = window.localStorage.getItem('role');
+
 
 
     const user = useQuery('user', async() => {
@@ -167,7 +169,9 @@ export const useUsers = (role) => {
         const client = axios.create({
             baseURL: baseURL,
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'user-info': role
+
             }
         });
         const { data } = await client.post('/candidate', candidate);
@@ -212,7 +216,9 @@ export const useUsers = (role) => {
         const client = axios.create({
             baseURL: baseURL,
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'user-info': role
+
             }
         });
         const { data } = await client.get(`/hr`);

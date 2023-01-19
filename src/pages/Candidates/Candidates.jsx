@@ -87,7 +87,7 @@ const Candidates = () => {
   const [ref] = useHookWithRefCallback();
 
   useEffect(() => {
-    document.body.style.zoom = "80%";
+    // document.body.style.zoom = "80%";
     if (candidateStatuses?.data?.data) {
       console.log(candidateStatuses?.data?.data.slice(0,2));
       // setAfterSelectStatuses(candidateStatuses.data.data.filter((status) => (status.display_text === 'Offered' || status.display_text === 'Doc Verification In Progress' || status.display_text === 'Disqualified' || status.display_text === 'Hold' || status.display_text === 'Selected')));
@@ -199,7 +199,7 @@ const Candidates = () => {
             onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })}
           >
             {jobs?.data && jobs.data.data.map(job =>
-              <MenuItem key={job.job_title} value={job.job_id}>{job.job_title}</MenuItem>
+              <MenuItem key={job.jobId} value={job.jobId}>{job.jobTitle}</MenuItem>
             )}
           </Select>
         </FormControl>
@@ -216,7 +216,7 @@ const Candidates = () => {
             style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
             onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })}>
             {candidateStatuses?.data && candidateStatuses.data.data.map(status =>
-              <MenuItem key={status.meta_data_id} value={status.meta_data_id}>{status.display_text}</MenuItem>
+              <MenuItem key={status.metaDataId} value={status.metaDataId}>{status.displayText.status}</MenuItem>
             )}
           </Select>
         </FormControl>
