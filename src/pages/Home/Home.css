@@ -1,0 +1,129 @@
+.home-block {
+    grid-area: content;
+}
+
+.home-block__container {
+    display: flex;
+}
+
+.home-block__greeting {
+    position: absolute;
+    margin-left: 20px;
+    color: #3b4452;
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-top: 25px;
+}
+
+.home-block__profile {
+    position: relative;
+    width: 280px;
+    height: 150px;
+    margin-left: 20px;
+    margin-top: 100px;
+    background-color: white;
+    border: 1px solid #ecd9d9;
+    border-radius: 8px;
+    padding: 20px;
+    color: rgba(103,122,142);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+}
+
+.home-block__profile:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.home-block__name {
+    display: flex;
+    height: 30px;
+    margin-top: 45px;
+}
+
+.home-block__email {
+    display: flex;
+    height: 30px;
+}
+
+.home-block__input {
+    margin-left: 8px;
+}
+
+.home-block__header {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    font-size: 20px;
+}
+
+.home-block__jobRequisition {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    margin-left: 50px;
+    margin-top: 100px;
+    background-color: white;
+    border: 1px solid #ecd9d9;
+    border-radius: 8px;
+    padding: 20px;
+    color: rgba(103,122,142);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.home-block__jobDescription {
+    position: relative;
+    width: 400px;
+    height: 200px;
+    margin-left: 50px;
+    margin-top: 100px;
+    background-color: white;
+    border: 1px solid #ecd9d9;
+    border-radius: 8px;
+    padding: 20px;
+    color: rgba(103,122,142);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.home-block__jobRequisition__list {
+    margin-top: 40px;
+    overflow: auto;
+}
+
+.home-block__descContent {
+    margin-top: 40px;
+}
+
+.home-block__jobRequisition__list__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.home-block__jobRequisition__list__item__code {
+    cursor: pointer;
+}
+
+.home-block__jobRequisition__list__item__description {
+    height: 24px;
+    width: 130px;
+    border: none;
+    color: white;
+    background-color: rgb(36,60,128);
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 699px) {
+    .home-block__container {
+        overflow: auto;
+    }
+
+    .home-block__jobRequisition {
+        width: 500px;
+    } 
+}

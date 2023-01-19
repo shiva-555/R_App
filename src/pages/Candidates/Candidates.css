@@ -1,0 +1,218 @@
+.candidates-block {
+    grid-area: content;
+    /* padding-top: 4%; */
+}
+
+.candidates-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.candidates-container__tableContainer {
+    /* height: 600px; */
+    height: 73vh;
+    width: 90%;
+    margin: 10px auto;
+    overflow: auto;
+}
+
+.candidates-container__table {
+    /* table-layout: fixed; */
+    border-collapse: separate;
+    border-spacing:0 15px;
+    width: 95%;
+    margin: 0 auto;
+    /* height: 600px; */
+    overflow: hidden;
+}
+
+/* .candidates-container__bodyContainer {
+    display: block;
+    height: 500px;
+    overflow-y: scroll;
+} */
+
+.candidates-container__headerRow {
+    border-radius: 3px;
+}
+
+.candidates-container__headerElem {
+    text-align: left;
+    padding: 5px 10px;
+}
+
+.candidates-container__bodyRow {
+    background-color: white;
+    height: 60px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.candidates-container__bodyElem {
+    text-align: left;
+    padding: 10px;
+}
+
+.candidates-container__searchBoxContainer {
+    width: 90%;
+    /* height: 120px; */
+    /* display: flex; */
+    display: grid;
+    grid-template-rows: auto auto;
+    /* grid-template-columns: 220px 220px 220px 100px 100px auto; */
+    /* grid-template-columns: auto; */
+    row-gap: 8px;
+    padding: 30px;
+    /* align-items: center; */
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.candidates-container__row1 {
+    grid-row: 1;
+}
+
+.candidates-container__row2 {
+    grid-row: 2;
+}
+
+.candidates-container__searchElem {
+    margin-left: 20;
+}
+
+.candidates-container__searchBox {
+    background-color: #f8f8f8;
+    outline-color: rgba(103,122,142);
+    border: none;
+    appearance: none;
+    outline: none;
+    height: 24px;
+    /* width: 25%; */
+    border-radius: 4px;
+    border: 1px solid #ecd9d9;
+    margin-right: 8px;
+    padding-left: 5px;
+    margin-bottom: 0;
+}
+
+.candidates-container__searchFilter {
+    margin-bottom: 0;
+    background-color: #f8f8f8;
+    outline-color: rgba(103,122,142);
+    border: none;
+    appearance: none;
+    outline: none;
+    width: 200px;
+    height: 24px;
+    /* width: 15%; */
+    border-radius: 4px;
+    border: 1px solid #ecd9d9;
+    margin-right: 14px;
+    padding-left: 5px;
+    margin-bottom: 0;
+}
+
+.candidates-container__searchBtn {
+    height: 24px;
+    width: 100px;
+    border: none;
+    color: white;
+    background-color: rgb(36,60,128);
+    cursor: pointer;
+}
+
+.candidates-container__resetBtn {
+    margin-left: 20px;
+    height: 24px;
+    width: 100px;
+    /* width: 10%; */
+    border: none;
+    color: rgb(36,60,128);
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgb(36,60,128);
+}
+
+.candidates-container__searchBtnAdd {
+    /* margin-left: 20px; */
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    /* width: 220px; */
+    /* justify-content: space-between; */
+}
+
+.candidates-block__icons--circle {
+    border: 1px solid rgba(0, 0, 0, 0.719);
+    border-radius: 50%;
+    transform: scale(1.5);
+    padding: 5px;
+    margin-left: 20px;
+}
+
+.candidates-block__icons--add {
+    margin-left: 20px;
+}
+
+.candidates-block__icons--circle:hover {
+    border: 1px solid rgba(103,122,142);
+    background: rgb(237, 243, 255);
+    color: rgb(71, 116, 206);
+}
+
+.candidates-container__bodyElem--afterSelect {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.candidates-container__bodyElem--select {
+    margin: 0;
+    width: 100px;
+}
+
+.candidates-container__bodyElem--afterSelectBtn {
+    margin-left: 20px;
+    background-color: rgb(36,60,128);
+    border: none;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.candidates-block__icons {
+    cursor: pointer;
+    font-size: 30px;
+    color: rgba(103,122,142);
+}
+
+.candidates-block__icons:hover {
+    color: rgba(0, 0, 0, 0.705);
+}
+
+@media screen and (max-width: 699px) {
+    .candidates-container__searchBoxContainer {
+        height: 220px;
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        justify-content: space-around;
+        align-items: flex-start;
+        align-items: center;
+    }
+
+    .candidates-container__searchBox,.candidates-container__searchFilter {
+        width: 60%;
+        margin: 0;
+    }
+
+    .candidates-container__searchBtn {
+        width: 30%;
+    }
+
+    .candidates-container__searchBtnAdd {
+        margin: 0;
+        width: auto;
+    }
+}

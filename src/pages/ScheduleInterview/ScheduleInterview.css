@@ -1,0 +1,75 @@
+.scheduleInterview-block {
+    grid-area: content;
+    position: relative;
+}
+
+.scheduleInterview-block__interviews{
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    height: 90%;
+    background-color: white;
+    border: 1px solid #ecd9d9;
+    border-radius: 5px;
+}
+
+.scheduleInterview-block_table {
+    /* table-layout: fixed; */
+    border-collapse: collapse;
+    border-spacing:0 15px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+.scheduleInterviews-block__headerRow {
+    /* background-color: #009879; */
+    background-color: rgb(36,60,128);
+    color: #ffffff;
+    text-align: left;
+}
+
+.scheduleInterviews-block__header, .scheduleInterviews-block__bodyElem {
+    padding: 12px 15px;
+    padding: 5px;
+    text-align: left;
+}
+
+.scheduleInterviews-block__bodyRow {
+    border-bottom: 1px solid #dddddd;
+}
+
+.scheduleInterviews-block__bodyRow:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.scheduleInterview-block__btnContainer{
+    margin-left: auto;
+    /* margin-right: 20px; */
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 20%;
+}
+
+.scheduleInterview-block__btnText {
+    margin-right: 8px;
+}
+
+.scheduleInterview-block__icon{
+    cursor: pointer;
+    font-size: 30px;
+    color: rgba(103,122,142);
+}
+
+.scheduleInterview-block__icon:hover{
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.scheduleInterviews-block__bodyRow:nth-child(7) {
+    width: 50px;
+}
+
+.scheduleInterviews-block__bodyRow:nth-child(5) {
+    width: 50px;
+}

@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+
+.App {
+  display: grid;
+  grid-template-rows: 10% auto;
+  grid-template-columns: 200px auto;
+  grid-template-areas: 
+  "navbar header" 
+  "navbar content";
+  background-color: #f7f7f7;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+@media screen and (max-width: 699px) {
+  .App {
+    display: grid;
+    grid-template-rows: 61px 100px auto;
+    grid-template-columns: 100%;
+    grid-template-areas: "header" "navbar" "content";
+    font-size: 12px;
+    overflow: auto;
+  }
+}

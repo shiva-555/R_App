@@ -1,0 +1,118 @@
+.addJobRequistion-block{
+    grid-area: content;
+    z-index: 999;
+}
+
+.jobRequisiton-block__form {
+    position: fixed;
+    width: 50%;
+    padding: 50px;
+    border-radius: 5px;
+    border: 2px solid #fff;
+    background: rgb(255, 255, 255);
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 15px;
+    box-shadow: 0 10px 20px rgba(black, 0.2);
+}
+
+.jobRequisiton-block__form label,.jobRequisiton-block__form input,.jobRequisiton-block__form select {
+    margin-bottom: 5px;
+}
+/* 
+.col1{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-between;
+} */
+ 
+/* .addInterview-block__form input,select {
+    grid-column: 2 / 3;
+} */
+
+/* .col2{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-between;
+}
+
+.col3{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    justify-content: space-between;
+} */
+
+.jobRequisiton-block__col1 {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+}
+
+.jobRequisiton-block__col2 {
+    display: flex;
+    flex-direction: column;
+    grid-column: 2;
+}
+
+.overlay-jobRequisiton {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+}
+
+.addJobRequistion-block__icon--close {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    color: rgba(103,122,142);
+    cursor: pointer;
+}
+
+.addJobRequistion-block--close:hover{
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.jobRequisiton-block__recruiterContainer, .jobRequisiton-block__assignmentContainer  {
+    height: 80px;
+    margin-bottom: 8px;
+    border: 1px solid black ;
+    overflow: auto;
+    /* margin-bottom: 10px; */
+}
+
+.jobRequisiton-block__jobDescription {
+    height: 100px;
+}
+
+.addJobRequistion-block_btnSubmit {
+    /* position: absolute;
+    bottom: 10%;
+    right: 3%;
+    border: none;
+    padding: 8px; */
+    /* margin-left: 10px; */
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 20px;
+    height: 24px;
+    grid-column: 2;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(36,60,128);
+}
+
+.jd_attachment {
+    margin-top: 8px;
+}

@@ -1,0 +1,109 @@
+.remainder-block {
+    grid-area: content;
+    /* background-color: rgb(255, 255, 255); */
+    border: 1px solid #ecd9d9;
+    border: none;
+    height: 95%;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+
+}
+
+.remainder-block .row-1 {
+    /* background-color: aqua; */
+    height: 400px;
+    /* background-color: rgb(255, 0, 0); */
+    display: grid;
+    justify-content: center;
+    padding: 1%;
+    /* align-content: center; */
+}
+
+.remainder-block .row-1 .row1-inline{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    background-color: rgb(252, 252, 252);
+    padding: 2%;
+    border: 2px solid #fff;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.remainder-block .row-1 .row2-inline{
+    display: flex;
+    flex-flow: row wrap;
+    /* align-items: center; */
+}
+
+.remainder-block .row-1 input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    height: 30px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.remainder-block .row-1 select {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+
+}
+
+.remainder-block .row-1 .textArea {
+    margin-top: 10px;
+    width: 700px;
+    max-height: 550px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    /* margin-top: 6px; */
+    /* margin-bottom: 16px; */
+    /* resize: vertical; */
+    /* background-color: beige; */
+    overflow:auto;
+}
+
+.remainder-block .row-1 .placeholders {
+    margin-left: 30px;
+    margin-top: 10%;
+    padding: 2px;
+    height: 400px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.remainder-block .row-1 .submitBtn {
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    border: 1px solid #ddd;
+    color: white;
+    cursor: pointer;
+}
+
+.remainder-block .row-1  button:hover {
+    background-color: royalblue;
+}
+
+.select_col{
+    /* width: auto;
+    height: auto; */
+    z-index: 999;
+    /* background-color: rgb(224, 227, 255); */
+    margin-top: 1px;
+    margin-right: 50px;
+    border: 1px solid rgb(0, 0, 0);
+  }
+ 
+
+
+  

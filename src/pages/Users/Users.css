@@ -1,0 +1,131 @@
+.users-block {
+    grid-area: content;
+    background-color: white;
+    border: 1px solid #ecd9d9;
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.users-block__searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20px;
+    margin-left: 20px;
+    width: 420px
+}
+.users-block__searchContainer div {
+    display: flex;
+    justify-content: space-between;
+    width: 240px;
+}
+
+.users-block__tableContainer {
+    width: 100%;
+    flex: 1;
+    position: relative;
+    /* padding: 10px; */
+}
+
+.users-block__tabItem {
+    padding: 5px;
+}
+
+.users-block__table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    /* margin: 50px auto; */
+    display: block;
+    width: 100%;
+    height: 420px;
+    overflow-y: scroll;
+}
+
+.users-block__tableBody, .users-block__tableHead {
+    width: 100%;
+    display: block;
+}
+
+.users-block__tableHeadRow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* background-color: #009879; */
+    background-color: rgb(36,60,128);
+    color: #ffffff;
+    text-align: left;
+    display: flex;
+}
+
+.users-block__tableBody>tr:nth-of-type(1) {
+    margin-top: 30px ;
+}
+
+.users-block__tableBodyRow {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #dddddd;
+    display: flex;
+}
+
+.users-block__tableHeadElem,.users-block__tableBodyElem   {
+    display: block;
+    width: 33%;
+    padding: 5px;
+    text-align: left;
+}
+
+.users-block__tableBodyRow:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.users-block__tableBodyElem:last-of-type {
+    text-align: center;
+}
+
+.users-block__tableBodyRow.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.users-block__icon {
+    cursor: pointer;
+    font-size: 30px;
+    color: rgba(103,122,142);
+}
+
+.users-block__icon:hover {
+    color: rgba(0, 0, 0, 0.705);
+}
+
+.users-block__tabCont {
+    padding: 10px;
+}
+
+.users-block__tab {
+    display: flex;
+    list-style: none;
+}
+
+.users-block__tabItem{
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.users-block__searchbtn {
+    height: 24px;
+    width: 100px;
+    border: none;
+    color: white;
+    background-color: rgb(36,60,128);
+    cursor: pointer;
+    margin-left: 10px;
+}
