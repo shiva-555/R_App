@@ -165,7 +165,7 @@
 //                 </div>
 //             </>
 //         }
-        
+
 //     </div>
 //   )
 // }
@@ -208,7 +208,7 @@ const Users = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [open, setOpen] = useState();
     const [tab] = useState('Org');
- 
+
     const { data: users, isLoading, refetch } = useQuery('fetchTenantUsers', () => getAllTenantUsers({ instance, accounts, ...search }), {
         retry: false, enabled: tab === 'Org',
         onError: (err) => {
@@ -216,8 +216,6 @@ const Users = () => {
         },
         refetchOnWindowFocus: false
     });
-
-
 
     const { data: guestUsers, isLoading: guestLoading, refetch: refetchGuest } = useQuery('fetchGuestUsers', () => getAllGuestUsers({ instance, accounts, ...search }), {
         retry: false, enabled: tab === 'Guest',
@@ -227,9 +225,6 @@ const Users = () => {
         refetchOnWindowFocus: false
     })
 
-
-
-
     const { data: appUsers, isLoading: appLoading, refetch: refetchApp } = useQuery('fetchAppUsers', () => getAllAppUsers({ instance, accounts, ...search }), {
         retry: false, enabled: tab === 'App',
         onError: (err) => {
@@ -237,9 +232,6 @@ const Users = () => {
         },
         refetchOnWindowFocus: false
     })
-
-  
-
 
     if (isLoading || guestLoading || appLoading) {
         return <SpinLoader />
@@ -256,26 +248,26 @@ const Users = () => {
 
     return (
         <>
-{ isModalOpen && <AddUser setIsModalOpen={setIsModalOpen} user={user} isModalOpen={isModalOpen} editMode={editMode} setEditMode={setEditMode} /> }
+            {isModalOpen && <AddUser setIsModalOpen={setIsModalOpen} user={user} isModalOpen={isModalOpen} editMode={editMode} setEditMode={setEditMode} />}
             <Box m={20} sx={{ width: 1200, height: 100, bgcolor: 'background.paper' }}>
                 <div style={{ margin: '20px' }}>
-                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px'}} 
-                    onClick={(e) => { setValue('Organization User') }}> Orginazation Users </Button>
-                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px'}} style={{ marginLeft: '20px' }}
-                     onClick={(e) => { setValue('Guest Users') }}> Guest Users </Button>
-                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px'}} style={{ marginLeft: '20px' }} onClick={(e) => { setValue('App Users') }}> App Users </Button>
+                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }}
+                        onClick={(e) => { setValue('Organization User') }}> Orginazation Users </Button>
+                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }} style={{ marginLeft: '20px' }}
+                        onClick={(e) => { setValue('Guest Users') }}> Guest Users </Button>
+                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }} style={{ marginLeft: '20px' }} onClick={(e) => { setValue('App Users') }}> App Users </Button>
                 </div>
                 {(value === 'Organization User') &&
                     <>
                         <Box>
-                            <h3 style={{marginLeft:'20px'}}>Search According to email</h3>
-                            <TextField sx={{marginLeft:'30px', marginTop:'10px'}}                             
-                            type='email'
-                            name="email" 
-                            size='small' 
-                            onChange={(e) => setSearch({ [e.target.name]: e.target.value })} 
+                            <h3 style={{ marginLeft: '20px' }}>Search According to email</h3>
+                            <TextField sx={{ marginLeft: '30px', marginTop: '10px' }}
+                                type='email'
+                                name="email"
+                                size='small'
+                                onChange={(e) => setSearch({ [e.target.name]: e.target.value })}
                             />
-                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40,marginTop:'10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
+                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40, marginTop: '10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
                         </Box>
                         <div style={{ height: 'auto' }}>
                             <Paper>
@@ -305,7 +297,7 @@ const Users = () => {
                                                         <TableCell> {user.displayName}</TableCell>
                                                         <TableCell> {user.mail}</TableCell>
                                                         <TableCell>
-                                                             <AddCircleOutlineIcon onClick={(e) => {
+                                                            <AddCircleOutlineIcon onClick={(e) => {
                                                                 setUser(user);
                                                                 setIsModalOpen(true);
                                                                 setEditMode(true)
@@ -321,23 +313,23 @@ const Users = () => {
                         </div>
                     </>
                 }
-                
+
                 {(value == 'Guest Users') &&
 
                     <>
-                    <Box>
-                            <h3 style={{marginLeft:'20px'}}>Search According to email</h3>
-                            <TextField sx={{marginLeft:'30px', marginTop:'10px'}} 
-                            type='email' 
-                            name="email" 
-                            size='small' 
-                            onChange={(e) => setSearch({ [e.target.name]: e.target.value })} 
+                        <Box>
+                            <h3 style={{ marginLeft: '20px' }}>Search According to email</h3>
+                            <TextField sx={{ marginLeft: '30px', marginTop: '10px' }}
+                                type='email'
+                                name="email"
+                                size='small'
+                                onChange={(e) => setSearch({ [e.target.name]: e.target.value })}
                             />
-                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40,marginTop:'10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
+                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40, marginTop: '10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
                         </Box>
                         <div style={{ height: 'auto' }}>
                             <Paper>
-                                <Box m={1} sx={{ overflow: 'hidden' }}> 
+                                <Box m={1} sx={{ overflow: 'hidden' }}>
                                     <TableContainer sx={{ marginTop: 4, maxHeight: 900, height: 600 }}>
                                         <Table stickyHeader aria-label="sticky table">
                                             <TableHead>
@@ -364,7 +356,7 @@ const Users = () => {
                                                         <TableCell>{user.displayName}</TableCell>
                                                         <TableCell>{user.mail}</TableCell>
                                                         <TableCell>
-                                                        <AddCircleOutlineIcon onClick={(e) => {
+                                                            <AddCircleOutlineIcon onClick={(e) => {
                                                                 setUser(user);
                                                                 setIsModalOpen(true);
                                                                 setEditMode(true)
@@ -384,14 +376,14 @@ const Users = () => {
                 {(value == 'App Users') &&
                     <>
                         <Box>
-                            <h3 style={{marginLeft:'20px'}}>Search According to email</h3>
-                            <TextField sx={{marginLeft:'30px', marginTop:'10px'}} 
-                            type='email' 
-                            name="email" 
-                            size='small' 
-                            onChange={(e) => setSearch({ [e.target.name]: e.target.value })} 
+                            <h3 style={{ marginLeft: '20px' }}>Search According to email</h3>
+                            <TextField sx={{ marginLeft: '30px', marginTop: '10px' }}
+                                type='email'
+                                name="email"
+                                size='small'
+                                onChange={(e) => setSearch({ [e.target.name]: e.target.value })}
                             />
-                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40,marginTop:'10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
+                            <Button variant="contained" sx={{ borderRadius: 3, width: '120px', height: 40, marginTop: '10px' }} style={{ padding: "10px", marginBottom: '20px', marginLeft: '20px' }} onClick={() => refetch()}>Search</Button>
                         </Box>
                         <div style={{ height: 'auto' }}>
                             <Paper>
@@ -421,12 +413,12 @@ const Users = () => {
                                                 {appUsers?.data && appUsers.data.map((user) => {
 
                                                     return (<TableRow>
-                                                        <TableCell> {user.display_name}</TableCell>
+                                                        <TableCell> {user.displayName}</TableCell>
                                                         <TableCell> {user.mail}</TableCell>
                                                         <TableCell> {user?.assignedRoles.map((role, i, arr) => arr.length - 1 !== i ? role.assignedRole.role + ',' : role.assignedRole.role)}</TableCell>
                                                         <TableCell>
 
-                                                        <AddCircleOutlineIcon onClick={(e) => {
+                                                            <AddCircleOutlineIcon onClick={(e) => {
                                                                 setUser(user);
                                                                 setIsModalOpen(true);
                                                                 setEditMode(true)

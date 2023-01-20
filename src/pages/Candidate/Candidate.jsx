@@ -121,15 +121,17 @@ const Candidate = () => {
   }
 
 
-  const array = [2, 5, 9];
+  let statuses;
+  if (window.localStorage.getItem('role') === 'Recruiter') {
+    statuses = candidateStatuses?.data?.data.filter(el => el.order !== 5 && el.order !== 6 && el.order !== 7)
+  } else if (window.localStorage.getItem('role') === 'HR') {
+    statuses = candidateStatuses?.data?.data.filter(el => el.order !== 0 && el.order !== 1 && el.order !== 2 && el.order !== 3)
+  }
+  // useEffect(() => {
 
-  console.log(candidateStatuses?.data?.data);
-  
+  // }, [statuses]);
 
 
-  
-  console.log(window.localStorage.getItem('role'));
-  
   return (
     <>
       {showDocument &&
@@ -687,7 +689,7 @@ const Candidate = () => {
                     defaultValue={candidate?.data?.data?.candidateStatusId}
                     onChange={(e) => handleChange(e)}
                   >
-                    {candidateStatuses?.data?.data && candidateStatuses?.data?.data.map((status) =>
+                    {statuses && statuses.map((status) =>
                       <MenuItem key={status.metaDataId} value={status.metaDataId}>{status.displayText.status}</MenuItem>
                     )}
                   </Select>
@@ -823,7 +825,7 @@ const Candidate = () => {
               color: "white", fontWeight: 500, fontSize: "18px",
             }}>Recruiter / HR </h2>
             <hr />
-            
+
             <Grid container m={2} gap={5}>
               <Grid item xs='auto'>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">

@@ -144,7 +144,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
   const { instance, accounts } = useMsal();
   const [form, setForm] = useState({});
   const queryClient = useQueryClient();
-  const { roles } = useAdmin(value.data.role);
+  const { roles } = useAdmin(value?.data?.role);
 
   const { mutate, isLoading } = useMutation('createAppUser', createAppUser, {
     retry: false, onSuccess: () => {
@@ -177,9 +177,9 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
     } else {
       setForm({
         ...form,
-        user_id: user.id,
-        display_name: user.displayName,
-        email: user.mail,
+        id: user.id,
+        displayName: user.displayName,
+        mail: user.mail,
         [e.target.name]: e.target.value
       });
     }
@@ -198,7 +198,8 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
     setIsModalOpen(false);
     setEditMode(false);
   }
- 
+
+  console.log(user)
   return (
 
     <Dialog
@@ -218,7 +219,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
         <form onSubmit={(e) => handleSubmit(e)}>
           <Box>
 
-            <h3 sx={{ marginTop: "80px" }}>Display Name</h3>  <TextField sx={{ marginTop: '-10px', marginLeft: '250px', width: '750px' }} variant='filled' value={user.displayName ? user.displayName : user.display_name} readOnly></TextField>
+            <h3 sx={{ marginTop: "80px" }}>Display Name</h3>  <TextField sx={{ marginTop: '-10px', marginLeft: '250px', width: '750px' }} variant='filled' value={user.displayName ? user.displayName : user.displayName} readOnly></TextField>
             <h3 style={{ marginTop: '9px', marginBottom: '500', marginLeft: '30px' }}>Email</h3>
             <TextField size='sm' sx={{ marginTop: '1px', marginLeft: '250px', width: '750px' }} variant='filled' value={user.mail ? user.mail : user.email} readOnly></TextField>
 
@@ -230,7 +231,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
                 onChange={(e) => handleChange(e)}
               >
                 {
-                  roles?.data && roles.data.data.map((role) => <MenuItem key={role.role_id} value={role.role_id}>{role.role}</MenuItem>)
+                  roles?.data && roles.data.data.map((role) => <MenuItem key={role.roleId} value={role.roleId}>{role.roleName}</MenuItem>)
                 }
               </Select>
             </FormControl>
