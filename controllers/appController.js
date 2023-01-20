@@ -66,6 +66,7 @@ exports.getAppUsers = async (req, res) => {
             include: includeCriteria
         });
     } catch (e) {
+        console.log(e);
         logger.error('Error occurred while finding users in getAppUsers controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
