@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { useJobs } from '../../helpers/hooks/jobsHooks';
 import { useMetaData } from '../../helpers/hooks/metaDataHooks';
@@ -28,6 +28,7 @@ import { useLocation } from 'react-router-dom';
 
 const Candidate = () => {
   const location = useLocation();
+  const ref = useRef(null);
   const candidateId = location.pathname.split('/')[2];
   const { sources, jobLocations, backoutReasons, gender, candidateStatuses, costCenter, department, division, devices } = useMetaData();
 
@@ -39,14 +40,16 @@ const Candidate = () => {
   const [showOnBoarding, setShowOnBoarding] = useState(false);
   const [showDocument, setshowDocument] = useState(false);
   const [remark1, setRemark] = useState();
-  const [value1, setValue1] = useState();
   const { HR } = useUsers()
+  const [currentStatus, setCurrentStatus] = useState(null);
+
 
   const handleChange = (e) => {
-    console.log()
 
+    if (e.target.name === 'candidateStatusId') {
+      setCurrentStatus(e.target.value)
+    }
     if (e.target.name === 'jobId') {
-
       if (e.target.value === '') {
       } else {
         console.log(jobs?.data?.data?.filter((job) => job.jobId === e.target.value)[0])
@@ -120,18 +123,40 @@ const Candidate = () => {
     }
   }
 
+  const downloadDocument = (e) => {
+    e.preventDefault();
+
+    if (candidate?.data?.data.documents) {
+      let document = candidate.documents.filter((doc) => doc.candidateDocumentName === e.target.name)[0];
+
+      if (document) {
+        window.open(document.candidateDocumentURL, '_blank', 'noopener,noreferrer')
+      }
+    }
+  }
+
+  const handleDelete = (e) => {
+    const formData = new FormData();
+
+    formData.append('candidateId', candidate?.data?.data.candidateId);
+    formData.append('documentName', e.target.name);
+    formData.append('delete', true);
+
+    deleteDocument.mutate({ formData });
+  }
 
   let statuses;
   if (window.localStorage.getItem('role') === 'Recruiter') {
     statuses = candidateStatuses?.data?.data.filter(el => el.order !== 5 && el.order !== 6 && el.order !== 7)
   } else if (window.localStorage.getItem('role') === 'HR') {
     statuses = candidateStatuses?.data?.data.filter(el => el.order !== 0 && el.order !== 1 && el.order !== 2 && el.order !== 3)
+  } else {
+    statuses = candidateStatuses?.data?.data
+
   }
-  // useEffect(() => {
-
-  // }, [statuses]);
 
 
+  console.log(candidate?.data?.data);
   return (
     <>
       {showDocument &&
@@ -540,11 +565,14 @@ const Candidate = () => {
                     type="date"
                     id="selectedRejectedDate"
                     name="selectedRejectedDate"
-                    defaultValue={
-                      candidate?.data?.data.selectedRejectedDate
-                        ? new Date(candidate?.data?.data.selectedRejectedDate).toISOString().split('T')[0]
-                        : ''
-                    } onChange={(e) => handleChange(e)} />
+                    defaultValue={candidate?.data?.data.selectedRejectedDate}
+                    readOnly
+                    // defaultValue={
+                    //   candidate?.data?.data.selectedRejectedDate
+                    //     ? new Date(candidate?.data?.data.selectedRejectedDate).toISOString().split('T')[0]
+                    //     : ''
+                    // } 
+                    onChange={(e) => handleChange(e)} />
 
 
                 </FormControl>
@@ -559,11 +587,14 @@ const Candidate = () => {
                     type="date"
                     id="documentVerificationInitiatedOn"
                     name="documentVerificationInitiatedOn"
-                    defaultValue={
-                      candidate?.data?.data.documentVerificationInitiatedOn
-                        ? new Date(candidate?.data?.data.documentVerificationInitiatedOn).toISOString().split('T')[0]
-                        : ''
-                    } onChange={(e) => handleChange(e)} />
+                    defaultValue={candidate?.data?.data.documentVerificationInitiatedOn}
+                    readOnly
+                    // defaultValue={
+                    //   candidate?.data?.data.documentVerificationInitiatedOn
+                    //     ? new Date(candidate?.data?.data.documentVerificationInitiatedOn).toISOString().split('T')[0]
+                    //     : ''
+                    // } 
+                    onChange={(e) => handleChange(e)} />
 
 
                 </FormControl>
@@ -578,11 +609,14 @@ const Candidate = () => {
                     type="date"
                     id="offerDate"
                     name="offerDate"
-                    defaultValue={
-                      candidate?.data?.data.offerDate
-                        ? new Date(candidate?.data?.data.offerDate).toISOString().split('T')[0]
-                        : ''
-                    } onChange={(e) => handleChange(e)} />
+                    defaultValue={candidate?.data?.data.offerDate}
+                    readOnly
+                    // defaultValue={
+                    //   candidate?.data?.data.offerDate
+                    //     ? new Date(candidate?.data?.data.offerDate).toISOString().split('T')[0]
+                    //     : ''
+                    // } 
+                    onChange={(e) => handleChange(e)} />
 
 
                 </FormControl>
@@ -602,6 +636,7 @@ const Candidate = () => {
                     type='number'
                     name='offeredSalary'
                     variant="filled"
+                    disabled={currentStatus !== '7bfcc09d-7014-47bd-8bda-984081ddd991'}
                     defaultValue={candidate?.data?.data.offeredSalary}
                     onChange={(e) => handleChange(e)} />
                 </FormControl>
@@ -611,14 +646,18 @@ const Candidate = () => {
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
                   <input
                     style={{ width: 300, height: 50, fontSize: 15 }}
+                    required
                     type="date"
-                    id="joiningDate"
-                    name="joiningDate"
+                    id="tentativeDateOfJoining"
+                    name="tentativeDateOfJoining"
                     defaultValue={
-                      candidate?.data?.data.joiningDate
-                        ? new Date(candidate?.data?.data.joiningDate).toISOString().split('T')[0]
+                      candidate?.data?.data.tentativeDateOfJoining
+                        ? new Date(candidate?.data?.data.tentativeDateOfJoining).toISOString().split('T')[0]
                         : ''
-                    } onChange={(e) => handleChange(e)} />
+                    }
+                    onChange={(e) => handleChange(e)}
+                    disabled={currentStatus != 'a5392787-669d-43cd-ba75-773c1a8ddc02'}
+                  />
 
                 </FormControl>
 
@@ -629,13 +668,11 @@ const Candidate = () => {
                   <input
                     style={{ width: 300, height: 50, fontSize: 15 }}
                     type="date"
-                    id="tentativeDateOfJoining"
-                    name="tentativeDateOfJoining"
-                    defaultValue={
-                      candidate?.data?.data.tentativeDateOfJoining
-                        ? new Date(candidate?.data?.data.tentativeDateOfJoining).toISOString().split('T')[0]
-                        : ''
-                    } onChange={(e) => handleChange(e)} />
+                    id="joiningDate"
+                    name="joiningDate"
+                    defaultValue={candidate?.data?.data.joiningDate}
+                    readOnly
+                    onChange={(e) => handleChange(e)} />
 
 
                 </FormControl>
@@ -644,6 +681,7 @@ const Candidate = () => {
                 <h3>BackOut / Other Reason</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 3, }} size="small">
                   <Select
+                    required
                     labelId="demo-simple-select-label"
                     id="backout_reason_id"
                     size='small'
@@ -652,7 +690,7 @@ const Candidate = () => {
                     defaultValue={candidate?.data?.data.backoutReasonId}
                     variant="filled"
                     onChange={(e) => handleChange(e)}
-
+                    disabled={currentStatus !== 'c162cc5a-e812-43d3-967a-a6c2d913e5e5'}
                   >
                     <MenuItem key="" value=""> Select Reason</MenuItem>
                     {backoutReasons?.data && backoutReasons.data.data.map((backoutReason) =>
@@ -665,6 +703,7 @@ const Candidate = () => {
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
                   <h3>Reporting Manager</h3>
                   <TextField
+                    required
                     id="reporting_manager_id"
                     placeholder='Enter Reporting Manager'
                     size='small'
@@ -673,6 +712,8 @@ const Candidate = () => {
                     variant="filled"
                     defaultValue={candidate?.data?.data.reportingManager}
                     onChange={(e) => handleChange(e)}
+                    disabled={currentStatus !== 'a5392787-669d-43cd-ba75-773c1a8ddc02'}
+                  // disabled={inputDisable(statuses)}
                   />
                 </FormControl>
               </Grid>
@@ -680,7 +721,8 @@ const Candidate = () => {
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 6 }} size="small">
                   <InputLabel id="select-status-label">Status</InputLabel>
                   <Select
-                    id="candidate_status_id"
+                    ref={ref}
+                    id="candidateStatusId"
                     size='small'
                     margin='normal'
                     required
@@ -697,128 +739,134 @@ const Candidate = () => {
               </Grid>
             </Grid>
 
-            {showOnBoarding &&
-
+            {currentStatus === 'a5392787-669d-43cd-ba75-773c1a8ddc02' &&
               <>
-                <h2 style={{
-                  marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
-                  color: "white", fontWeight: 500, fontSize: "18px",
-                }}   > OnBoarding Details </h2>
-                <hr />
-                <Grid container m={2} gap={5}>
+                {showOnBoarding &&
+
+                  <>
+                    <h2 style={{
+                      marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
+                      color: "white", fontWeight: 500, fontSize: "18px",
+                    }}   > OnBoarding Details </h2>
+                    <hr />
+                    <Grid container m={2} gap={5}>
 
 
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-label">Cost Center</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="costCenter"
-                      name="joiningDetails.costCenter"
-                      defaultValue={candidate?.data?.data.joiningDetails?.costCenter}
-                      sx={{ width: 300, height: 50 }}
-                      style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                      onChange={(e) => handleChange(e)}
-                    >
-                      {costCenter?.data && costCenter.data.data.map(cc =>
-                        <MenuItem key={cc.metaDataId} value={cc.displayText.costCenter}>{cc.displayText.costCenter}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
+                      <FormControl>
+                        <InputLabel id="demo-simple-select-label">Cost Center</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="costCenter"
+                          name="joiningDetails.costCenter"
+                          defaultValue={candidate?.data?.data.joiningDetails?.costCenter}
+                          sx={{ width: 300, height: 50 }}
+                          style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {costCenter?.data && costCenter.data.data.map(cc =>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText.costCenter}>{cc.displayText.costCenter}</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
 
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-label">Department</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="department"
-                      label="department"
-                      name="joiningDetails.department"
-                      defaultValue={candidate?.data?.data.joiningDetails?.department}
-                      sx={{ width: 300, height: 50 }}
-                      style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                      onChange={(e) => handleChange(e)}
-                    >
-                      {department?.data && department.data.data.map(cc =>
-                        <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.department}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
-
-
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-label">joining Location</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="joining Location"
-                      label="joining Location"
-                      name="joiningDetails.joiningLocation"
-                      defaultValue={candidate?.data?.data.joiningDetails?.joiningLocation}
-                      sx={{ width: 300, height: 50 }}
-                      style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                      onChange={(e) => handleChange(e)}
-                    >
-                      {jobLocations?.data && jobLocations.data.data.map(cc =>
-                        <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.location}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
-
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-label">division</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="division"
-                      label="division"
-                      name="joiningDetails.division"
-                      defaultValue={candidate?.data?.data.joiningDetails?.division}
-                      sx={{ width: 300, height: 50 }}
-                      style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                      onChange={(e) => handleChange(e)}
-                    >
-                      {division?.data && division.data.data.map(cc =>
-                        <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.division}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
+                      <FormControl>
+                        <InputLabel id="demo-simple-select-label">Department</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="department"
+                          label="department"
+                          name="joiningDetails.department"
+                          defaultValue={candidate?.data?.data.joiningDetails?.department}
+                          sx={{ width: 300, height: 50 }}
+                          style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {department?.data && department.data.data.map(cc =>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.department}</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
 
 
-                  <FormControl>
-                    <InputLabel id="demo-simple-select-label">devices</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="devices"
-                      label="devices"
-                      name="joiningDetails.devices"
-                      defaultValue={candidate?.data?.data.joiningDetails?.devices}
-                      sx={{ width: 300, height: 50 }}
-                      style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                      onChange={(e) => handleChange(e)}
-                    >
-                      {devices?.data && devices.data.data.map(cc =>
-                        <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.device}</MenuItem>
-                      )}
-                    </Select>
-                  </FormControl>
+                      <FormControl>
+                        <InputLabel id="demo-simple-select-label">joining Location</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="joining Location"
+                          label="joining Location"
+                          name="joiningDetails.joiningLocation"
+                          defaultValue={candidate?.data?.data.joiningDetails?.joiningLocation}
+                          sx={{ width: 300, height: 50 }}
+                          style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {jobLocations?.data && jobLocations.data.data.map(cc =>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.location}</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
 
-                  <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                    <h3>Offered Desgination</h3>
-                    <TextField
-                      required
-                      id="outlined-required"
-                      label="offered Designation"
-                      variant="filled"
-                      placeholder='Enter designation'
-                      size='small'
-                      margin='normal'
-                      name='joiningDetails.offeredDesignation'
-                      defaultValue={candidate?.data?.data.joiningDetails?.offeredDesignation}
-                      onChange={(e) => handleChange(e)}
-                    />
-                  </FormControl>
+                      <FormControl>
+                        <InputLabel id="demo-simple-select-label">division</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="division"
+                          label="division"
+                          name="joiningDetails.division"
+                          defaultValue={candidate?.data?.data.joiningDetails?.division}
+                          sx={{ width: 300, height: 50 }}
+                          style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {division?.data && division.data.data.map(cc =>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.division}</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
 
 
-                </Grid>
+                      <FormControl>
+                        <InputLabel id="demo-simple-select-label">devices</InputLabel>
+                        <Select
+                          labelId="demo-simple-select-label"
+                          id="devices"
+                          label="devices"
+                          name="joiningDetails.devices"
+                          defaultValue={candidate?.data?.data.joiningDetails?.devices}
+                          sx={{ width: 300, height: 50 }}
+                          style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+                          onChange={(e) => handleChange(e)}
+                        >
+                          {devices?.data && devices.data.data.map(cc =>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.device}</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl variant="standard" sx={{ width: 300 }} size="small">
+                        <h3>Offered Desgination</h3>
+                        <TextField
+                          required
+                          id="outlined-required"
+                          label="offered Designation"
+                          variant="filled"
+                          placeholder='Enter designation'
+                          size='small'
+                          margin='normal'
+                          name='joiningDetails.offeredDesignation'
+                          defaultValue={candidate?.data?.data.joiningDetails?.offeredDesignation}
+                          onChange={(e) => handleChange(e)}
+                        />
+                      </FormControl>
+
+
+                    </Grid>
+                  </>
+                }
               </>
+
             }
+
 
             <h2 style={{
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
@@ -839,7 +887,7 @@ const Candidate = () => {
                     margin='normal'
                     name='createdById'
                     variant="filled"
-                    value={candidate?.data?.data?.createdById}
+                    value={candidate?.data?.data.createdBy?.displayName}
                     disabled={true}
                     onChange={(e) => handleChange(e)}
                   />
@@ -847,26 +895,31 @@ const Candidate = () => {
               </Grid>
 
 
-              <Grid item xs='auto'>
-                <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">
-                  <InputLabel id="select-hr">HR</InputLabel>
-                  <Select
-                    labelId="select-hr"
-                    id="HR"
-                    name='hrId'
-                    label='HR'
-                    variant="filled"
-                    required
-                    onChange={(e) => handleChange(e)}
-                    margin='normal'
-                    defaultValue={candidate?.data?.data?.hrId}>
-                    <MenuItem key="" value=""> Select HR</MenuItem>
-                    {HR?.data?.data?.map((h) => {
-                      return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid>
+              {window.localStorage.getItem('role') === 'TA Manager' &&
+                <>
+                  <Grid item xs='auto'>
+                    <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">
+                      <InputLabel id="select-hr">HR</InputLabel>
+                      <Select
+                        labelId="select-hr"
+                        id="HR"
+                        name='hrId'
+                        label='HR'
+                        variant="filled"
+                        required
+                        onChange={(e) => handleChange(e)}
+                        margin='normal'
+                        disabled={currentStatus !== '9098ccd3-b893-4f82-bbb1-b5663a596a71'}
+                        defaultValue={candidate?.data?.data?.hrId}>
+                        <MenuItem key="" value=""> Select HR</MenuItem>
+                        {HR?.data?.data?.map((h) => {
+                          return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </>
+              }
 
 
             </Grid>
@@ -881,21 +934,31 @@ const Candidate = () => {
                 <h3>Upload Resume</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-                  <TextField
-                    id='attachment_path'
-                    name='file'
-                    required
-                    type="file"
-                    accept=".doc,.docx,application/pdf"
-                    onChange={(e) => {
-                      if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {
-                        setForm({ ...form, [e.target.name]: e.target.files[0] });
-                      } else {
-                        alert('Document type should be PDf or Word only');
-                        e.target.value = ''
-                      }
-                    }}
-                  />
+                  {
+                    (candidate?.documents?.filter((doc) => doc.documentName === 'Resume')[0]) ?
+                      <>
+                        <Button variant='contained' name='Resume'
+                          onClick={(e) => downloadDocument(e)}
+                        >Download</Button>
+                        <Button variant='contained' name='Resume'
+                          onClick={(e) => handleDelete(e)}
+                        >Delete</Button>
+
+                      </>
+                      :
+                      <input id="file" type="file" name='file' accept=".doc,.docx,application/pdf"
+                        onChange={(e) => {
+                          if (e.target.files[0].size > 10 && (e.target.files[0].type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || e.target.files[0].type === '.docx' || e.target.files[0].type === 'application/pdf')) {
+                            setForm({ ...form, [e.target.name]: e.target.files[0] });
+                          } else {
+                            alert('Document type should be PDf or Word only');
+                            e.target.value = ''
+                          }
+                        }}
+
+                      />
+                  }
+
                 </FormControl>
 
               </Grid>
@@ -903,7 +966,7 @@ const Candidate = () => {
                 <h3>Upload Documents</h3>
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
-                  <Button variant='contained' onClick={(e) => setshowDocument(true)}>Uploaded documents</Button>
+                  <Button variant='contained' onClick={(e) => setshowDocument(true)}>Upload documents</Button>
                 </FormControl>
               </Grid>
             </Grid>
@@ -922,7 +985,6 @@ const Candidate = () => {
                   padding: "10px", width: "250px", marginTop: "50px",
                 }}
                 type="submit"
-                onClick={(e) => handlesubmit(e)}
               > Update </Button>
 
             </Grid>

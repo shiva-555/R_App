@@ -22,45 +22,53 @@ export const UserContext = React.createContext('');
 
 const AppRoutes = () => {
     const isAuthenticated = useIsAuthenticated();
-    const {user} = useUsers();
+    const { user } = useUsers();
+    const role = window.localStorage.getItem('role');
 
-    if(user.isLoading) {
+    if (user.isLoading) {
         return <SpinLoader />
-    }    
+    }
 
     document.body.style.zoom = "80%";
 
     return (
-    <UserContext.Provider value={user.data}>
-        <Router>
-            {isAuthenticated &&
-            <>
-                <Navbar />
-                <Header />
-            </>
-            }
-            <Routes>
-                <Route path="/login" element={<Login />}/>
-                <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
-                    <Route path="/" element={<Home />} isAuthorized={true}/>
-                    <Route path="/candidates" element={<Candidates />} isAuthorized={true}/>
-                    <Route path="/candidate/:id" element={<Candidate />}  isAuthorized={true}/> 
-                    <Route path='/candidate/:candidate_id/interview' element={<ShceduleInterview />} />
-                    {/* <Route path='/candidate/:id' element={<CandidateDisplay />} /> */}
-                    {/* <Route path="/interviews" element={<Interviews />}/> */}
-                    <Route path='/jobRequisition' element={<JobRequisition />}/>
-                    <Route path='/dashboard' element={<Dashboard />}/>
-                    <Route path='*' element={<Home />}/>
-                    <Route path='/admin/users' element={<Users />}/>
-                    <Route path='admin/remainder' element={<Remainder/>}/>
-                    <Route path='admin/templates' element={<GeneralTemplate/>}/>
-                    <Route path="/referral" element={<Referal/>} isAuthorized={true}/>
+        <UserContext.Provider value={user.data}>
+            <Router>
+                {isAuthenticated &&
+                    <>
+                        <Navbar />
+                        <Header />
+                    </>
+                }
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
+                        <Route path="/" element={<Home />} isAuthorized={true} />
+
+                        {role !== 'selectRole' &&
+                            <>
+
+                                <Route path="/candidates" element={<Candidates />} isAuthorized={true} />
+                                <Route path="/candidate/:id" element={<Candidate />} isAuthorized={true} />
+                                <Route path='/candidate/:candidate_id/interview' element={<ShceduleInterview />} />
+                                {/* <Route path='/candidate/:id' element={<CandidateDisplay />} /> */}
+                                {/* <Route path="/interviews" element={<Interviews />}/> */}
+                                <Route path='/jobRequisition' element={<JobRequisition />} />
+                                <Route path='/dashboard' element={<Dashboard />} />
+                                <Route path='admin/remainder' element={<Remainder />} />
+                                <Route path='admin/templates' element={<GeneralTemplate />} />
+
+                            </>
+                        }
+                        <Route path='*' element={<Home />} />
+                        <Route path="/referral" element={<Referal />} isAuthorized={true} />
+                        <Route path='/admin/users' element={<Users />} />
 
 
-                </Route>
-            </Routes>
-        </Router>
-    </UserContext.Provider>
+                    </Route>
+                </Routes>
+            </Router>
+        </UserContext.Provider>
     )
 }
 

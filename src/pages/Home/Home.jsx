@@ -33,14 +33,14 @@ function SimpleDialog(props) {
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Select A Role To Continue</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {roles.map((role) => (
-          <ListItem button onClick={() => handleListItemClick(role.roleName)} key={role.roleName}>
+        {roles?.map((role) => (
+          <ListItem button onClick={() => handleListItemClick(role?.roleName)} key={role?.roleName}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={role.roleName} />
+            <ListItemText primary={role?.roleName} />
           </ListItem>
         ))}
 
@@ -121,18 +121,20 @@ const Home = () => {
     return <SpinLoader />
   }
 
+  console.log(window.localStorage.getItem('role'));
   return (
     <>
       {
         !isRoleSelected ? <SimpleDialogDemo roles={roles} setIsRoleSelected={setIsRoleSelected} /> :
         <div className='home-block' style={{margin:"60px"}}>
         <div className='home-block__container'>
-          <h1 className='home-block__greeting'>{greeting} - {value.data.display_name}</h1>
+          <h1 className='home-block__greeting'>{greeting} - {value.data.displayName}</h1>
+
           <div className='home-block__profile'>
             <p className='home-block__header'>Profile</p>
             <div className='home-block__name'>
               <p className='home-block__holder'>Name</p>
-              <p className='home-block__input'>{value.data.display_name}</p>
+              <p className='home-block__input'>{value.data.displayName}</p>
             </div>
             <div className='home-block__email'>
               <p className='home-block__holder'>Email</p>

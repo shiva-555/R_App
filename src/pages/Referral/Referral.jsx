@@ -63,7 +63,7 @@ const Referal = () => {
     const { assignCandidateToRecruiter } = AssignRecruiter();
     const value = useContext(UserContext);
 
-    const { jobs, JobsWithRecruiter } = useJobs()
+    const { jobs, JobsWithRecruiter, jobRequisitions } = useJobs()
     // console.log(JobsWithRecruiter?.data?.data)
 
     // let a = JobsWithRecruiter?.data?.data.map((job)=>{
@@ -99,22 +99,14 @@ const Referal = () => {
         if (form?.file) {
 
             console.log(form);
-            addReferalCandidate.mutate(formData, {
+            addReferalCandidate.mutate(form, {
                 onSuccess: (data) => {
                     formData.append('candidateId', data.data.candidateId);
                     formData.append('documentName', 'resume');
                     // uploadDocuments.mutate({formData});
                 }
             });
-
-            Swal.fire({
-                position: 'top',
-                title: `Candidate ${form.candidateName} successfully Created`,
-                timer: 1200
-            }
-
-            )
-            // alert(`Candidate ${form.candidate_name} successfully Created`)
+            alert(`Candidate ${form.candidateName} successfully Created`)
             setOpen(false);
         } else {
             alert("Please add attachment")
@@ -136,6 +128,7 @@ const Referal = () => {
     function Reset() {
         setSearch({});
     }
+
 
     return (
         <>
@@ -223,52 +216,52 @@ const Referal = () => {
                         >
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Referred By</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Name</TableCell>
-                            <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Phone</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Job Title</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Status</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiter Name</TableCell>
-
-
-
+                            
                             {
-                                (window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'Hiring Manager' || window.localStorage.getItem('role') === 'TA Manager') &&
+                               (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
                                 <>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiters</TableCell>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Update</TableCell>
+
                                 </>
                             }
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {candidates?.data && candidates?.data?.data.map((candidate) => {
-
                             return <TableRow hover
                                 key={candidate?.candidate?.candidateId}>
-                                <TableCell>{candidate?.candidate.referedBy.user.displayName}</TableCell>
+                                <TableCell>{candidate?.user?.displayName}</TableCell>
                                 <TableCell>{candidate?.candidate?.candidateName}</TableCell>
-                                <TableCell>{candidate?.candidate?.candidatePhone}</TableCell>
                                 <TableCell>{candidate?.candidate?.jobTitle.jobTitle}</TableCell>
                                 <TableCell>{candidate?.candidate?.candidateStatus.displayText.status}</TableCell>
                                 <TableCell>{candidate?.candidate?.createdBy?.displayName}</TableCell>
                                 {
-                                    (window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'Hiring Manager' || window.localStorage.getItem('role') === 'TA Manager') &&
+                                    (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
                                     <>
                                         <TableCell>
                                             <InputLabel id="recruiter-select-label">Recruiters Name</InputLabel>
                                             <Select
                                                 labelId="recruiter-select-label"
                                                 id="recruiter-select"
-                                                label="Recruiters"
+                                                label="Recruiter"
                                                 name='recruiter'
                                                 sx={{ width: 300, height: 50, borderRadius: 4 }}
-                                                defaultValue={candidate.candidate.createdById}
+                                                defaultValue={candidate?.candidate?.createdById}
                                                 // value={jobs?.data?.data[0].jobAssignments[0].user.displayName}
                                                 onChange={(e) => {
                                                     handleChange(e);
-                                                    setCurrentCandidate(candidate.candidate.candidateId)
+                                                    setCurrentCandidate(candidate?.candidate?.candidateId)
                                                 }}>
+                                                {/* {
+                                                     JobsWithRecruiter?.data?.data && getRecruiters(JobsWithRecruiter?.data?.data, candidate?.candidate?.jobId).map((recruiter) =>
+                                                        <MenuItem key={recruiter.userId} value={recruiter.userId}>{recruiter.displayName}</MenuItem>)
+                                                } */}
                                                 {
-                                                    getRecruiters(JobsWithRecruiter?.data?.data, candidate?.candidate?.jobId).map((recruiter) => <MenuItem key={recruiter.userId}
+                                                    jobRequisitions?.data?.data && getRecruiters(jobRequisitions?.data?.data, candidate?.candidate.jobId).map((recruiter) => <MenuItem key={recruiter.userId}
                                                         value={recruiter.userId}>{recruiter.displayName}</MenuItem>)
                                                 }
 
@@ -340,10 +333,12 @@ const Referal = () => {
                                                 required
                                                 sx={{ width: 300, height: 50 }}
                                                 onChange={(e) => handleChange(e)}>
-                                                <MenuItem value=""></MenuItem>
-                                                {jobs?.data && jobs?.data.data.map(job =>
-                                                    <MenuItem key={job.jobTitle} value={job.jobId}>{job.jobTitle}</MenuItem>
-                                                )}
+                                                <MenuItem key="" value=""> Select Job Title</MenuItem>
+                                                {jobs?.data && jobs?.data?.data.map((job) => {
+                                                    if (job?.status === 'Active') {
+                                                        return <MenuItem key={job.jobId} value={job.jobId}>{job.jobTitle}</MenuItem>
+                                                    }
+                                                })}
                                             </Select>
                                         </FormControl>
 
@@ -386,7 +381,7 @@ const Referal = () => {
                                                 type='button' onClick={handleClose}>Close</Button>
 
                                         </Box>
-                                        <label>{form?.attachment_path?.name}</label>
+
                                     </form>
                                 </card>
                             </Grid>

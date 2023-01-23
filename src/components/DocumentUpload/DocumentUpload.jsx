@@ -71,7 +71,6 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
     }
 
 
-    console.log(candidate);
     return (
         <>
             <Dialog

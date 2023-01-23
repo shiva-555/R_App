@@ -93,8 +93,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    
-    
+
+
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': openedMixin(theme),
@@ -107,6 +107,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function MiniDrawer() {
+
+  const role = window.localStorage.getItem('role');
 
   const [isDrawerOpen, setDrawerOpen] = useState(false)
   const handleClose = () => {
@@ -148,7 +150,7 @@ export default function MiniDrawer() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
-      <Drawer variant="permanent" open={open} sx={{width:'20px'}}  onMouseOver={handleDrawerOpen} onMouseOut={handleDrawerClose}>
+      <Drawer variant="permanent" open={open} sx={{ width: '20px' }} onMouseOver={handleDrawerOpen} onMouseOut={handleDrawerClose}>
         <DrawerHeader>
           {open ?
             <IconButton onClick={handleDrawerClose}>
@@ -159,7 +161,7 @@ export default function MiniDrawer() {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-             
+
               onClick={handleDrawerOpen}
               edge="start"
 
@@ -176,52 +178,60 @@ export default function MiniDrawer() {
 
         {!open &&
           <>
-            <img src="/favicon.png" style={{ width: '30px', background: 'white', height: 'auto', marginLeft:'25px', marginTop:'10px', marginBottom:'100px'}} />
+            <img src="/favicon.png" style={{ width: '30px', background: 'white', height: 'auto', marginLeft: '25px', marginTop: '10px', marginBottom: '100px' }} />
           </>
 
         }
 
         <List>
+
           <ListItem divider >
             <ListItemButton>
               <NavLink to={'/'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
                 <ListItemIcon>
                   <HomeOutlinedIcon />
                 </ListItemIcon>
-                <h3 style={{p:'70px'}}>Home</h3>
+                <h3 style={{ p: '70px' }}>Home</h3>
               </NavLink>
             </ListItemButton>
           </ListItem>
-          <ListItem divider>
-            <ListItemButton>
-              <NavLink to={'/candidates'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemIcon>
-                  <Person3Icon />
-                </ListItemIcon>
-                <h3>candidates</h3>
-              </NavLink>
-            </ListItemButton>
-          </ListItem>
-          <ListItem divider>
-            <ListItemButton>
-              <NavLink to={'/jobRequisition'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemIcon>
-                  <ArticleOutlinedIcon />
-                </ListItemIcon>
-                <h3>jobRequisition</h3>
-              </NavLink>
-            </ListItemButton>
-          </ListItem>
-          <ListItem divider>
-            <ListItemButton>
-              <NavLink to={'/dashboard'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemIcon>
-                  <DashboardIcon />
-                </ListItemIcon>
-                <h3>Dashboard</h3>
-              </NavLink>
-            </ListItemButton>
-          </ListItem>
+          {/* {role === ('Recruiter', 'Admin') && */}
+          {window.localStorage.getItem('role') === ('HR', 'Admin', 'Recruiter') &&
+            <>
+              <ListItem divider>
+                <ListItemButton>
+                  <NavLink to={'/candidates'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemIcon>
+                      <Person3Icon />
+                    </ListItemIcon>
+                    <h3>candidates</h3>
+                  </NavLink>
+                </ListItemButton>
+              </ListItem>
+              <ListItem divider>
+                <ListItemButton>
+                  <NavLink to={'/jobRequisition'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemIcon>
+                      <ArticleOutlinedIcon />
+                    </ListItemIcon>
+                    <h3>jobRequisition</h3>
+                  </NavLink>
+                </ListItemButton>
+              </ListItem>
+              <ListItem divider>
+                <ListItemButton>
+                  <NavLink to={'/dashboard'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemIcon>
+                      <DashboardIcon />
+                    </ListItemIcon>
+                    <h3>Dashboard</h3>
+                  </NavLink>
+                </ListItemButton>
+              </ListItem>
+
+            </>
+          }
+
           <ListItem divider>
             <ListItemButton>
               <NavLink to={'/referral'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
@@ -233,48 +243,53 @@ export default function MiniDrawer() {
             </ListItemButton>
           </ListItem>
 
-          <ListItemButton onClick={handleClick} sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <AdminPanelSettingsIcon />
-            </ListItemIcon>
-            <h3>admin</h3>
-            {open1 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-
-          <Collapse in={open1} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <NavLink to='/admin/users' style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonOutlineOutlinedIcon />
-                  </ListItemIcon>
-                  <h3>Users</h3>
-                </ListItemButton>
-              </NavLink>
 
 
-              <NavLink to={'/admin/remainder'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <CircleNotificationsIcon />
-                  </ListItemIcon>
-                  <h3>Reminder</h3>
-                </ListItemButton>
-              </NavLink>
+          {window.localStorage.getItem('role') === ('Recruiter')  &&
+            <>
+              <ListItemButton onClick={handleClick} sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <h3>admin</h3>
+                {open1 ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
 
-              <NavLink to={'/admin/templates'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <ContentPasteIcon />
-                  </ListItemIcon>
-                  <h4 height={8} >RealTime Templates</h4>
-                </ListItemButton>
-              </NavLink>
+              <Collapse in={open1} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <NavLink to='/admin/users' style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemIcon>
+                        <PersonOutlineOutlinedIcon />
+                      </ListItemIcon>
+                      <h3>Users</h3>
+                    </ListItemButton>
+                  </NavLink>
 
-            </List>
-          </Collapse>
 
-      
+                  <NavLink to={'/admin/remainder'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemIcon>
+                        <CircleNotificationsIcon />
+                      </ListItemIcon>
+                      <h3>Reminder</h3>
+                    </ListItemButton>
+                  </NavLink>
+
+                  <NavLink to={'/admin/templates'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemIcon>
+                        <ContentPasteIcon />
+                      </ListItemIcon>
+                      <h4 height={8} >RealTime Templates</h4>
+                    </ListItemButton>
+                  </NavLink>
+
+                </List>
+              </Collapse>
+
+            </>
+          }
         </List>
 
       </Drawer>

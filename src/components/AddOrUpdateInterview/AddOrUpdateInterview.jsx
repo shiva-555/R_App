@@ -114,7 +114,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
         setOpen(false)
     };
 
-    console.log(interviewStatuses?.data)
+    console.log(interview);
 
     return (
         <>
@@ -150,7 +150,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                             placeholder='Enter Candidate Name'
                                             size='small'
                                             margin='normal'
-                                            name='candidate_name'
+                                            name='candidateName'
                                             variant="filled"
                                             readOnly
                                             value={candidate?.candidateName}
@@ -167,7 +167,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                             placeholder='Enter Job Title'
                                             size='small'
                                             margin='normal'
-                                            name='candidate_email'
+                                            name='candidateEmail'
                                             readOnly
                                             type="email"
                                             value={candidate?.candidateEmail}
@@ -231,13 +231,16 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                     <FormControl variant="standard" sx={{ width: 300, mr: 2, mt: -1 }} size="small" >
                                         <h3>Interview Date</h3>
                                         <input
+                                        style={{ width: 300, height: 50, fontSize: 15 }}
                                             id='interviewDate'
                                             type="date"
-                                            defaultValue={interview?.interviewDate.toString()} 
                                             name="interviewDate"
-                                            onChange={(e) => handleChange(e)}
-                                            style={{ width: "300px", height: "50px", marginTop: "25px", }}
                                             required
+                                            defaultValue={
+                                                interview?.interviewDate
+                                                    ? new Date(interview?.interviewDate).toISOString().split('T')[0]
+                                                    : ''
+                                            } onChange={(e) => handleChange(e)}
                                         />
                                     </FormControl>
 
@@ -286,7 +289,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                         </Select>
                                     </FormControl>
                                 </Grid>
-    
+
                                 <Grid Item xs='auto'>
                                     <FormControl variant="standard" sx={{ width: 300 }} size="small">
                                         <h3>Panel Email</h3>
@@ -308,7 +311,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                             </Grid>
                             <Box>
                                 <Grid item xs='auto'>
-                                    <ReactQuill theme="snow" id='interview_body' value={interviewBody}
+                                    <ReactQuill theme="snow" id='interview_body'defaultValue={interview?.interviewBody}
                                         name="remark"
                                         onChange={setInterviewBody} placeholder="Write Something"
                                         style={{ height: '120px', marginTop: "40px", width: "1100px", marginBottom: "50px", marginLeft: "10px" }}
@@ -335,7 +338,6 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                 sx={{ borderRadius: 3, ml: 1, mt: 2, p: 1, }}
                                 type='submit'
                                 value={`${editMode ? 'update' : 'Schedule Interview'}`}
-                                onClick={(e) => handleSubmit(e)}
                             > Update </Button>
                         </Box>
                     </form>

@@ -178,7 +178,7 @@ export const AssignRecruiter = () => {
 
                 }
             });
-            const { data } = await client.put(`/assignCandidateToRecruiter/${reqInfo.candidate_id}`, reqInfo.formData);
+            const { data } = await client.put(`/assignCandidateToRecruiter/${reqInfo.candidateId}`, reqInfo.formData);
             return data;
         },
         {

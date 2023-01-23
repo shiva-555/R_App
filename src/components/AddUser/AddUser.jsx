@@ -199,7 +199,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
     setEditMode(false);
   }
 
-  console.log(user)
+  console.log(user?.roleAssignments[0]?.role?.roleName)
   return (
 
     <Dialog
@@ -228,6 +228,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
               <Select
                 name='role'
                 id="role"
+                value={user?.roleAssignments[0]?.role?.roleName}
                 onChange={(e) => handleChange(e)}
               >
                 {

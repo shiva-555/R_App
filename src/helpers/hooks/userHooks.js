@@ -23,17 +23,11 @@ export const useUsers = () => {
         const client = axios.create({
             baseURL: baseURL,
             headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'user-info': role
             }
         });
-        const { data } = await client.get('/user',
-        
-        {
-            headers: {
-                'user-info': role
-            }
-        }
-        );
+        const { data } = await client.get('/user');
         return data;
     });
 
@@ -42,13 +36,12 @@ export const useUsers = () => {
     //     const client = axios.create({
     //         baseURL: baseURL,
     //         headers: {
-    //         'Authorization': `Bearer ${token}`
+    //         'Authorization': `Bearer ${token}`,
+    //         'user-info': role
     //         }
     //     });
     //     const { data } = await client.get('/appUsers');
     //     return data;
-    // }, {
-    //     enabled: role === 'Admin'
     // });
 
     // const tenantUsers = useQuery('tenantUsers', async() => {
@@ -56,13 +49,12 @@ export const useUsers = () => {
     //     const client = axios.create({
     //         baseURL: baseURL,
     //         headers: {
-    //         'Authorization': `Bearer ${token}`
+    //         'Authorization': `Bearer ${token}`,
+    //         'user-info': role
     //         }
     //     });
     //     const { data } = await client.get('/tenantUsers');
     //     return data;
-    // }, {
-    //     enabled: role && role === 'Admin'
     // });
 
     // const guestUsers = useQuery('guestUsers', async() => {
@@ -84,17 +76,11 @@ export const useUsers = () => {
         const client = axios.create({
             baseURL: baseURL,
             headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'user-info': role
             }
         });
-        const { data } = await client.get('/appUsers?role=recruiter',
-        
-        {
-            headers: {
-                'user-info': role
-            }
-        }
-        );
+        const { data } = await client.get('/appUsers?role=recruiter');
         return data;
     }, {
         enabled: role === 'Admin' ? true : false
@@ -175,7 +161,6 @@ export const useUsers = () => {
             }
         });
         const { data } = await client.post('/candidate', candidate);
-          
         return data;
     },
     {

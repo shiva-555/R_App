@@ -40,7 +40,7 @@
 //     if(isLoading || guestLoading || appLoading) {
 //         return <SpinLoader />
 //     }
-
+//     console.log(appUsers?.data?.map((a) => a.roleAssignments[0].role.roleName));
 //   return (
 //     <div className='users-block'>
 //         {isModalOpen && <AddUser setIsModalOpen={setIsModalOpen} user={user} editMode={editMode} setEditMode={setEditMode} />}
@@ -150,9 +150,9 @@
 //                         <tbody className='users-block__tableBody'>
 //                             {appUsers?.data && appUsers.data.map((user) => 
 //                             <tr className='users-block__tableBodyRow'>
-//                                 <td className='users-block__tableBodyElem'>{user.display_name}</td>
+//                                 <td className='users-block__tableBodyElem'>{user.displayName}</td>
 //                                 <td className='users-block__tableBodyElem'>{user.email}</td>
-//                                 <td className='users-block__tableBodyElem'>{user?.assignedRoles.map((role, i, arr) => arr.length - 1 !== i ? role.assignedRole.role + ',' : role.assignedRole.role)}</td>
+//                                 <td className='users-block__tableBodyElem'>{user?.roleAssignments.map((role, i, arr) => arr.length - 1 !== i ? role.role.roleName + ',' : role.role.roleName)}</td>
 //                                 <td className='users-block__tableBodyElem'><ModeEditOutlineOutlinedIcon className='users-block__icon' onClick={(e) => {
 //                                     setUser(user);
 //                                     setIsModalOpen(true);
@@ -180,6 +180,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddUser from '../../components/AddUser/AddUser';
 import { useQuery } from 'react-query';
 import { getAllTenantUsers, getAllGuestUsers, getAllAppUsers } from '../../backendApis';
+import { useUsers } from '../../helpers/hooks/userHooks';
+
 import SpinLoader from '../../components/SpinLoader/SpinLoader';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import Tabs from '@mui/material/Tabs';
@@ -200,14 +202,15 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Users = () => {
 
-    const [value, setValue] = useState();
+    const [tab, setValue] = useState('Org');
     const { instance, accounts } = useMsal();
     const [user, setUser] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [search, setSearch] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [open, setOpen] = useState();
-    const [tab] = useState('Org');
+
+
 
     const { data: users, isLoading, refetch } = useQuery('fetchTenantUsers', () => getAllTenantUsers({ instance, accounts, ...search }), {
         retry: false, enabled: tab === 'Org',
@@ -233,6 +236,7 @@ const Users = () => {
         refetchOnWindowFocus: false
     })
 
+
     if (isLoading || guestLoading || appLoading) {
         return <SpinLoader />
     }
@@ -246,18 +250,19 @@ const Users = () => {
         setOpen(false);
     };
 
+    console.log(tab);
     return (
         <>
             {isModalOpen && <AddUser setIsModalOpen={setIsModalOpen} user={user} isModalOpen={isModalOpen} editMode={editMode} setEditMode={setEditMode} />}
             <Box m={20} sx={{ width: 1200, height: 100, bgcolor: 'background.paper' }}>
                 <div style={{ margin: '20px' }}>
                     <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }}
-                        onClick={(e) => { setValue('Organization User') }}> Orginazation Users </Button>
+                        onClick={(e) => { setValue('Org') }}> Orginazation Users </Button>
                     <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }} style={{ marginLeft: '20px' }}
-                        onClick={(e) => { setValue('Guest Users') }}> Guest Users </Button>
-                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }} style={{ marginLeft: '20px' }} onClick={(e) => { setValue('App Users') }}> App Users </Button>
+                        onClick={(e) => { setValue('Guest') }}> Guest Users </Button>
+                    <Button variant="contained" sx={{ borderRadius: 3, width: '320px' }} style={{ marginLeft: '20px' }} onClick={(e) => { setValue('App') }}> App Users </Button>
                 </div>
-                {(value === 'Organization User') &&
+                {(tab === 'Org') &&
                     <>
                         <Box>
                             <h3 style={{ marginLeft: '20px' }}>Search According to email</h3>
@@ -314,7 +319,7 @@ const Users = () => {
                     </>
                 }
 
-                {(value == 'Guest Users') &&
+                {(tab == 'Guest') &&
 
                     <>
                         <Box>
@@ -373,7 +378,7 @@ const Users = () => {
                         </div>
                     </>
                 }
-                {(value == 'App Users') &&
+                {(tab == 'App') &&
                     <>
                         <Box>
                             <h3 style={{ marginLeft: '20px' }}>Search According to email</h3>
@@ -414,8 +419,8 @@ const Users = () => {
 
                                                     return (<TableRow>
                                                         <TableCell> {user.displayName}</TableCell>
-                                                        <TableCell> {user.mail}</TableCell>
-                                                        <TableCell> {user?.assignedRoles.map((role, i, arr) => arr.length - 1 !== i ? role.assignedRole.role + ',' : role.assignedRole.role)}</TableCell>
+                                                        <TableCell> {user.email}</TableCell>
+                                                        <TableCell> {user?.roleAssignments.map((role, i, arr) => arr.length - 1 !== i ? role.role.roleName + ',' : role.role.roleName)}</TableCell>
                                                         <TableCell>
 
                                                             <AddCircleOutlineIcon onClick={(e) => {

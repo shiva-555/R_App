@@ -105,23 +105,23 @@ export const useJobs = () => {
         }
     );
 
-    // const jobRequisitions = useQuery('recruitersJob', async() => {
-    //     const token  = await acquireToken(instance, accounts);
-    //     const client = axios.create({
-    //         baseURL: baseURL,
-    //         headers: {
-    //         'Authorization': `Bearer ${token}`
-    //         }
-    //     });
-    //     const { data } = await client.get(`/getJobAssignedRecruiter`);
-    //     return data;
-    // })
+    const jobRequisitions = useQuery('recruitersJob', async() => {
+        const token  = await acquireToken(instance, accounts);
+        const client = axios.create({
+            baseURL: baseURL,
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+        });
+        const { data } = await client.get(`/getJobAssignedRecruiter`);
+        return data;
+    })
     
     return {
         jobs,
         createJobRequisition,
         updateJobRequisition,
         JobsWithRecruiter,
-        // jobRequisitions
+        jobRequisitions
     }
 }
