@@ -108,7 +108,7 @@ function GeneralTemplate() {
                         let data = {
                           status: selectedStatus,
                           role: column?.value ? column.value : null,
-                          TemplateType: 'general'
+                          templateType: 'general'
                         }
                         return (
                           <>

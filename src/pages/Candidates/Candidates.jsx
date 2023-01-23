@@ -89,7 +89,7 @@ const Candidates = () => {
   useEffect(() => {
     // document.body.style.zoom = "80%";
     if (candidateStatuses?.data?.data) {
-      console.log(candidateStatuses?.data?.data.slice(0,2));
+      console.log(candidateStatuses?.data?.data.slice(0, 2));
       // setAfterSelectStatuses(candidateStatuses.data.data.filter((status) => (status.display_text === 'Offered' || status.display_text === 'Doc Verification In Progress' || status.display_text === 'Disqualified' || status.display_text === 'Hold' || status.display_text === 'Selected')));
     }
   }, [candidateStatuses?.data?.data]);
@@ -142,7 +142,7 @@ const Candidates = () => {
       formData.append(key, form[key]);
     });
 
-    
+
     if (parseInt(form.expected_ctc) <= parseInt(form.current_ctc)) {
       alert('Current CTC should be less than Expected CTC');
       return;
@@ -170,23 +170,29 @@ const Candidates = () => {
   return (
     <>
       <Box m={8} mt={15} sx={{ boxShadow: 1 }} >
-        {/* <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          label="Job"
-          options={search?.job ? search.job : ''}
-          sx={{ width: 300 }}
-          // renderInput={(params) => <TextField {...params} label="Job" />}
-          onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })}
-            // {jobs?.data && jobs.data.data.map(job =>
-            //   <MenuItem key={job.job_title} value={job.job_id}>{job.job_title}</MenuItem>
-            // )}
-            
-        />
-         */}
-
 
         <FormControl>
+
+          <Autocomplete
+
+            disablePortal
+            id="jobFilter"
+            name="job"
+            value={search?.job ? jobs?.data?.data.filter((job) => job.jobId === search.job)[0].jobTitle : undefined}
+            options={jobs?.data?.data.map((job) => ({ label: job.jobTitle, value: job.jobId }))}
+            sx={{ width: 300 }}
+            style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+            // getOptionLabel={}
+            renderInput={(params) => <TextField {...params} label="Job-Title" />}
+            onChange={(e, job) => {
+              setSearch({ ...search, job: job.value })
+            }}
+
+          />
+        </FormControl>
+
+
+        {/* <FormControl>
           <InputLabel id="demo-simple-select-label">Job-title</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -202,7 +208,7 @@ const Candidates = () => {
               <MenuItem key={job.jobId} value={job.jobId}>{job.jobTitle}</MenuItem>
             )}
           </Select>
-        </FormControl>
+        </FormControl> */}
 
         <FormControl>
           <InputLabel id="demo-simple-label">Status</InputLabel>
@@ -516,7 +522,7 @@ const Candidates = () => {
                       onChange={(e) => handleChange(e)}
                     >
                       <MenuItem key="" value=""> Select Status</MenuItem>
-                      {candidateStatuses?.data && candidateStatuses?.data?.data.slice(0,2).map((status) =>
+                      {candidateStatuses?.data && candidateStatuses?.data?.data.slice(0, 2).map((status) =>
                         <MenuItem key={status.metaDataId} value={status.metaDataId}>{status.displayText.status}</MenuItem>
 
                       )}

@@ -47,7 +47,8 @@ const AppRoutes = () => {
                         <Route path="/" element={<Home />} isAuthorized={true} />
 
 
-                        {role !== 'selectRole' &&
+                        {(window.localStorage.getItem('role') === 'HR' || window.localStorage.getItem('role') === 'Recruiter' || window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
+
                             <>
                                 <Route path="/candidates" element={<Candidates />} isAuthorized={true} />
                                 <Route path="/candidate/:id" element={<Candidate />} isAuthorized={true} />
@@ -61,13 +62,14 @@ const AppRoutes = () => {
                                     </>
                                 }
 
-                                {role !== 'Recruiter' || 'HR' &&
-                                    <>
+                                {/* {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
+
+                                    <> */}
                                         <Route path='/admin/users' element={<Users />} />
                                         <Route path='admin/remainder' element={<Remainder />} />
                                         <Route path='admin/templates' element={<GeneralTemplate />} />
-                                    </>
-                                }
+                                    {/* </>
+                                } */}
                             </>
                         }
 

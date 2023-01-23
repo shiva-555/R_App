@@ -109,7 +109,7 @@ export default function Remainder() {
                                             let data = {
                                                 status: selectedStatus,
                                                 role: column?.value ? column.value : null,
-                                                TemplateType: 'isReminder'
+                                                templateType: 'isReminder'
                                             }
                                             return (
                                                 <>

@@ -565,13 +565,13 @@ const Candidate = () => {
                     type="date"
                     id="selectedRejectedDate"
                     name="selectedRejectedDate"
-                    defaultValue={candidate?.data?.data.selectedRejectedDate}
+                    // defaultValue={candidate?.data?.data.selectedRejectedDate}
                     readOnly
-                    // defaultValue={
-                    //   candidate?.data?.data.selectedRejectedDate
-                    //     ? new Date(candidate?.data?.data.selectedRejectedDate).toISOString().split('T')[0]
-                    //     : ''
-                    // } 
+                    defaultValue={
+                      candidate?.data?.data.selectedRejectedDate
+                        ? new Date(candidate?.data?.data.selectedRejectedDate).toISOString().split('T')[0]
+                        : ''
+                    } 
                     onChange={(e) => handleChange(e)} />
 
 
@@ -587,13 +587,13 @@ const Candidate = () => {
                     type="date"
                     id="documentVerificationInitiatedOn"
                     name="documentVerificationInitiatedOn"
-                    defaultValue={candidate?.data?.data.documentVerificationInitiatedOn}
+                    // defaultValue={candidate?.data?.data.documentVerificationInitiatedOn}
                     readOnly
-                    // defaultValue={
-                    //   candidate?.data?.data.documentVerificationInitiatedOn
-                    //     ? new Date(candidate?.data?.data.documentVerificationInitiatedOn).toISOString().split('T')[0]
-                    //     : ''
-                    // } 
+                    defaultValue={
+                      candidate?.data?.data.documentVerificationInitiatedOn
+                        ? new Date(candidate?.data?.data.documentVerificationInitiatedOn).toISOString().split('T')[0]
+                        : ''
+                    } 
                     onChange={(e) => handleChange(e)} />
 
 
@@ -609,13 +609,13 @@ const Candidate = () => {
                     type="date"
                     id="offerDate"
                     name="offerDate"
-                    defaultValue={candidate?.data?.data.offerDate}
+                    // defaultValue={candidate?.data?.data.offerDate}
                     readOnly
-                    // defaultValue={
-                    //   candidate?.data?.data.offerDate
-                    //     ? new Date(candidate?.data?.data.offerDate).toISOString().split('T')[0]
-                    //     : ''
-                    // } 
+                    defaultValue={
+                      candidate?.data?.data.offerDate
+                        ? new Date(candidate?.data?.data.offerDate).toISOString().split('T')[0]
+                        : ''
+                    } 
                     onChange={(e) => handleChange(e)} />
 
 
@@ -670,7 +670,11 @@ const Candidate = () => {
                     type="date"
                     id="joiningDate"
                     name="joiningDate"
-                    defaultValue={candidate?.data?.data.joiningDate}
+                    defaultValue={
+                      candidate?.data?.data.joiningDate
+                        ? new Date(candidate?.data?.data.joiningDate).toISOString().split('T')[0]
+                        : ''
+                    } 
                     readOnly
                     onChange={(e) => handleChange(e)} />
 

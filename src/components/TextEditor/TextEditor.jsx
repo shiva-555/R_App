@@ -20,9 +20,9 @@ const TextEditor = ({ template, templateData, label }) => {
   const [subjectValue, setSubjectValue] = useState();
   const [templateStatus, setTemplateStatus] = useState();
   const editor = useRef(null);
-    const config = {
-			readonly: false, // all options from https://xdsoft.net/jodit/doc/,
-		}
+  const config = {
+    readonly: false, // all options from https://xdsoft.net/jodit/doc/,
+  }
   useEffect(() => {
     // const getRoles = roles?.data?.data.map(obj1 => [obj1.role, obj1.role_id == template.sent_to]);
     // const temp = getRoles.filter(getRoleName);
@@ -59,9 +59,9 @@ const TextEditor = ({ template, templateData, label }) => {
     event.preventDefault();
     console.log(template?.status);
     if (template.status === 'Active') {
-      updateEmailRemainder.mutate({ id: template.templateId, formData: {status: 'InActive'}});
+      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'InActive' } });
     } else {
-      updateEmailRemainder.mutate({ id: template.templateId, formData: {status: 'Active'}});
+      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'Active' } });
     }
   }
 
@@ -71,21 +71,35 @@ const TextEditor = ({ template, templateData, label }) => {
     if (otherEmail) form.senTo = otherEmail;
     if (subjectValue) form.subject = subjectValue;
 
-
+    console.log(template);
+    console.log(templateData);
     if (!template) {
-      createEmailRemainder.mutate(form);
-      console.log('creating');
+
+      if (templateData?.templateType === 'general') {
+        createEmailRemainder.mutate(form);
+        console.log('creating General Templte');
+      }
+      else if (templateData?.templateType === 'isReminder') {
+        createEmailRemainder.mutate(form);
+
+        console.log('creating Reminder Templte');
+
+      }
     } else {
-      console.log(template.templateId);
-      updateEmailRemainder.mutate({ id: template.templateId, formData: form });
-      console.log('updating');
+      if (template?.templateType === 'general') {
+        updateEmailRemainder.mutate({ id: template.templateId, formData: form });
+        console.log('updating general');
+      } else if (template?.templateType === 'isReminder') {
+        updateEmailRemainder.mutate({ id: template.templateId, formData: form });
+        console.log('updating reminder');
+
+      }
     }
 
     if (templateData?.templateType === 'isReminder') {
       alert("Please Set the Duration");
     }
     alert('Details saved successfully');
-    // console.log(form);
   }
 
 
@@ -95,13 +109,13 @@ const TextEditor = ({ template, templateData, label }) => {
         label === 'Others' &&
         <>
           <p style={{ margin: '1% 0% 0% 0%' }}> To: </p>
-          <input className="width" type="text" name="sentTo" defaultValue={template? template.sentTo : ''} onChange={(e) => handleInput(e)} placeholder="Enter Email Address" style={{width: '500px', background: 'rgb(252, 255, 102)'}}/>
+          <input className="width" type="text" name="sentTo" defaultValue={template ? template.sentTo : ''} onChange={(e) => handleInput(e)} placeholder="Enter Email Address" style={{ width: '500px', background: 'rgb(252, 255, 102)' }} />
         </>
       }
 
-      <input name="subject" defaultValue={template?.subject } onChange={(e) => handleSubject(e)} style={{ width: '500px' }} placeholder="Enter Subject here" />
-     
-      <button name='status' style={{ width: 'auto', padding: '6px 20px',background: 'dodgerblue', color: 'white', border: '1px solid #ddd', cursor: 'pointer'}} onClick={(e) => handleStatus(e)}>{template? template?.status: 'InActive'}</button>
+      <input name="subject" defaultValue={template?.subject} onChange={(e) => handleSubject(e)} style={{ width: '500px' }} placeholder="Enter Subject here" />
+
+      <button name='status' style={{ width: 'auto', padding: '6px 20px', background: 'dodgerblue', color: 'white', border: '1px solid #ddd', cursor: 'pointer' }} onClick={(e) => handleStatus(e)}>{template ? template?.status : 'InActive'}</button>
 
       {/* <ReactQuill value={message} onChange={(message) => setMessage(message)} placeholder="Write Something" theme="snow" style={{ background: 'rgb(244, 255, 143)', height: '100% ', margin: '1% 0% 0% 0%' }} /> */}
       <JoditEditor

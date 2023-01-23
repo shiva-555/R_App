@@ -195,7 +195,7 @@ export default function MiniDrawer() {
               </NavLink>
             </ListItemButton>
           </ListItem>
-          {( window.localStorage.getItem('role') === 'HR' ||  window.localStorage.getItem('role') === 'Recruiter' || window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
+          {(window.localStorage.getItem('role') === 'HR' || window.localStorage.getItem('role') === 'Recruiter' || window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
             <>
               <ListItem divider>
                 <ListItemButton>

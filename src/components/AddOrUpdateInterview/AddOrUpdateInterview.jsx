@@ -95,22 +95,20 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
             ...form,
             interviewDate: moment(filters?.interviewDate?.['$d']).format('YYYY-MM-DD'),
             interviewStartTime: filters?.interviewStartTime?.['$d'].format("YYYY-MM-DDTHH:mm:ss")
-
         })
 
         if (interviewBody && !editMode) form.interviewBody = interviewBody;
         if ((interviewBody !== interview?.interviewBody) && editMode) form.interviewBody = interviewBody;
 
         if (editMode) {
-            updateInterview.mutate({ formData: form, candidate_id: candidate.candidateId, interview_id: interview.interviewId });
+            // updateInterview.mutate({ formData: form, candidate_id: candidate.candidateId, interview_id: interview.interviewId });
         } else {
-            scheduleInterview.mutate({ formData: form, candidate_id: candidate.candidateId });
+            // scheduleInterview.mutate({ formData: form, candidate_id: candidate.candidateId });
         }
 
     }
 
     const handleClose = () => {
-
         setOpen(false)
     };
 
