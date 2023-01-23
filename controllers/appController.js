@@ -54,9 +54,9 @@ exports.getAppUsers = async (req, res) => {
         include: {
             model: Role,
             as: 'role',
-            where: {
-                roleName: req.query.role
-            }
+            // where: {
+            //     roleName: req.query.role
+            // }
         }
     });
 
@@ -215,6 +215,10 @@ exports.getCandidate = async (req, res) => {
                     model: JobRequisition,
                     as: 'jobTitle',
                 },
+                {
+                    model: User,
+                    as: 'createdBy',
+                },
             ],
             order: [[{ model: Interview, as: 'interviews' }, 'createdDate', 'DESC']],
         });
@@ -231,9 +235,10 @@ exports.createCandidate = async (req, res) => {
     let checkJob, checkCandidate, candidate, isJobRequisitionAssinged, candidateRole;
 
     try {
-        console.log(req.body.jobId);
+        console.log(req.body);
         checkJob = await JobRequisition.findByPk(req.body.jobId);
     } catch (e) {
+        console.log(e);
         logger.error('Error occurred while finding job in createCandidate controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
@@ -1084,8 +1089,13 @@ exports.getReferralByUserId = async (req, res, next) => {
                     as: 'createdBy'
                 }
                 ]
+            },
+            {
+                model: User,
+                as: 'user'
             }
         ]
+        
     })
     return res.status(200).json(responseFormatter.responseFormatter(candidate, 'success', 200));
 }
@@ -1111,14 +1121,14 @@ exports.getReferralByJob_id = async (req, res, next) => {
 exports.assignCandidateToRecruiter = async (req, res, next) => {
     let candidate;
     try {
-        await Candidate.update({ createdById: req.body.recruiter }, { where: { candidateId: req.params.candidate_id } });
+        await Candidate.update({ createdById: req.body.recruiter }, { where: { candidateId: req.params.candidateId } });
     } catch (e) {
         logger.error('Error Occured while updating referal Candidate in App  Controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error Occured', 'error', 500));
     }
 
     try {
-        candidate = await Candidate.findByPk(req.params.candidate_id, {
+        candidate = await Candidate.findByPk(req.params.candidateId, {
             include: [
                 {
                     model: MetaData,
@@ -1146,37 +1156,6 @@ exports.assignCandidateToRecruiter = async (req, res, next) => {
                     attributes: ['metaDataId', 'displayText']
                 },
 
-                // {
-                //     model: OnBoarding,
-                //     as: 'joiningDetails',
-                //     include: [
-                //         {
-                //             model: MetaData,
-                //             as: 'costCenter',
-                //             attributes: [['display_text', 'cost_center']]
-                //         },
-                //         {
-                //             model: MetaData,
-                //             as: 'division',
-                //             attributes: [['display_text', 'division']]
-                //         },
-                //         {
-                //             model: MetaData,
-                //             as: 'department',
-                //             attributes: [['display_text', 'department']]
-                //         },
-                //         {
-                //             model: MetaData,
-                //             as: 'joiningLocation',
-                //             attributes: [['display_text', 'joining_location']]
-                //         },
-                //         {
-                //             model: MetaData,
-                //             as: 'device',
-                //             attributes: [['display_text', 'device']]
-                //         }
-                //     ]
-                // }
             ]
         });
     } catch (e) {
@@ -1461,7 +1440,7 @@ exports.getJobRequisitions = async (req, res, next) => {
 
 
 
-    if (role.jobsView) {
+    if (role?.jobsView) {
         if (!role.jobsView.showAll) {
             if (role.jobsView.isHierarchy) {
                 includeCriteria.push(

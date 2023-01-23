@@ -112,6 +112,7 @@ exports.updateAppUser = async (req, res) => {
                     roleId: role.roleId
                 });
             } catch (e) {
+                console.log(e);
                 logger.error('Error occurred while create role assignment in updateAppUser controller %s:', JSON.stringify(e));
                 return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
             }

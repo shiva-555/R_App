@@ -17,8 +17,8 @@ router.use(passport.authenticate('oauth-bearer', {session: false}), checkUserExi
 
 /* User Routes */
 router.get('/user', appController.getUser);
-router.get('/appUsers', authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager', 'Recruiter'), appController.getAppUsers);
-router.get('/appUsers/:userId', appController.getAppUser, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
+router.get('/appUsers', appController.getAppUsers);
+router.get('/appUsers/:userId', appController.getAppUser);
 
 /* Candidate Routes */
 router.get('/candidates', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getCandidates);
@@ -37,7 +37,7 @@ router.get('/candidateReport', appController.getCandidatesReport);
 
 /* Job Requisitions*/
 //! Need to Add H Code
-router.get('/jobRequisitions', authorizeRoles('Recruiter', 'Admin'), appController.getJobRequisitions);
+router.get('/jobRequisitions', authorizeRoles('Recruiter', 'Admin'),appController.getJobRequisitions);
 // router.post('/jobRequisition', upload.single('file'), appController.createJobRequisition, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
 // router.put('/jobRequisition/:job_id', upload.single('file'), appController.updateJobRequisition, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
 router.get('/getAllJobRequisitions',authorizeRoles('Recruiter', 'Admin'), appController.getAllJobRequisitions)
@@ -49,7 +49,7 @@ router.get('/getAllJobRequisitions',authorizeRoles('Recruiter', 'Admin'), appCon
 /** Referal */
 router.get('/getReferralByuserid', appController.getReferralByUserId);
 // router.get('/getReferralByJobid', appController.getReferralByJob_id);
-router.put('/assignCandidateToRecruiter/:candidate_id', appController.assignCandidateToRecruiter); 
+router.put('/assignCandidateToRecruiter/:candidateId', appController.assignCandidateToRecruiter); 
 router.get('/getJobAssignedRecruiter', appController.getJobAssignedRecruiter)
 // router.put('/assignCandidateToRecruiter/:candidate_id', appController.assignCandidateToRecruiter); 
 // router.get('/getJobAssignedRecruiter', appController.getJobAssignedRecruiter)
