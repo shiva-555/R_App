@@ -24,6 +24,11 @@
             "date": 1674441770572,
             "name": "logs/recruitement-app-2023-01-23.log",
             "hash": "2694b3e2cd99151f642270ed84f5d5dc5eef1ec4ad9bfcad32028ebe024a8cff"
+        },
+        {
+            "date": 1674455351802,
+            "name": "logs\\recruitement-app-2023-01-23.log",
+            "hash": "d4ceb5423f9ebca6420875cffbf0c5530ad6388b4caa000bdac5b306095dacfa"
         }
     ],
     "hashType": "sha256"

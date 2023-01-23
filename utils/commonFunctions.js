@@ -446,6 +446,7 @@ exports.generateTemplate = (template, candidate) => {
     const regExp = /{[\w.]+}/g;
     // const retrievedResult = template.body.match(regExp);
 
+    console.log(template.body);
     let reg1 = /\?(.*?)\?/g;
     let reg2 = /\[(.*?)\]/g;
     let reg3 = /\`(.*?)\`/g;
@@ -469,8 +470,9 @@ exports.generateTemplate = (template, candidate) => {
     }
 
     console.log(retrievedResult)
+    console.log(candidate.dataValues);
 
-    if (retrievedResult.length && retrievedResult.length > 0) {
+    if (retrievedResult?.length && retrievedResult?.length > 0) {
         for (let i = 0; i < retrievedResult.length; i++) {
             const regExp = /[\w.]+/g;
             const variableName = retrievedResult[i].match(regExp)[0];
@@ -511,7 +513,6 @@ exports.getHierarchy = async (associatedUsers) => {
     const users = [];
     async function getParent(user) {
         users.push(user);
-
         let parent = await user.getParent()
         if (parent) {
             await getParent(parent);
@@ -521,9 +522,8 @@ exports.getHierarchy = async (associatedUsers) => {
     };
 
     for (const key in associatedUsers) {
-        console.log(key)
-        if (users[key]) {
-            await getParent(users[key]);
+        if (associatedUsers[key]) {
+            await getParent(associatedUsers[key]);
         }
     }
 
@@ -610,9 +610,9 @@ exports.sendMailFromGeneralTemplate = async (status, candidateOBJ) => {
                     email: users[i].email,
                     name: users[i].displayName
                 };
-                const assignments = users[i].getRoleAssignments();
+                const assignments = await users[i].getRoleAssignments();
                 for (let j = 0; j < assignments.length; j++) {
-                    const role = assignments[j].getRole();
+                    const role = await assignments[j].getRole();
                     user.roles.push(role.roleName);
                 }
                 users[i] = user;
@@ -624,10 +624,16 @@ exports.sendMailFromGeneralTemplate = async (status, candidateOBJ) => {
 
             if (templates[i].role.roleName !== 'Candidate') {
                 const sendToUsers = users.filter((user) => user.roles.includes(templates[i].role.roleName));
+                console.log(sendToUsers);
                 const template = this.generateTemplate(templates[i], candidate);
                 if (sendToUsers.length && sendToUsers.length > 0) {
                     for (let i = 0; i < sendToUsers.length; i++) {
-                        await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                        console.log(sendToUsers);
+                        try {
+                            await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 }
             } else {

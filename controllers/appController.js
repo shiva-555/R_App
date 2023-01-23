@@ -105,8 +105,8 @@ exports.getCandidates = async (req, res) => {
             searchCriteria.candidateStatusId = req.query.status;
         }
 
-        if (req.query.jobTitle) {
-            searchCriteria.jobId = req.query.jobTitle;
+        if (req.query.job) {
+            searchCriteria.jobId = req.query.job;
         }
 
         if (req.query.company) {
@@ -404,9 +404,7 @@ exports.updateCandidate = async (req, res) => {
                     model: MetaData,
                     as: 'candidateStatus',
                 },
-            ],
-            raw: true,
-            nest: true
+            ]
         });
     } catch (e) {
         console.log(e);
@@ -447,6 +445,48 @@ exports.updateCandidate = async (req, res) => {
     //! Need to verify 
     if (req.body.candidateStatusId) {
         if (candidate.candidateStatusId !== req.body.candidateStatusId) {
+            for (let i = 0; i < statuses.length; i++) {
+                if (statuses[i].displayText.status === 'Offered') {
+                    if (statuses[i].metaDataId === req.body.candidateStatusId) {
+                        if (!req.body.offerDate) {
+                            req.body.offerDate = new Date();
+                        }
+                    }
+                }
+                else if (statuses[i].displayText.status === 'Doc Verification Completed') {
+                    if (statuses[i].metaDataId === req.body.candidateStatusId) {
+                        if (!req.body.documentVerificationInitiatedOn) {
+                            req.body.documentVerificationInitiatedOn = new Date();
+                        }
+                        if (!req.body.documentVerificationInitiatedOn && req.body.tentativeDateOfJoining) {
+                            req.body.documentVerificationInitiatedOn = new Date();
+                            req.body.tentativeDateOfJoining = new Date(req.body.tentativeDateOfJoining);
+                        }
+                    }
+                }
+                else if (statuses[i].displayText.status === 'Joined') {
+                    if (statuses[i].metaDataId === req.body.candidateStatusId) {
+                        if (!req.body.joiningDate) {
+                            req.body.joiningDate = new Date();
+                        }
+                    }
+                }
+                else if (statuses[i].displayText.status === 'Selected') {
+                    if (statuses[i].metaDataId === req.body.candidateStatusId) {
+                        if (!req.body.selectedRejectedDate) {
+                            req.body.selectedRejectedDate = new Date();
+                        }
+                    }
+                }
+                else if (statuses[i].displayText.status === 'Rejected') {
+                    if (statuses[i].metaDataId === req.body.candidateStatusId) {
+                        if (!req.body.selectedRejectedDate) {
+                            req.body.selectedRejectedDate = new Date();
+                        }
+                    }
+                }
+
+            }
             try {
                 await commonFunctions.sendMailFromGeneralTemplate(req.body.candidateStatusId, candidate);
             } catch (e) {
@@ -553,7 +593,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 if (document[0].sharepointId) {
                     await commonFunctions.deleteDocumentFromSharepoint(document.sharepointId);
                 }
-                
+
                 if (document[0].oneDriveId) {
                     await commonFunctions.deleteDocumentFromOneDrive(document.oneDriveId);
                 }
@@ -1095,7 +1135,7 @@ exports.getReferralByUserId = async (req, res, next) => {
                 as: 'user'
             }
         ]
-        
+
     })
     return res.status(200).json(responseFormatter.responseFormatter(candidate, 'success', 200));
 }
@@ -1515,17 +1555,17 @@ exports.getAllJobRequisitions = async (req, res, next) => {
     /* Getting Role of requesting user */
     // const role = req.user.roleAssignments.role;
 
-        includeCriteria.push(
-            {
-                model: JobAssignment,
-                as: 'jobAssignments',
-                required: false,
-                include: {
-                    model: User,
-                    as: 'user'
-                }
+    includeCriteria.push(
+        {
+            model: JobAssignment,
+            as: 'jobAssignments',
+            required: false,
+            include: {
+                model: User,
+                as: 'user'
             }
-        );
+        }
+    );
 
     try {
         jobRequisitions = await JobRequisition.findAll({
