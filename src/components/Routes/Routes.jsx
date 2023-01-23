@@ -41,31 +41,40 @@ const AppRoutes = () => {
                     </>
                 }
                 <Routes>
+
                     <Route path="/login" element={<Login />} />
                     <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
                         <Route path="/" element={<Home />} isAuthorized={true} />
 
+
                         {role !== 'selectRole' &&
                             <>
-
                                 <Route path="/candidates" element={<Candidates />} isAuthorized={true} />
                                 <Route path="/candidate/:id" element={<Candidate />} isAuthorized={true} />
                                 <Route path='/candidate/:candidate_id/interview' element={<ShceduleInterview />} />
                                 {/* <Route path='/candidate/:id' element={<CandidateDisplay />} /> */}
                                 {/* <Route path="/interviews" element={<Interviews />}/> */}
                                 <Route path='/jobRequisition' element={<JobRequisition />} />
-                                <Route path='/dashboard' element={<Dashboard />} />
-                                <Route path='admin/remainder' element={<Remainder />} />
-                                <Route path='admin/templates' element={<GeneralTemplate />} />
+                                {role !== 'HR' &&
+                                    <>
+                                        <Route path='/dashboard' element={<Dashboard />} />
+                                    </>
+                                }
 
+                                {role !== 'Recruiter' || 'HR' &&
+                                    <>
+                                        <Route path='/admin/users' element={<Users />} />
+                                        <Route path='admin/remainder' element={<Remainder />} />
+                                        <Route path='admin/templates' element={<GeneralTemplate />} />
+                                    </>
+                                }
                             </>
                         }
+
                         <Route path='*' element={<Home />} />
                         <Route path="/referral" element={<Referal />} isAuthorized={true} />
-                        <Route path='/admin/users' element={<Users />} />
-
-
                     </Route>
+
                 </Routes>
             </Router>
         </UserContext.Provider>

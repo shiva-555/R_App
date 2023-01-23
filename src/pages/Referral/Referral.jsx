@@ -23,6 +23,7 @@ import { useMetaData } from '../../helpers/hooks/metaDataHooks';
 import { UserContext } from '../../components/Routes/Routes';
 import { AssignRecruiter } from '../../helpers/hooks/adminHooks';
 
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
@@ -58,7 +59,7 @@ const Referal = () => {
     const { addReferalCandidate, useGetReferalCandidates } = useUsers();
     const { recruiters, } = useUsers();
     const candidates = useGetReferalCandidates(accounts[0].localAccountId, search);
-    const { candidateStatuses } = useMetaData();
+    const { candidateStatuses, gender } = useMetaData();
     const [currentCandidate, setCurrentCandidate] = useState(null);
     const { assignCandidateToRecruiter } = AssignRecruiter();
     const value = useContext(UserContext);
@@ -219,9 +220,9 @@ const Referal = () => {
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Job Title</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Status</TableCell>
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiter Name</TableCell>
-                            
+
                             {
-                               (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
+                                (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
                                 <>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiters</TableCell>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Update</TableCell>
@@ -308,19 +309,17 @@ const Referal = () => {
                                                 fullWidth
                                                 onChange={(e) => handleChange(e)}
                                                 required />
-                                            <Box marginTop={2}> <h3>Gender</h3>
-                                                <RadioGroup row
-                                                    aria-labelledby="demo-radio-buttons-group-label"
-                                                    defaultValue="female"
-                                                    name="gender"
-                                                    onChange={(e) => handleChange(e)}
-                                                >
-                                                    <FormControlLabel value="female" control={<Radio required />} label="Female" />
-                                                    <FormControlLabel value="male" control={<Radio required />} label="Male" />
-                                                    <FormControlLabel value="other" control={<Radio required />} label="Other" />
-                                                </RadioGroup>
-                                            </Box>
 
+                                            <RadioGroup row
+                                                aria-labelledby="demo-radio-buttons-group-label"
+                                                defaultValue="female"
+                                                name="gender"
+                                                onChange={(e) => handleChange(e)}>
+                                                {gender?.data && gender?.data?.data.map((gen) =>
+                                                    <FormControlLabel value={gen.metaDataId} control={<Radio required />} label={gen.displayText.gender} />
+                                                )}
+
+                                            </RadioGroup>
                                         </CardContent>
 
                                         <FormControl>

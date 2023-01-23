@@ -195,8 +195,7 @@ export default function MiniDrawer() {
               </NavLink>
             </ListItemButton>
           </ListItem>
-          {/* {role === ('Recruiter', 'Admin') && */}
-          {window.localStorage.getItem('role') === ('HR', 'Admin', 'Recruiter') &&
+          {( window.localStorage.getItem('role') === 'HR' ||  window.localStorage.getItem('role') === 'Recruiter' || window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
             <>
               <ListItem divider>
                 <ListItemButton>
@@ -218,16 +217,20 @@ export default function MiniDrawer() {
                   </NavLink>
                 </ListItemButton>
               </ListItem>
-              <ListItem divider>
-                <ListItemButton>
-                  <NavLink to={'/dashboard'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
-                    <ListItemIcon>
-                      <DashboardIcon />
-                    </ListItemIcon>
-                    <h3>Dashboard</h3>
-                  </NavLink>
-                </ListItemButton>
-              </ListItem>
+              {window.localStorage.getItem('role') !== 'HR' &&
+                <>
+                  <ListItem divider>
+                    <ListItemButton>
+                      <NavLink to={'/dashboard'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                        <ListItemIcon>
+                          <DashboardIcon />
+                        </ListItemIcon>
+                        <h3>Dashboard</h3>
+                      </NavLink>
+                    </ListItemButton>
+                  </ListItem>
+                </>
+              }
 
             </>
           }
@@ -245,7 +248,7 @@ export default function MiniDrawer() {
 
 
 
-          {window.localStorage.getItem('role') === ('Recruiter')  &&
+          {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
             <>
               <ListItemButton onClick={handleClick} sx={{ pl: 4 }}>
                 <ListItemIcon>

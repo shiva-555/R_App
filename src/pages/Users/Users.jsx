@@ -250,7 +250,7 @@ const Users = () => {
         setOpen(false);
     };
 
-    console.log(tab);
+
     return (
         <>
             {isModalOpen && <AddUser setIsModalOpen={setIsModalOpen} user={user} isModalOpen={isModalOpen} editMode={editMode} setEditMode={setEditMode} />}
