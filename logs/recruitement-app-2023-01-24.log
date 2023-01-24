@@ -1,0 +1,205 @@
+{
+  level: 'error',
+  message: 'Error occurred while creating user in checkUserExistInApp middleware {"name":"SequelizeUniqueConstraintError","errors":[{"message":"PRIMARY must be unique","type":"unique violation","path":"PRIMARY","value":"1bdd3f52-3349-4557-8b0d-3a60f6069cfb","origin":"DB","instance":{"mobile":null,"city":null,"status":"Active","parentId":null,"userId":"1bdd3f52-3349-4557-8b0d-3a60f6069cfb","displayName":"Chetan Gaikwad","email":"gchetan@futransolutions.com","createdById":"1bdd3f52-3349-4557-8b0d-3a60f6069cfb","lastModifiedById":"1bdd3f52-3349-4557-8b0d-3a60f6069cfb","lastModifiedDate":"2023-01-24T06:18:17.433Z","createdDate":"2023-01-24T06:18:17.433Z"},"validatorKey":"not_unique","validatorName":null,"validatorArgs":[]}],"parent":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'1bdd3f52-3349-4557-8b0d-3a60f6069cfb\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["1bdd3f52-3349-4557-8b0d-3a60f6069cfb","Chetan Gaikwad","gchetan@futransolutions.com",null,null,"Active","2023-01-24 06:18:17","2023-01-24 06:18:17","1bdd3f52-3349-4557-8b0d-3a60f6069cfb","1bdd3f52-3349-4557-8b0d-3a60f6069cfb",null]},"original":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'1bdd3f52-3349-4557-8b0d-3a60f6069cfb\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["1bdd3f52-3349-4557-8b0d-3a60f6069cfb","Chetan Gaikwad","gchetan@futransolutions.com",null,null,"Active","2023-01-24 06:18:17","2023-01-24 06:18:17","1bdd3f52-3349-4557-8b0d-3a60f6069cfb","1bdd3f52-3349-4557-8b0d-3a60f6069cfb",null]},"fields":{"PRIMARY":"1bdd3f52-3349-4557-8b0d-3a60f6069cfb"},"sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);"}:',
+  timestamp: '2023-01-24T06:18:17.469Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:27:42.635Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while creating user in checkUserExistInApp middleware {"name":"SequelizeUniqueConstraintError","errors":[{"message":"PRIMARY must be unique","type":"unique violation","path":"PRIMARY","value":"0e79f771-9530-40d6-bd10-22ab01a3de87","origin":"DB","instance":{"mobile":null,"city":null,"status":"Active","parentId":null,"userId":"0e79f771-9530-40d6-bd10-22ab01a3de87","displayName":"Shivam Sharma","email":"sshivam@futransolutions.com","createdById":"0e79f771-9530-40d6-bd10-22ab01a3de87","lastModifiedById":"0e79f771-9530-40d6-bd10-22ab01a3de87","lastModifiedDate":"2023-01-24T06:29:46.011Z","createdDate":"2023-01-24T06:29:46.011Z"},"validatorKey":"not_unique","validatorName":null,"validatorArgs":[]}],"parent":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'0e79f771-9530-40d6-bd10-22ab01a3de87\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["0e79f771-9530-40d6-bd10-22ab01a3de87","Shivam Sharma","sshivam@futransolutions.com",null,null,"Active","2023-01-24 06:29:46","2023-01-24 06:29:46","0e79f771-9530-40d6-bd10-22ab01a3de87","0e79f771-9530-40d6-bd10-22ab01a3de87",null]},"original":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'0e79f771-9530-40d6-bd10-22ab01a3de87\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["0e79f771-9530-40d6-bd10-22ab01a3de87","Shivam Sharma","sshivam@futransolutions.com",null,null,"Active","2023-01-24 06:29:46","2023-01-24 06:29:46","0e79f771-9530-40d6-bd10-22ab01a3de87","0e79f771-9530-40d6-bd10-22ab01a3de87",null]},"fields":{"PRIMARY":"0e79f771-9530-40d6-bd10-22ab01a3de87"},"sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);"}:',
+  timestamp: '2023-01-24T06:29:46.056Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:29:52.965Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:31:00.608Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:35:49.728Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while creating user in checkUserExistInApp middleware {"name":"SequelizeUniqueConstraintError","errors":[{"message":"PRIMARY must be unique","type":"unique violation","path":"PRIMARY","value":"0e79f771-9530-40d6-bd10-22ab01a3de87","origin":"DB","instance":{"mobile":null,"city":null,"status":"Active","parentId":null,"userId":"0e79f771-9530-40d6-bd10-22ab01a3de87","displayName":"Shivam Sharma","email":"sshivam@futransolutions.com","createdById":"0e79f771-9530-40d6-bd10-22ab01a3de87","lastModifiedById":"0e79f771-9530-40d6-bd10-22ab01a3de87","lastModifiedDate":"2023-01-24T06:37:15.648Z","createdDate":"2023-01-24T06:37:15.648Z"},"validatorKey":"not_unique","validatorName":null,"validatorArgs":[]}],"parent":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'0e79f771-9530-40d6-bd10-22ab01a3de87\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["0e79f771-9530-40d6-bd10-22ab01a3de87","Shivam Sharma","sshivam@futransolutions.com",null,null,"Active","2023-01-24 06:37:15","2023-01-24 06:37:15","0e79f771-9530-40d6-bd10-22ab01a3de87","0e79f771-9530-40d6-bd10-22ab01a3de87",null]},"original":{"code":"ER_DUP_ENTRY","errno":1062,"sqlState":"23000","sqlMessage":"Duplicate entry \'0e79f771-9530-40d6-bd10-22ab01a3de87\' for key \'users.PRIMARY\'","sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);","parameters":["0e79f771-9530-40d6-bd10-22ab01a3de87","Shivam Sharma","sshivam@futransolutions.com",null,null,"Active","2023-01-24 06:37:15","2023-01-24 06:37:15","0e79f771-9530-40d6-bd10-22ab01a3de87","0e79f771-9530-40d6-bd10-22ab01a3de87",null]},"fields":{"PRIMARY":"0e79f771-9530-40d6-bd10-22ab01a3de87"},"sql":"INSERT INTO `Users` (`userId`,`displayName`,`email`,`mobile`,`city`,`status`,`createdDate`,`lastModifiedDate`,`createdById`,`lastModifiedById`,`parentId`) VALUES (?,?,?,?,?,?,?,?,?,?,?);"}:',
+  timestamp: '2023-01-24T06:37:15.741Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:43:31.199Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:43:34.028Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:45:03.227Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:50:14.629Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:51:35.258Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:53:06.984Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T06:54:28.795Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:07:24.706Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:07:52.611Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:08:03.693Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:09:04.977Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:11:53.090Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:12:18.582Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:12:29.630Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:12:47.870Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:13:17.936Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:13:26.895Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:14:22.419Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:14:44.325Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:15:09.949Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:15:12.235Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:15:28.737Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:15:36.649Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:15:43.941Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:15.539Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:22.950Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:30.314Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:38.884Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:45.858Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:16:51.407Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:17:18.422Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:19:07.189Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:19:23.533Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'users')",
+  level: 'error',
+  timestamp: '2023-01-24T07:19:47.090Z'
+}
