@@ -122,7 +122,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Active'
         }
     }, {
-        tableName: 'Candidates',
+        tableName: 'candidates',
         createdAt: 'createdDate',
         updatedAt: 'lastModifiedDate',
         timestamps: true

@@ -48,7 +48,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Active'
         }
     }, {
-        tableName: 'TempCeipalJobs',
+        tableName: 'tempceipaljobs',
         createdAt: 'createdDate',
         updatedAt: 'lastModifiedDate',
         timestamps: true

@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Active'
         }
     }, {
-        tableName: 'Roles',
+        tableName: 'roles',
         createdAt: 'createdDate',
         updatedAt: 'lastModifiedDate',
         indexes: [

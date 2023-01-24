@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Active'
         }
     }, {
-        tableName: 'Permissions',
+        tableName: 'permissions',
         createdAt: 'createdDate',
         updatedAt: 'lastModifiedDate',
         indexes: [

@@ -22,7 +22,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Active'
         }
     }, {
-        tableName: 'MetaData',
+        tableName: 'metadata',
         createdAt: 'createdDate',
         updatedAt: 'lastModifiedDate',
         timestamps: true,
