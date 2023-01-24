@@ -7,7 +7,8 @@ import moment from 'moment';
 let baseURL;
 
 if (process.env.NODE_ENV === 'production') {
-    baseURL = 'https://44.199.164.191';
+    baseURL = 'https://hr-app-test-be.futransolutions.com';
+
 } else {
     baseURL = 'http://localhost:5000';
 }

@@ -6,7 +6,8 @@ import { acquireToken } from '../acquireToken';
 let baseURL;
 
 if (process.env.NODE_ENV === 'production') {
-    baseURL = 'https://44.199.164.191';
+    baseURL = 'https://hr-app-test-be.futransolutions.com';
+
 } else {
     baseURL = 'http://localhost:5000';
 }
@@ -66,7 +67,7 @@ export const useInterviews = () => {
         },
         {
             onSuccess: (updatedInterview) => {
-                queryClient.setQueryData(['candidate', updatedInterview.data.candidate_id], (currentCandidate) => {
+                queryClient.setQueryData(['candidate', updatedInterview.data.candidateId], (currentCandidate) => {
                     return {
                         status: 'success',
                         statusCode: 200,

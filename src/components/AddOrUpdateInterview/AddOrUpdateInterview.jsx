@@ -85,7 +85,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
             ...form,
             [e.target.name]: e.target.value
         });
-        console.logt(value)
+        console.log(value)
     }
 
     const handleSubmit = async (e) => {
@@ -101,9 +101,37 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
         if ((interviewBody !== interview?.interviewBody) && editMode) form.interviewBody = interviewBody;
 
         if (editMode) {
-            // updateInterview.mutate({ formData: form, candidate_id: candidate.candidateId, interview_id: interview.interviewId });
+            updateInterview.mutate({ formData: form, candidate_id: candidate.candidateId, interview_id: interview.interviewId },
+                {
+                    onSuccess: (data) => {
+                        alert('success');
+                        setEditMode(false);
+                        setIsModalOpen(false)
+
+                    }
+                },
+                {
+                    onSuccess: (data) => {
+                        alert('error')
+                    }
+                }
+            );
+
         } else {
-            // scheduleInterview.mutate({ formData: form, candidate_id: candidate.candidateId });
+            scheduleInterview.mutate({ formData: form, candidate_id: candidate.candidateId },
+                {
+                    onSuccess: (data) => {
+                        alert('success');
+                        setEditMode(false);
+                        setIsModalOpen(false)
+
+                    }
+                },
+                {
+                    onSuccess: (data) => {
+                        alert('error')
+                    }
+                });
         }
 
     }
@@ -229,7 +257,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                                     <FormControl variant="standard" sx={{ width: 300, mr: 2, mt: -1 }} size="small" >
                                         <h3>Interview Date</h3>
                                         <input
-                                        style={{ width: 300, height: 50, fontSize: 15 }}
+                                            style={{ width: 300, height: 50, fontSize: 15 }}
                                             id='interviewDate'
                                             type="date"
                                             name="interviewDate"
@@ -309,7 +337,7 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
                             </Grid>
                             <Box>
                                 <Grid item xs='auto'>
-                                    <ReactQuill theme="snow" id='interview_body'defaultValue={interview?.interviewBody}
+                                    <ReactQuill theme="snow" id='interview_body' defaultValue={interview?.interviewBody}
                                         name="remark"
                                         onChange={setInterviewBody} placeholder="Write Something"
                                         style={{ height: '120px', marginTop: "40px", width: "1100px", marginBottom: "50px", marginLeft: "10px" }}

@@ -39,6 +39,7 @@ const Candidate = () => {
   const [company, setCompany] = useState(null);
   const [showOnBoarding, setShowOnBoarding] = useState(false);
   const [showDocument, setshowDocument] = useState(false);
+  const [showHr, setShowHr] = useState(false);
   const [remark1, setRemark] = useState();
   const { HR } = useUsers()
   const [currentStatus, setCurrentStatus] = useState(null);
@@ -65,12 +66,12 @@ const Candidate = () => {
       }
     }
 
-    if (e.target.name === 'candidateStatusId') {
-      if (e.target.value === '9098ccd3-b893-4f82-bbb1-b5663a596a71') {
+    // if (e.target.name === 'candidateStatusId') {
+    //   if (e.target.value === '9098ccd3-b893-4f82-bbb1-b5663a596a71') {
 
-        setShowOnBoarding(true);
-      }
-    }
+    //     setShowOnBoarding(true);
+    //   }
+    // }
 
     setForm({
       ...form,
@@ -899,7 +900,7 @@ const Candidate = () => {
               </Grid>
 
 
-              {window.localStorage.getItem('role') === 'TA Manager' &&
+              {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'HR Manager') &&
                 <>
                   <Grid item xs='auto'>
                     <FormControl variant="standard" sx={{ width: 300, marginTop: 4 }} size="small">

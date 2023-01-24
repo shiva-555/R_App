@@ -1,7 +1,7 @@
 let redirectUri;
 
 if (process.env.NODE_ENV === 'production') {
-  redirectUri = 'https://recruitment.futransolutions.com';
+  redirectUri = 'https://hr-app-test.futransolutions.com';
 } else {
   redirectUri = 'http://localhost:3000';
 }

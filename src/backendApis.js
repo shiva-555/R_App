@@ -3,7 +3,8 @@ import { acquireToken } from "./helpers/acquireToken";
 
 let baseUrl;
 if (process.env.NODE_ENV === 'production') {
-    baseUrl = 'https://44.199.164.191';
+    baseUrl = 'https://hr-app-test-be.futransolutions.com';
+
 } else {
     baseUrl = 'http://localhost:5000';
 }
