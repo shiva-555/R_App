@@ -914,7 +914,6 @@ const Candidate = () => {
                         required
                         onChange={(e) => handleChange(e)}
                         margin='normal'
-                        disabled={currentStatus !== '9098ccd3-b893-4f82-bbb1-b5663a596a71'}
                         defaultValue={candidate?.data?.data?.hrId}>
                         <MenuItem key="" value=""> Select HR</MenuItem>
                         {HR?.data?.data?.map((h) => {

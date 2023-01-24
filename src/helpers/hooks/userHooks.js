@@ -81,11 +81,13 @@ export const useUsers = () => {
             'user-info': role
             }
         });
-        const { data } = await client.get('/appUsers?role=recruiter');
+        const { data } = await client.get('/appUsers?role=Recruiter');
         return data;
-    }, {
-        enabled: role === 'Admin' ? true : false
-    });
+    }, 
+    // {
+    //     enabled: role === 'Admin' ? true : false
+    // }
+    );
 
     // const hiringManagers = useQuery('hiringManagers', async() => {
     //     const token  = await acquireToken(instance, accounts);

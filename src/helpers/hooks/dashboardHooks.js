@@ -16,6 +16,8 @@ if (process.env.NODE_ENV === 'production') {
 export const useDashboard = () => {
     const {instance, accounts} = useMsal();
     const queryClient = useQueryClient();
+    const role = window.localStorage.getItem('role');
+
 
     const useGetDashboard = (filter) => useQuery('dashboard', async () => {
         let query;
@@ -42,7 +44,9 @@ export const useDashboard = () => {
         const client = axios.create({
             baseURL: baseURL,
             headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'user-info': role
+
             }
         });
         const { data } = await client.get(`/dashboard${query ? query : ''}`);

@@ -37,6 +37,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -58,7 +59,7 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
       let value, value1;
       if (apiData[i][key] && typeof apiData[i][key] === 'object' && apiData[i][key].hasOwnProperty('candidates')) {
         value = apiData[i][key].candidates;
-        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.display_name, CandidateName: el.candidate_name, Remark: el.remark, CreatedDate: moment(el.created_date).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.display_text, JoiningDate: moment(el.joining_date).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interview_date).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidate_calling_date).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidate_email, CandidatePhone: el.candidate_phone, JobTitle: el.jobTitle?.job_title, location: el.jobLocation.display_text, Company: el.company, Source: el.source?.display_text, TotalExperience: el.total_experience, RelevantExperience: el.relevant_experience }]);
+        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.display_name, CandidateName: el.candidateName, Remark: el.remark, CreatedDate: moment(el.createdDate).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.display_text, JoiningDate: moment(el.joiningDate).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation.display_text, Company: el.company, Source: el.source?.display_text, TotalExperience: el.total_experience, RelevantExperience: el.relevant_experience }]);
         for (let j = 0; j < value1.length; j++) {
           candidates.push(...value1[j]);
         }
@@ -86,7 +87,7 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
             data[key] = hiringManagerNames;
           }
         }
-      } else if (key === 'total' || key === 'assignedRecruiters' || key === 'job_code' || key === 'job_title' || key === 'job_type') {
+      } else if (key === 'total' || key === 'assignedRecruiters' || key === 'jobCode' || key === 'jobTitle' || key === 'job_type') {
         if (key === 'assignedRecruiters') {
           if (data[key].length > 0) {
             let recruiterNames = ''
@@ -133,48 +134,48 @@ const statusFields = [
   {
     Status: 'Screening',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' }
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' }
     ]
   },
   {
     Status: 'Identified',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
     ]
   },
   {
     Status: 'Scheduled',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 }
     ]
@@ -182,190 +183,190 @@ const statusFields = [
   {
     Status: 'Selected',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected Date', fieldValue: 'selected_or_rejected_date' }
+      { fieldName: 'Selected Date', fieldValue: 'selectedRejectedDate' }
 
     ]
   },
   {
     Status: 'Doc Verification Completed',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'Doc Verification Date', fieldValue: 'document_verification_initiated_on' }
+      { fieldName: 'Selected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'Doc Verification Date', fieldValue: 'documentVerificationInitiatedOn' }
     ]
   },
   {
     Status: 'Offered',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'Doc Verification Date', fieldValue: 'document_verification_initiated_on' },
-      { fieldName: 'Offer Date', fieldValue: 'offer_date' },
-      { fieldName: 'Offered Salary', fieldValue: 'offered_salary' },
+      { fieldName: 'Selected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'Doc Verification Date', fieldValue: 'documentVerificationInitiatedOn' },
+      { fieldName: 'Offer Date', fieldValue: 'offerDate' },
+      { fieldName: 'Offered Salary', fieldValue: 'offeredSalary' },
     ]
   },
   {
     Status: 'Joined',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Notice Period', fieldValue: 'notice_period_in_days' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Notice Period', fieldValue: 'noticePeriodInDays' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'Doc Verification Date', fieldValue: 'document_verification_initiated_on' },
-      { fieldName: 'Offer Date', fieldValue: 'offer_date' },
-      { fieldName: 'Offered Salary', fieldValue: 'offered_salary' },
-      { fieldName: 'Joining Date', fieldValue: 'joining_date' },
+      { fieldName: 'Selected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'Doc Verification Date', fieldValue: 'documentVerificationInitiatedOn' },
+      { fieldName: 'Offer Date', fieldValue: 'offerDate' },
+      { fieldName: 'Offered Salary', fieldValue: 'offeredSalary' },
+      { fieldName: 'Joining Date', fieldValue: 'joiningDate' },
     ]
   },
   {
     Status: 'Disqualified',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected/Rejected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'BackOut', fieldValue: 'backout_reason_id' }
+      { fieldName: 'Selected/Rejected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'BackOut', fieldValue: 'backoutReasonId' }
 
     ]
   },
   {
     Status: 'Rejected',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected/Rejected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'BackOut', fieldValue: 'backout_reason_id' }
+      { fieldName: 'Selected/Rejected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'BackOut', fieldValue: 'backoutReasonId' }
     ]
   },
   {
     Status: 'BackOut',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected/Rejected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'BackOut', fieldValue: 'backout_reason_id' }
+      { fieldName: 'Selected/Rejected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'BackOut', fieldValue: 'backoutReasonId' }
     ]
   },
   {
     Status: 'BackUp',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'Selected/Rejected Date', fieldValue: 'selected_or_rejected_date' },
-      { fieldName: 'BackOut', fieldValue: 'backout_reason_id' }
+      { fieldName: 'Selected/Rejected Date', fieldValue: 'selectedRejectedDate' },
+      { fieldName: 'BackOut', fieldValue: 'backoutReasonId' }
     ]
   },
   {
     Status: 'Hold',
     Fields: [
-      { fieldName: 'Candidate Name', fieldValue: 'candidate_name' },
-      { fieldName: 'Email', fieldValue: 'candidate_email' },
-      { fieldName: 'Mobile', fieldValue: 'candidate_phone' },
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
       { fieldName: 'Job Location', fieldValue: 'jobLocation' },
       { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
-      { fieldName: 'Reporting Manager', fieldValue: 'reporting_manager' },
-      { fieldName: 'Calling date', fieldValue: 'candidate_calling_date' },
-      { fieldName: 'Current CTC', fieldValue: 'current_ctc' },
-      { fieldName: 'Expected CTC', fieldValue: 'expected_ctc' },
-      { fieldName: 'Screening Date', fieldValue: 'created_date' },
-      { fieldName: 'Identified Date', fieldValue: 'identified_date' },
+      { fieldName: 'Reporting Manager', fieldValue: 'reportingManager' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Expected CTC', fieldValue: 'expectedCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' },
+      { fieldName: 'Identified Date', fieldValue: 'identifiedDate' },
       { fieldName: 'InterView 1st Date', fieldValue: 'interviews', round: 1 },
       { fieldName: 'InterView 2nd Date', fieldValue: 'interviews', round: 2 },
-      { fieldName: 'BackOut', fieldValue: 'backout_reason_id' }
+      { fieldName: 'BackOut', fieldValue: 'backoutReasonId' }
     ]
   },
 
@@ -382,7 +383,7 @@ const Dashboard = () => {
   const [candidates, setCandidates] = useState(null);
   const dashboard = useGetDashboard(filter);
   const value = useContext(UserContext);
-  const { hiringManagers, recruiters } = useUsers(value.data.assignedRoles[0].assignedRole.role);
+  const { HR, recruiters } = useUsers(value?.data?.assignedRoles?.assignedRole.role);
   const [jobSelectedColumns, setJobSelectedColumns] = useState([]);
 
   const [open, setOpen] = React.useState(false);
@@ -397,7 +398,7 @@ const Dashboard = () => {
   useEffect(() => {
 
     if (dashboard?.data?.data) {
-      setJobSelectedColumns(dashboard?.data?.data.map((job) => job.job_title));
+      setJobSelectedColumns(dashboard?.data?.data.map((job) => job.jobTitle));
     }
 
     if (JSON.stringify(filter) === '{}') {
@@ -407,7 +408,8 @@ const Dashboard = () => {
   }, [dashboard?.data?.data, JSON.stringify(filter)]);
 
 
-  if (dashboard.isLoading || hiringManagers.isLoading || recruiters.isLoading || dashboard.isFetching) {
+  console.log(dashboard?.data?.data);
+  if (dashboard.isLoading || HR.isLoading || recruiters.isLoading || dashboard.isFetching) {
     return <SpinLoader />
   }
 
@@ -454,103 +456,121 @@ const Dashboard = () => {
     const { target: { value }, } = event;
 
     if (value[value.length - 1] === "all") {
-      setJobSelectedColumns(jobSelectedColumns.length === dashboard?.data?.data.length ? [] : dashboard?.data?.data.map((job) => job.job_title));
+      setJobSelectedColumns(jobSelectedColumns.length === dashboard?.data?.data.length ? [] : dashboard?.data?.data.map((job) => job.jobTitle));
       return;
     }
     setJobSelectedColumns(typeof value === 'string' ? value.split(',') : value,);
   }
 
-  const recruiterDetails = [];
-  for (let i = 0; i < dashboard?.data?.data.length; i++) {
-    for (const key in dashboard?.data?.data[i]) {
-      let v, v1;
-      if (dashboard.data.data[i][key] && typeof dashboard.data.data[i][key] === 'object' && dashboard.data.data[i][key].hasOwnProperty('candidates')) {
-        v = dashboard.data.data[i][key].candidates;
-        v1 = v?.map((el) => [{ RecruiterName: el.createdBy?.display_name, CandidateName: el.candidate_name, Remark: el.remark, Status: el.candidateStatus?.display_text, ScheduledDate: moment(el.interviews[0]?.interview_date).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidate_calling_date).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidate_email, CandidatePhone: el.candidate_phone, JobTitle: el.jobTitle?.job_title, location: el.jobLocation?.display_text, Company: el.company, Source: el.source?.display_text, TotalExperience: el.total_experience, RelevantExperience: el.relevant_experience }]);
-        for (let j = 0; j < v1.length; j++) {
-          recruiterDetails.push(...v1[j]);
-        }
-      }
-    }
-  }
+  // const recruiterDetails = [];
+  // for (let i = 0; i < dashboard?.data?.data.length; i++) {
+  //   for (const key in dashboard?.data?.data[i]) {
+  //     let v, v1;
+  //     if (dashboard.data.data[i][key] && typeof dashboard.data.data[i][key] === 'object' && dashboard.data.data[i][key].hasOwnProperty('candidates')) {
+  //       v = dashboard.data.data[i][key].candidates;
+  //       v1 = v?.map((el) => [{ RecruiterName: el.createdBy?.display_name, CandidateName: el.candidateName, Remark: el.remark, Status: el.candidateStatus?.display_text, ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation?.display_text, Company: el.company, Source: el.source?.display_text, TotalExperience: el.total_experience, RelevantExperience: el.relevant_experience }]);
+  //       for (let j = 0; j < v1.length; j++) {
+  //         recruiterDetails.push(...v1[j]);
+  //       }
+  //     }
+  //   }
+  // }
 
-  const groups = recruiterDetails.reduce((groups, item) => {
-    const group = (groups[item.RecruiterName] || []);
-    group.push(item);
-    groups[item.RecruiterName] = group;
-    return groups;
-  }, {});
+  // const groups = recruiterDetails.reduce((groups, item) => {
+  //   const group = (groups[item.RecruiterName] || []);
+  //   group.push(item);
+  //   groups[item.RecruiterName] = group;
+  //   return groups;
+  // }, {});
 
-  const recruiterNames = Object.keys(groups);
-  const graphData = [];
-  for (let i = 0; i < recruiterNames.length; i++) {
-    graphData.push({
-      Name: recruiterNames[i],
-      Candidates: groups[recruiterNames[i]].length,
-      // Status: groups[recruiterNames[i]][i]?.Status
-    })
-  }
+  // const recruiterNames = Object.keys(groups);
+  // const graphData = [];
+  // for (let i = 0; i < recruiterNames.length; i++) {
+  //   graphData.push({
+  //     Name: recruiterNames[i],
+  //     Candidates: groups[recruiterNames[i]].length,
+  //     // Status: groups[recruiterNames[i]][i]?.Status
+  //   })
+  // }
 
-  const status = groups[recruiterNames[graphCurrentRecruiter]]?.map((el) => [el.Status]);
-  const count = [];
-  candidateStatuses?.data?.data?.forEach(element => {
-    let obj = {};
-    if (status) {
-      obj.Name = element.display_text;
-      obj.count = status.filter((el) => el[0] === element.display_text).length ? status.filter((el) => el[0] === element.display_text).length : 0;
-      count.push(obj);
-    }
-  });
+  // const status = groups[recruiterNames[graphCurrentRecruiter]]?.map((el) => [el.Status]);
+  // const count = [];
+  // candidateStatuses?.data?.data?.forEach(element => {
+  //   let obj = {};
+  //   if (status) {
+  //     obj.Name = element.display_text;
+  //     obj.count = status.filter((el) => el[0] === element.display_text).length ? status.filter((el) => el[0] === element.display_text).length : 0;
+  //     count.push(obj);
+  //   }
+  // });
+
 
   return (
 
-    <Box sx={{ flexGrow: 1, marginTop: '7%',margin:'80px' }}>
+    <Box sx={{ flexGrow: 1, marginTop: '7%', margin: '80px' }}>
       <Grid container>
         {showCandidateList && <CandidateList candidates={candidates} setShowCandidateList={setShowCandidateList} jobDetails={jobDetails} />}
         <Grid item xs='auto'>
-          {(value.data.assignedRoles.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value.data.assignedRoles.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
-            <>
-              <FormControl sx={{ m: 1, minWidth: 120 }} >
-                <InputLabel id="select-hiringManager-label">Hiring Manger</InputLabel>
-                <Select
-                  labelId="select-hiringManager-label"
-                  id="hiringManager"
-                  label="Select Hiring Manger"
-                  value={filter?.hiringManager}
-                  onChange={(e) => { setFilter({ ...filter, hiringManager: e.target.value }) }}
-                >
+          {/* {(value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
+            <> */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} >
+            <Autocomplete
+              disablePortal
+              labelId="select-hiringManager-label"
+              id="hiringManager"
+              label="Select Hiring Manger"
+              value={filter?.hiringManager}
+              options={HR?.data?.data.map((manager) => ({ label: manager.displayName, value: manager.userId }))}
+              sx={{ width: 300 }}
+              style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
+              renderInput={(params) => <TextField {...params} label="Hiring Manager" />}
+              onChange={(e, job) => {
+                setFilter({ ...filter, hiringManager: e.target.value })
+              }}
 
-                  <MenuItem value=""></MenuItem>
-                  {hiringManagers?.data && hiringManagers.data.data.map(manager =>
-                    <MenuItem key={manager.user_id} value={manager.user_id}>{manager.display_name}</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-            </>
-          }
+            />
+          </FormControl>
+          {/* <FormControl sx={{ m: 1, minWidth: 120 }} >
+            <InputLabel id="select-hiringManager-label">Hiring Manger</InputLabel>
+            <Select
+              labelId="select-hiringManager-label"
+              id="hiringManager"
+              label="Select Hiring Manger"
+              value={filter?.hiringManager}
+              onChange={(e) => { setFilter({ ...filter, hiringManager: e.target.value }) }}
+            >
+
+              <MenuItem value=""></MenuItem>
+              {HR?.data && HR.data.data.map(manager =>
+                <MenuItem key={manager.userId} value={manager.userId}>{manager.displayName}</MenuItem>
+              )}
+            </Select>
+          </FormControl> */}
+          {/* </>
+          } */}
         </Grid>
 
         <Grid item xs='auto'>
-          {
-            (value.data.assignedRoles.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value.data.assignedRoles.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
-            <>
-              <FormControl sx={{ m: 1, minWidth: 120 }} >
-                <InputLabel id="select-recruiter-label">Recruiter</InputLabel>
-                <Select
-                  labelId="select-recruiter-label"
-                  label="Select Recruiter"
-                  id="recruiter-select"
-                  value={filter?.recruiter}
-                  onChange={(e) => { setFilter({ ...filter, recruiter: e.target.value }) }}
-                >
-                  <MenuItem value=""></MenuItem>
-                  {recruiters?.data && recruiters.data.data.map(recruiter =>
-                    <MenuItem key={recruiter.user_id} value={recruiter.user_id}>{recruiter.display_name}</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-            </>
-          }
+          {/* {
+            (value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
+            <> */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} >
+            <InputLabel id="select-recruiter-label">Recruiter</InputLabel>
+            <Select
+              labelId="select-recruiter-label"
+              label="Select Recruiter"
+              id="recruiter-select"
+              value={filter?.recruiter}
+              onChange={(e) => { setFilter({ ...filter, recruiter: e.target.value }) }}
+            >
+              <MenuItem value=""></MenuItem>
+              {recruiters?.data && recruiters.data.data.map(recruiter =>
+                <MenuItem key={recruiter.userId} value={recruiter.userId}>{recruiter.displayName}</MenuItem>
+              )}
+            </Select>
+          </FormControl>
+          {/* </>
+          } */}
         </Grid>
 
         <Grid item xs='auto'>
@@ -561,7 +581,7 @@ const Dashboard = () => {
                 id="startDate"
                 value={filter?.startDate ? filter?.startDate : null}
                 onChange={(newDate) => {
-                  setFilter({ ...filter, startDate: newDate});
+                  setFilter({ ...filter, startDate: newDate });
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -577,7 +597,7 @@ const Dashboard = () => {
                 id="endDate"
                 value={filter?.endDate ? filter?.endDate : null}
                 onChange={(newDate) => {
-                  setFilter({ ...filter, endDate: newDate});
+                  setFilter({ ...filter, endDate: newDate });
                 }}
                 renderInput={(params) => <TextField {...params} />}
               />
@@ -636,14 +656,15 @@ const Dashboard = () => {
 
               {dashboard?.data && dashboard?.data?.data.map((job) => (
 
-                <MenuItem key={job.job_title} value={job.job_title}>
-                  <Checkbox checked={jobSelectedColumns.indexOf(job.job_title) > -1} />
-                  <ListItemText primary={job.job_title} />
+                <MenuItem key={job.jobTitle} value={job.jobTitle}>
+                  <Checkbox checked={jobSelectedColumns.indexOf(job.jobTitle) > -1} />
+                  <ListItemText primary={job.jobTitle} />
                 </MenuItem>
               ))
               }
             </Select>
           </FormControl>
+
         </Grid>
       </Grid>
 
@@ -656,7 +677,7 @@ const Dashboard = () => {
 
         <Grid Item xs='auto'>
           <FormControl sx={{ m: 1, minWidth: 120 }} >
-            <Button variant="contained" onClick={(e) => {setFilter({})}}>Reset</Button>
+            <Button variant="contained" onClick={(e) => { setFilter({}) }}>Reset</Button>
           </FormControl>
         </Grid>
 
@@ -667,13 +688,13 @@ const Dashboard = () => {
         </Grid>
 
         <Grid Item xs='auto'>
-          {(value.data.assignedRoles.some((assignedRole) => assignedRole.assignedRole.role === 'Admin')) &&
-            <>
-              <FormControl sx={{ m: 1 }}>
-                <Button variant="contained" onClick={(e) => { setShowGraph(true) }}>Show Graph</Button>
-              </FormControl>
-            </>
-          }
+          {/* {(value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Admin')) &&
+            <> */}
+          <FormControl sx={{ m: 1 }}>
+            <Button variant="contained" onClick={(e) => { setShowGraph(true) }}>Show Graph</Button>
+          </FormControl>
+          {/* </>
+          } */}
         </Grid>
       </Grid>
 
@@ -713,7 +734,6 @@ const Dashboard = () => {
                         maxWidth: 200
                       }}>Job Title</TableCell>
 
-                    {/* <TableCell>Type</TableCell> */}
                     <TableCell style={{ minWidth: 500, maxWidth: 500 }}>Recruiters</TableCell>
                     <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Total</TableCell>
                     <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Screening</TableCell>
@@ -732,14 +752,14 @@ const Dashboard = () => {
                 </TableHead>
                 <TableBody>
                   {dashboard?.data && dashboard?.data.data.map((data, i) => {
-                    if (jobSelectedColumns.includes(data.job_title)) {
+                    if (jobSelectedColumns.includes(data.jobTitle)) {
                       return (
                         <TableRow
-                          key={data.job_code}
+                          key={data.jobCode}
                           hover
                           sx={{
-                              fontSize: "0.5rem",
-                              height: '1px'
+                            fontSize: "0.5rem",
+                            height: '1px'
                           }}
                         >
 
@@ -756,7 +776,7 @@ const Dashboard = () => {
                               minWidth: 100,
                               maxWidth: 100
                             }}>
-                            {data.job_code}</TableCell>
+                            {data.jobCode}</TableCell>
 
                           <TableCell
                             align="left"
@@ -770,10 +790,10 @@ const Dashboard = () => {
                               borderLeft: 0,
                               minWidth: 100,
                               maxWidth: 100
-                            }}>{data.job_title}</TableCell>
+                            }}>{data.jobTitle}</TableCell>
 
-                          {/* <TableCell>{data.job_type}</TableCell> */}
-                          <TableCell style={{ minWidth: 500, maxWidth: 500, border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, }}>{data.assignedRecruiters.map((recruiter, i, arr) => ((arr.length - 1) !== i) ? recruiter + ',' : recruiter)}</TableCell>
+
+                          <TableCell style={{ minWidth: 500, maxWidth: 500, border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, }}>{data?.assignedRecruiters?.map((recruiter, i, arr) => ((arr.length - 1) !== i) ? recruiter + ',' : recruiter)}</TableCell>
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100 }}>{data.total}</TableCell>
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100, 'cursor': data.Screening?.count > 0 ? 'pointer' : '', 'color': data.Screening?.count > 0 ? 'blue' : '' }} onClick={(e) => {
 
@@ -782,8 +802,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Screening',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Screening?.count}</TableCell>
@@ -795,8 +815,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Identified',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Identified?.count}</TableCell>
@@ -807,8 +827,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Scheduled',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Scheduled?.count}</TableCell>
@@ -819,8 +839,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Selected',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Selected?.count}</TableCell>
@@ -831,8 +851,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Offered',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Offered?.count}</TableCell>
@@ -843,8 +863,8 @@ const Dashboard = () => {
                               setOpen(true);
                               setJobDetails({
                                 status: 'Joined',
-                                jobCode: data.job_code,
-                                jobTitle: data.job_title
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
                               });
                             }
                           }}>{data.Joined?.count}</TableCell>
@@ -865,8 +885,8 @@ const Dashboard = () => {
                                     setOpen(true);
                                     setJobDetails({
                                       status: column.label,
-                                      jobCode: data.job_code,
-                                      jobTitle: data.job_title
+                                      jobCode: data.jobCode,
+                                      jobTitle: data.jobTitle
                                     });
                                   }
                                 }}>{data[column.label].count}</TableCell>
@@ -886,7 +906,7 @@ const Dashboard = () => {
           </Paper>
         </Grid>
 
-        {showGraph &&
+        {/* {showGraph &&
           <>
             <div className='dashboard__graph'>
               <button className='button_reset' onClick={(e) => { setShowGraph(false) }} style={{ marginLeft: '90%', marginTop: '1%' }}>Close</button>
@@ -894,7 +914,7 @@ const Dashboard = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="Name" />
                 <YAxis dataKey="Candidates" label={{ value: 'Total Candidates', angle: -90, position: 'insideLeft' }} />
-                {/* <Legend /> */}
+
                 <Tooltip />
                 <Bar dataKey="Candidates" >
                   {graphData.map((entry, index) => (
@@ -913,13 +933,13 @@ const Dashboard = () => {
               <BarChart width={900} height={500} data={count} margin={{ top: 15, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="Name" />
-                {/* <Legend /> */}
+
                 <Tooltip />
                 <Bar dataKey="count" fill="#8884d8" />
               </BarChart>
             </div>
           </>
-        }
+        } */}
 
         <Dialog
           fullScreen={fullScreen}
@@ -938,7 +958,7 @@ const Dashboard = () => {
             <TableContainer sx={{ maxHeight: 440 }} dividers={scroll === 'paper'}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
-                <TableRow sx={{
+                  <TableRow sx={{
                     "& th": {
                       borderBottom: "2px solid black",
                       fontSize: "0.9rem",
@@ -956,7 +976,7 @@ const Dashboard = () => {
                 </TableHead>
                 <TableBody>
                   {candidates && candidates.map((data, i) => {
-                    return <tr className='candidateList-block__tablBodyRow' key={data.candidate_name}>
+                    return <tr className='candidateList-block__tablBodyRow' key={data.candidateName}>
                       {statusFields.filter((el) => el.Status === jobDetails?.status)[0]?.Fields.map((field) => {
                         let value;
                         if (!data[field.fieldValue]) {
@@ -965,11 +985,11 @@ const Dashboard = () => {
                           if (typeof data[field.fieldValue] === 'object') {
                             if (data[field.fieldValue] instanceof Array && field.fieldValue === 'interviews') {
                               value = data[field.fieldValue].filter((interview) => {
-                                return interview.interview_round === field.round
-                              })[0]?.interview_date;
+                                return interview.interviewRound === field.round
+                              })[0]?.interviewDate;
                               value = value ? value : 'N/A'
                             } else {
-                              value = data[field.fieldValue].display_text ? data[field.fieldValue].display_text : data[field.fieldValue].display_name;
+                              value = data[field.fieldValue].displayText ? data[field.fieldValue].displayText : data[field.fieldValue].displayName;
                             }
                           } else {
                             value = data[field.fieldValue]

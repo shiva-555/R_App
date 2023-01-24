@@ -32,10 +32,10 @@ const JobRequisition = () => {
 
   return (
 
-    <div style={{height:'auto',margin:'50px',marginTop:'10px'}}>
+    <div style={{ height: 'auto', margin: '50px', marginTop: '10px' }}>
 
       <Paper>
-        <Box m={10} sx={{ overflow: 'hidden'}}>
+        <Box m={10} sx={{ overflow: 'hidden' }}>
           <TableContainer sx={{ marginTop: 4, maxHeight: 900 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -50,17 +50,16 @@ const JobRequisition = () => {
                     zIndex: 0
                   }
                 }}>
-
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Job Code</TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Job Type</TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Job Title</TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Priority</TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>No of Positions</TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Can Engage External Consultants </TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Status </TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Hiring Manager </TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Recruiter </TableCell>
-                  <TableCell style={{ fontWeight: 700, fontSize: "18px" }}>Edit </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px", }}>Job Code</TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Job Type</TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Job Title</TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Priority</TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>No of Positions</TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Can Engage External Consultants </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Status </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Hiring Manager </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Recruiter </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Edit </TableCell>
                 </TableRow>
 
               </TableHead>
