@@ -44,7 +44,7 @@ router.get('/getAllJobRequisitions',authorizeRoles('Recruiter', 'Admin', 'TA Man
 
 
 /* Dashboard*/
-// router.get('/dashboard', appController.getDashboard);
+router.get('/dashboard', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getDashboard);
 
 /** Referal */
 router.get('/getReferralByuserid', appController.getReferralByUserId);

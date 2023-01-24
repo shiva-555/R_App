@@ -12,6 +12,7 @@ const { RoleAssignment } = db;
 const { Role } = db;
 const { ReferralCandidate } = db;
 const { Op } = db;
+const { sequelize } = db;
 const moment = require('moment');
 const logger = require('../utils/logger');
 const commonFunctions = require('../utils/commonFunctions');
@@ -1461,7 +1462,6 @@ exports.getJobRequisitions = async (req, res, next) => {
 
     /* Getting Role of requesting user */
     const role = req.user.roleAssignments.role;
-    console.log('Here =====================')
 
     /* Finding all child users */
     try {
@@ -1580,318 +1580,183 @@ exports.getAllJobRequisitions = async (req, res, next) => {
 };
 
 
-// exports.getDashboard = async (req, res, next) => {
-//     let jobs, statuses, dashboardData, searchCriteria = {}, includeCriteria, candidateSearchCriteria = { where: {} };
+exports.getDashboard = async (req, res, next) => {
+    let jobs, childUsers, statuses, userIds = [req.user.userId], dashboardData, searchCriteria = {}, includeCriteria = [], candidateSearchCriteria = { where: {} };
 
-//     // if (req.user.roles) {
-//     //     if (req.query.startDate && req.query.endDate) {
-//     //         searchCriteria = {
-//     //             [Op.gte]: new Date(req.query.startDate),
-//     //             [Op.lte]: new Date(req.query.endDate).setHours(24)
-//     //         }
-//     //     }
-//     // }
+    const role = req.user.roleAssignments.role;
 
-//     // if (!req.user.roles.some((role) => role === 'Admin')) {
-//     //     if (req.user.roles.some((role) => role === 'Recruiter')) {
-//     //         candidateSearchCriteria.where.created_by = req.user.user_id;
-//     //     }
-//     // }
+    /* Finding all child users */
+    try {
+        childUsers = await req.user.getChilderens();
+    } catch (e) {
+        console.log(e);
+        logger.error('Error occurred while getting child usres in getCandidates controller %s:', JSON.stringify(e));
+        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
 
-//     // if (req.query.recruiter) {
-//     //     candidateSearchCriteria.where.created_by = req.query.recruiter
-//     // }
+    if (childUsers && childUsers.length > 0) {
+        const len = childUsers.length;
+        for (let i = 0; i < len; i++) {
+            userIds.push(childUsers[i].userId);
+        }
+    }
 
-//     // includeCriteria = [
-//     //     {
-//     //         model: MetaData,
-//     //         as: 'jobType',
-//     //         attributes: ['display_text']
-//     //     },
-//     //     {
-//     //         model: Candidate,
-//     //         as: 'candidates',
-//     //         required: false,
-//     //         ...candidateSearchCriteria,
-//     //         include: [
-//     //             {
-//     //                 model: CandidateStatusHistory,
-//     //                 as: 'statusHistory',
-//     //                 required: true,
-//     //                 where: {
-//     //                     candidate_status_id: {
-//     //                         [Op.eq]: sequelize.col('candidates.candidate_status_id'),
-//     //                     },
-//     //                     created_date: {
-//     //                         [Op.and]: {
-//     //                             // [Op.gte]: sequelize.col('candidates.last_modified_date'),
-//     //                             ...searchCriteria
-//     //                         }
-//     //                     }
-//     //                 },
-//     //                 attributes: []
-//     //             },
-//     //             {
-//     //                 model: MetaData,
-//     //                 as: 'source',
-//     //                 attributes: ['meta_data_id', 'display_text']
-//     //             },
-//     //             {
-//     //                 model: MetaData,
-//     //                 as: 'jobLocation',
-//     //                 attributes: ['meta_data_id', 'display_text']
-//     //             },
-//     //             // {
-//     //             //     model: MetaData,
-//     //             //     as: 'backoutReasons',
-//     //             //     attributes: ['meta_data_id', 'display_text']
-//     //             // },
-//     //             {
-//     //                 model: MetaData,
-//     //                 as: 'candidateStatus',
-//     //                 attributes: ['meta_data_id', 'display_text']
+    if (req.query.recruiter) {
+        userIds = [req.query.recruiter]
+    }
 
-//     //             },
-//     //             {
-//     //                 model: JobRequisition,
-//     //                 as: 'jobTitle',
-//     //                 attributes: ['job_id', 'job_title']
+    if (role.candidatesView) {
+        if (role.candidatesView.isHierarchy) {
+            candidateSearchCriteria.where = {
+                createdById: {
+                    [Op.in]: userIds
+                }
+            }
+        }
 
-//     //             },
-//     //             {
-//     //                 model: User,
-//     //                 as: 'createdBy',
-//     //                 attributes: ['user_id', 'display_name']
-//     //             },
-//     //             {
-//     //                 model: User,
-//     //                 as: 'reportingManager',
-//     //                 attributes: ['user_id', 'display_name']
-//     //             },
-//     //             {
-//     //                 model: Interview,
-//     //                 as: 'interviews',
-//     //                 attributes: ['interview_id', 'interview_round', 'panel_email', 'interview_date'],
-//     //                 // order: [["interview_round", 'DESC']]
-//     //             }
-//     //         ],
-//     //         // where: {
-//     //         //     [Op.col]: sequelize.col('cand')
-//     //         //     candidates
-//     //         // }
-//     //     },
-//     //     {
-//     //         model: MetaData,
-//     //         required: false,
-//     //         as: 'jobRequisitionStatus',
-//     //         attributes: ['display_text']
-//     //     }
-//     // ]
+        if (role.candidatesView.showAll) {
 
-//     // if (!req.user.roles.some((role) => role === 'Admin')) {
-//     //     if (req.user.roles.some((role) => role === 'Recruiter')) {
-//     //         includeCriteria.push(
-//     //             {
-//     //                 model: JobRequisitionsRecruitersAssingment,
-//     //                 as: 'assignments',
-//     //                 required: true,
-//     //                 include: {
-//     //                     model: User,
-//     //                     as: 'assignedRecruiter',
-//     //                     required: true,
-//     //                     where: {
-//     //                         user_id: req.user.user_id
-//     //                     }
-//     //                 }
-//     //             },
-//     //             {
-//     //                 model: jobRequisitionHiringManagerAssignment,
-//     //                 as: 'hiringManagerAssignments',
-//     //                 required: false,
-//     //                 attributes: ['hiring_manager_id'],
-//     //                 include: {
-//     //                     model: User,
-//     //                     as: 'assignedHiringManger',
-//     //                     attributes: ['user_id', 'display_name']
-//     //                 }
-//     //             }
-//     //         )
-//     //     }
-//     // } else if (!req.user.roles.some((role) => role === 'Admin')) {
-//     //     if (req.user.roles.some((role) => role === 'Hiring Manager')) {
-//     //         includeCriteria.push(
-//     //             {
-//     //                 model: JobRequisitionsRecruitersAssingment,
-//     //                 as: 'assignments',
-//     //                 required: false,
-//     //                 include: {
-//     //                     model: User,
-//     //                     as: 'assignedRecruiter',
-//     //                     required: true,
-//     //                     attributes: ['user_id', 'display_name']
-//     //                 }
-//     //             },
-//     //             {
-//     //                 model: jobRequisitionHiringManagerAssignment,
-//     //                 as: 'hiringManagerAssignments',
-//     //                 required: false,
-//     //                 attributes: ['hiring_manager_id'],
-//     //                 include: {
-//     //                     model: User,
-//     //                     as: 'assignedHiringManger',
-//     //                     where: {
-//     //                         user_id: req.user.user_id
-//     //                     },
-//     //                     attributes: ['user_id', 'display_name']
-//     //                 }
-//     //             }
-//     //         )
-//     //     }
-//     // } else if (req.user.roles.some((role) => role === 'Admin')) {
-//     //     includeCriteria.push(
-//     //         {
-//     //             model: JobRequisitionsRecruitersAssingment,
-//     //             as: 'assignments',
-//     //             required: false,
-//     //             include: {
-//     //                 model: User,
-//     //                 as: 'assignedRecruiter',
-//     //                 required: true,
-//     //                 attributes: ['user_id', 'display_name']
-//     //             }
-//     //         },
-//     //         {
-//     //             model: jobRequisitionHiringManagerAssignment,
-//     //             as: 'hiringManagerAssignments',
-//     //             required: false,
-//     //             attributes: ['hiring_manager_id'],
-//     //             include: {
-//     //                 model: User,
-//     //                 as: 'assignedHiringManger',
-//     //                 required: true,
-//     //                 attributes: ['user_id', 'display_name']
-//     //             }
-//     //         }
-//     //     )
-//     // } else {
-//     //     return res.status(403).json(responseFormatter.responseFormatter({}, 'forbidden access', 'bad request', 403));
-//     // }
+        }
+    }
 
-//     // if (req.query.recruiter || req.query.hiringManager) {
+    if (role.jobsView) {
+        if (role.jobsView.isHierarchy) {
+            includeCriteria.push({
+                model: JobAssignment,
+                as: 'jobAssignments',
+                where: {
+                    userId: {
+                        [Op.in]: userIds
+                    }
+                },
+            });
+        }
 
-//     //     if (req.user.roles.some((role) => role === 'Admin' || role === 'Hiring Manager')) {
+        if (role.jobsView.showAll) {
+            includeCriteria.push({
+                model: JobAssignment,
+                as: 'jobAssignments'
+            });
+        }
+    }
 
-//     //         if (req.user.roles.some((role) => role === 'Admin')) {
-//     //             if (req.query.hiringManager) {
-//     //                 includeCriteria.splice(
-//     //                     includeCriteria.findIndex((el) => el.as === 'hiringManagerAssignments'),
-//     //                     1
-//     //                 );
-//     //                 includeCriteria.push({
-//     //                     model: jobRequisitionHiringManagerAssignment,
-//     //                     as: 'hiringManagerAssignments',
-//     //                     attributes: ['hiring_manager_id'],
-//     //                     required: true,
-//     //                     include: {
-//     //                         model: User,
-//     //                         as: 'assignedHiringManger',
-//     //                         attributes: ['user_id', 'display_name'],
-//     //                         required: true,
-//     //                         where: {
-//     //                             user_id: req.query.hiringManager
-//     //                         }
-//     //                     }
-//     //                 });
-//     //             }
-//     //         }
+    includeCriteria.push(
+        {
+            model: Candidate,
+            as: 'candidates',
+            required: false,
+            ...candidateSearchCriteria,
+            include: [
+                {
+                    model: CandidateStatusHistory,
+                    as: 'statusHistory',
+                    required: true,
+                    where: {
+                        candidateStatusId: {
+                            [Op.eq]: sequelize.col('candidates.candidateStatusId'),
+                        },
+                        createdDate: {
+                            [Op.and]: {
+                                // [Op.gte]: sequelize.col('candidates.last_modified_date'),
+                                ...searchCriteria
+                            }
+                        }
+                    },
+                    attributes: []
+                },
+  
+                {
+                    model: MetaData,
+                    as: 'candidateStatus',
+                    // attributes: ['metaDataId', 'displayText']
 
-//     //         if (req.query.recruiter) {
-//     //             includeCriteria.splice(
-//     //                 includeCriteria.findIndex((el) => el.as === 'assignments'),
-//     //                 1
-//     //             );
-//     //             includeCriteria.push({
-//     //                 model: JobRequisitionsRecruitersAssingment,
-//     //                 as: 'assignments',
-//     //                 required: true,
-//     //                 include: {
-//     //                     model: User,
-//     //                     as: 'assignedRecruiter',
-//     //                     required: true,
-//     //                     where: {
-//     //                         user_id: req.query.recruiter
-//     //                     }
-//     //                 }
-//     //             });
-//     //         }
-//     //     } else {
-//     //         return res.status(403).json(responseFormatter.responseFormatter({}, 'forbidden access', 'bad request', 403));
-//     //     }
-//     // }
+                },
+                {
+                    model: JobRequisition,
+                    as: 'jobTitle',
+                    // attributes: ['job_id', 'job_title']
 
-//     /* Getting all candidate statuses */
-//     try {
-//         statuses = await MetaData.findAll({
-//             where: {
-//                 status: 'Active',
-//                 metaDataType: 'candidate_status'
-//             }
-//         });
-//     } catch (e) {
-//         logger.error('Error occurred while finding statuses in getDashboard controller %s:', JSON.stringify(e));
-//         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
-//     }
+                },
+                {
+                    model: User,
+                    as: 'createdBy',
+                    // attributes: ['userId', 'displayName']
+                },
+                {
+                    model: Interview,
+                    as: 'interviews',
+                    // attributes: ['interviewId', 'interviewRound', 'panelEmail', 'interviewDate'],
+                    order: [["interviewRound", 'DESC']]
+                }
+            ],
+        },
+    )
+
+    /* Getting all candidate statuses */
+    try {
+        statuses = await MetaData.findAll({
+            where: {
+                status: 'Active',
+                metaDataType: 'candidate_status'
+            }
+        });
+    } catch (e) {
+        console.log(e);
+        logger.error('Error occurred while finding statuses in getDashboard controller %s:', JSON.stringify(e));
+        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
 
 
-//     /* Getting all jobs */
-//     try {
-//         jobs = await JobRequisition.findAll({
-//             //             where: { status: 'Active' },
-//             // attributes: ['job_title', 'job_code', 'job_type_id', 'priority', 'can_engage_external_consultants', 'created_date', 'no_of_positions'],
-//             include: includeCriteria,
-//             order: [["created_date", 'DESC'], [{ model: Candidate, as: 'candidates' }, { model: Interview, as: 'interviews' }, 'interview_round', 'DESC']]
-//         });
-//     } catch (e) {
-//         logger.error('Error occurred while finding statuses in getDashboard controller %s:', JSON.stringify(e));
-//         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
-//     }
+    /* Getting all jobs */
+    try {
+        jobs = await JobRequisition.findAll({
+            //             where: { status: 'Active' },
+            // attributes: ['job_title', 'job_code', 'job_type_id', 'priority', 'can_engage_external_consultants', 'created_date', 'no_of_positions'],
+            include: includeCriteria,
+            // order: [["createdDate", 'DESC'], [{ model: Candidate, as: 'candidates' }, { model: Interview, as: 'interviews' }, 'interviewRound', 'DESC']]
+        });
+    } catch (e) {
+        console.log(e);
+        logger.error('Error occurred while finding data in getDashboard controller %s:', JSON.stringify(e));
+        return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
 
-//     /* Getting Dashboard data */
-//     dashboardData = jobs.map((job) => {
-//         let data = {
-//             jobCode: job.jobCode,
-//             jobTitle: job.jobTitle,
-//             jobType: job.jobType,
-//             priority: job.priority,
-//             no_of_positions: job.no_of_positions,
-//             can_engage_external_consultants: job.can_engage_external_consultants,
-//             job_created: moment(job.created_date, 'DD-MMM-YYYY'),
-//             job_status: job?.jobRequisitionStatus?.display_text,
-//             job_age: '',
-//             assignedRecruiters: job.assignments.map((assignment) => assignment.assignedRecruiter.display_name),
-//             assignedHiringManager: job.hiringManagerAssignments.map((assignment) => assignment.assignedHiringManger.display_name),
-//             total: job.candidates.length
-//         }
+    /* Getting Dashboard data */
+    dashboardData = jobs.map((job) => {
+        let data = {
+            jobCode: job.jobCode,
+            jobTitle: job.jobTitle,
+            jobType: job.jobType,
+            priority: job.priority,
+            noOfPositions: job.noOfPositions,
+            canEngageExternalConsultants: job.canEngageExternalConsultants,
+            jobCreated: moment(job.createdDate, 'DD-MMM-YYYY'),
+            jobStatus: job?.status,
+            jobAge: '',
+            // assignedRecruiters: job.assignments.map((assignment) => assignment.assignedRecruiter.displayName),
+            // assignedHiringManager: job.hiringManagerAssignments.map((assignment) => assignment.assignedHiringManger.display_name),
+            total: job.candidates?.length
+        }
 
-//         const createdDate = moment(data?.job_created);
-//         const todayDate = moment();
-//         const dayDiff = todayDate.diff(createdDate, 'd');
-//         data.job_age = dayDiff;
+        const createdDate = moment(data?.jobCreated);
+        const todayDate = moment();
+        const dayDiff = todayDate.diff(createdDate, 'd');
+        data.jobAge = dayDiff;
 
-//         for (let i = 0; i < statuses.length; i++) {
-//             let candidates = job.candidates.filter((candidate) => {
-//                 return candidate.candidate_status_id === statuses[i].meta_data_id;
-//             });
-//             data[statuses[i]?.display_text] = {
-//                 count: candidates.length,
-//                 candidates
-//             }
-//         }
-//         return data;
-//     });
+        for (let i = 0; i < statuses?.length; i++) {
+            let candidates = job.candidates.filter((candidate) => {
+                return candidate.candidateStatusId === statuses[i].metaDataId;
+            });
+            data[statuses[i]?.displayText.status] = {
+                count: candidates.length,
+                candidates
+            }
+        }
+        return data;
+    });
 
-//     dashboardData.sort((a, b) => b.total - a.total);
+    dashboardData.sort((a, b) => b.total - a.total);
 
-//     /* success */
-//     return res.status(200).json(responseFormatter.responseFormatter(dashboardData, 'fetched successfully', 'success', 200));
-// };
+    /* success */
+    return res.status(200).json(responseFormatter.responseFormatter(dashboardData, 'fetched successfully', 'success', 200));
+};

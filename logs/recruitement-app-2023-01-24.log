@@ -203,3 +203,393 @@
   level: 'error',
   timestamp: '2023-01-24T07:19:47.090Z'
 }
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'JobRequisition.created_date\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'JobRequisition.created_date\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;"},"sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;","parameters":{}}:',
+  timestamp: '2023-01-24T10:59:52.644Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'JobRequisition.created_date\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'JobRequisition.created_date\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;"},"sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`created_date` DESC, `candidates->interviews`.`interview_round` DESC;","parameters":{}}:',
+  timestamp: '2023-01-24T11:00:24.216Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'candidates->interviews.interview_round\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interview_round` DESC;"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'candidates->interviews.interview_round\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interview_round` DESC;"},"sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interview_round` DESC;","parameters":{}}:',
+  timestamp: '2023-01-24T11:00:52.572Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeDatabaseError","parent":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'candidates->interviews.interviewRound\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interviewRound` DESC;"},"original":{"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","sqlMessage":"Unknown column \'candidates->interviews.interviewRound\' in \'order clause\'","sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interviewRound` DESC;"},"sql":"SELECT `jobId`, `jobCode`, `jobTitle`, `city`, `state`, `primarySkills`, `experience`, `payRates`, `canEngageExternalConsultants`, `priority`, `company`, `noOfPositions`, `remark`, `jobDescription`, `status`, `createdDate`, `lastModifiedDate`, `createdById`, `lastModifiedById`, `jobTypeId`, `jobRequisitionStatusId` FROM `jobrequisitions` AS `JobRequisition` ORDER BY `JobRequisition`.`createdDate` DESC, `candidates->interviews`.`interviewRound` DESC;","parameters":{}}:',
+  timestamp: '2023-01-24T11:01:17.616Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:02:35.868Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:02:51.466Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:03:20.742Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:03:58.286Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:05:18.535Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:05:30.640Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:05:37.362Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:05:54.745Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:06:00.620Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:06:20.561Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:10:07.551Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:10:48.422Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:11:00.792Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:11:04.463Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:11:18.987Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:11:53.083Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'roleName')",
+  level: 'error',
+  timestamp: '2023-01-24T11:12:10.604Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:12:23.933Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:12:36.177Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:12:51.348Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'roleName')",
+  level: 'error',
+  timestamp: '2023-01-24T11:13:08.929Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'roleName')",
+  level: 'error',
+  timestamp: '2023-01-24T11:13:19.277Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:13:40.167Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:14:39.973Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:15:55.681Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:17:02.421Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:17:22.262Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:17:39.396Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:17:57.382Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:18:00.295Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:18:30.739Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:19:41.267Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'filter')",
+  level: 'error',
+  timestamp: '2023-01-24T11:20:10.006Z'
+}
+{
+  message: 'Error: sequelize is not defined',
+  level: 'error',
+  timestamp: '2023-01-24T11:23:27.508Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:27:50.793Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'length')",
+  level: 'error',
+  timestamp: '2023-01-24T11:33:47.795Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T12:31:26.060Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T12:31:32.346Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T12:31:40.909Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T12:31:51.232Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T12:32:24.366Z'
+}
+{
+  message: 'Error: req.user.roleAssignments.role.some is not a function',
+  level: 'error',
+  timestamp: '2023-01-24T12:54:25.195Z'
+}
+{
+  message: 'Error: req.user.roleAssignments.some is not a function',
+  level: 'error',
+  timestamp: '2023-01-24T12:54:53.157Z'
+}
+{
+  message: 'Error: req.user.roleAssignments.role.some is not a function',
+  level: 'error',
+  timestamp: '2023-01-24T12:56:34.216Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'some')",
+  level: 'error',
+  timestamp: '2023-01-24T12:57:00.338Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'some')",
+  level: 'error',
+  timestamp: '2023-01-24T12:57:08.039Z'
+}
+{
+  message: 'Error: req.user.roleAssignments.role.some is not a function',
+  level: 'error',
+  timestamp: '2023-01-24T12:57:31.233Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'some')",
+  level: 'error',
+  timestamp: '2023-01-24T12:57:54.414Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'some')",
+  level: 'error',
+  timestamp: '2023-01-24T12:58:15.846Z'
+}
+{
+  message: "Error: Cannot read properties of undefined (reading 'some')",
+  level: 'error',
+  timestamp: '2023-01-24T12:58:21.907Z'
+}
+{
+  message: 'Error: req.user.roleAssignments.role.roleName.some is not a function',
+  level: 'error',
+  timestamp: '2023-01-24T12:58:32.876Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:07:16.911Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:08:16.755Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:09:01.819Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:11:42.364Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:15:10.059Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:15:54.103Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:20:18.036Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:22:18.668Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:23:58.672Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:26:22.943Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:28:23.462Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:30:21.521Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:31:16.175Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T13:31:30.921Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while getting child usres in getCandidates controller {}:',
+  timestamp: '2023-01-24T16:05:04.106Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while getting child usres in getCandidates controller {}:',
+  timestamp: '2023-01-24T16:05:52.350Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:06:27.221Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:06:51.967Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding statuses in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:07:30.265Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding data in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:08:35.954Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding data in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:10:29.499Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding data in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:12:05.620Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while finding data in getDashboard controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-24T16:14:27.647Z'
+}
