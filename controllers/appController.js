@@ -1544,7 +1544,6 @@ exports.getJobRequisitions = async (req, res, next) => {
         logger.error('Error occurred while finding job requisitions in getJobRequisitions controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
-    jobRequisitions[0].users.map((assignment) => console.log(assignment.user.email, assignment.user.roleAssignments[0].role.roleName));
 
     return res.status(200).json(responseFormatter.responseFormatter(jobRequisitions, 'fetched successfully', 'success', 200));
 };
