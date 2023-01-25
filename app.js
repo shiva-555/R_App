@@ -40,9 +40,9 @@ const corsOptions = {
   "optionsSuccessStatus": 204
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 // app.use(validator);
-app.options('*', cors(corsOptions));
+app.options('*', cors());
 
 app.use(morgan('dev'));
 app.use(express.json());
