@@ -42,7 +42,6 @@ router.get('/jobRequisitions', authorizeRoles('Recruiter', 'Admin', 'TA Manager'
 // router.put('/jobRequisition/:job_id', upload.single('file'), appController.updateJobRequisition, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
 router.get('/getAllJobRequisitions',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getAllJobRequisitions)
 
-
 /* Dashboard*/
 router.get('/dashboard', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getDashboard);
 

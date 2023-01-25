@@ -1583,6 +1583,8 @@ exports.getAllJobRequisitions = async (req, res, next) => {
 exports.getDashboard = async (req, res, next) => {
     let jobs, childUsers, statuses, userIds = [req.user.userId], dashboardData, searchCriteria = {}, includeCriteria = [], candidateSearchCriteria = { where: {} };
 
+
+
     const role = req.user.roleAssignments.role;
 
     /* Finding all child users */
@@ -1603,6 +1605,13 @@ exports.getDashboard = async (req, res, next) => {
 
     if (req.query.recruiter) {
         userIds = [req.query.recruiter]
+    }
+
+    if (req.query.startDate && req.query.endDate) {
+        searchCriteria = {
+            [Op.gte]: new Date(req.query.startDate),
+            [Op.lte]: new Date(req.query.endDate).setHours(24)
+        }
     }
 
     if (role.candidatesView) {
@@ -1664,7 +1673,7 @@ exports.getDashboard = async (req, res, next) => {
                     },
                     attributes: []
                 },
-  
+
                 {
                     model: MetaData,
                     as: 'candidateStatus',
