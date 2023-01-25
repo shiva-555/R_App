@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
         dialect: 'mysql'
     });
 } else {
-    sequelize = new Sequelize('recruiter_app_test', 'root', 'root', {
+    sequelize = new Sequelize('recruiter_app_test', 'root', '1998', {
         logging: console.log,
         dialect: 'mysql'
     });

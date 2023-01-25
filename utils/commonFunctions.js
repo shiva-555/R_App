@@ -7,6 +7,8 @@ const { RoleAssignment } = db;
 const { User } = db;
 const axios = require('axios');
 const qs = require('qs');
+const _ = require('lodash');
+const { parse } = require('dotenv');
 
 
 //! Not tested
@@ -443,69 +445,75 @@ exports.sendMail = async (to, subject, template, table) => {
 
 //* Tested Working *
 exports.generateTemplate = (template, candidate) => {
-    const regExp = /{[\w.]+}/g;
-    // const retrievedResult = template.body.match(regExp);
-
-    console.log(template.body);
-    let reg1 = /\?(.*?)\?/g;
-    let reg2 = /\[(.*?)\]/g;
-    let reg3 = /\`(.*?)\`/g;
-
-    let required_docs, retrievedResult, splitTemplate, Combine_temp;
-
-    splitTemplate = template.body.match(reg3);
-    if (candidate.candidateType === 1) {
-        required_docs = template.body.match(reg1);
-    } else {
-        required_docs = template.body.match(reg2);
-    }
-
-    if (required_docs != null) {
-        required_docs = required_docs[0].slice(1, -1);
-        Combine_temp = splitTemplate + required_docs;
-        retrievedResult = Combine_temp.match(regExp);
-    } else {
-        Combine_temp = splitTemplate;
-        retrievedResult = Combine_temp[0].match(regExp);
-    }
-
-    console.log(retrievedResult)
-    console.log(candidate.dataValues);
-
-    if (retrievedResult?.length && retrievedResult?.length > 0) {
-        for (let i = 0; i < retrievedResult.length; i++) {
-            const regExp = /[\w.]+/g;
-            const variableName = retrievedResult[i].match(regExp)[0];
-
-            function recursion(candidate) {
-                if (candidate) {
-                    if (variableName.includes('.')) {
-                        const nestedVariable = variableName.split('.');
-                        const value = candidate[nestedVariable[0]][nestedVariable[1]];
-                        if (value) {
-                            template.body = template.body.replace(retrievedResult[i], value);
-                        }
-                    }
-                    else if (candidate[variableName] && typeof candidate[variableName] !== 'object') {
-                        if (candidate[variableName] instanceof Date) {
-                            template.body = template.body.replace(retrievedResult[i], moment(candidate[variableName]).format("dddd, MMMM Do YYYY"));
-                        } else {
-                            template.body = template.body.replace(retrievedResult[i], candidate[variableName]);
-                        }
-                    } else if (typeof candidate === 'object') {
-                        for (const key in candidate) {
-                            if (typeof candidate[key] === 'object') {
-                                recursion(candidate[key]);
+    try {
+        
+        const regExp = /{(.*?)}/g;
+        // const retrievedResult = template.body.match(regExp);    
+        let reg1 = /\?(.*?)\?/g;
+        let reg2 = /\[(.*?)\]/g;
+        let reg3 = /\`(.*?)\`/g;
+    
+        let required_docs, retrievedResult, splitTemplate, Combine_temp;
+    
+        splitTemplate = template.body.match(reg3);
+      
+        if (candidate.candidateType === 1) {
+            required_docs = template.body.match(reg1);
+        } else {
+            required_docs = template.body.match(reg2);
+        }
+    
+        if (required_docs != null) {
+            required_docs = required_docs[0].slice(1, -1);
+            Combine_temp = splitTemplate + required_docs;
+            retrievedResult = Combine_temp.match(regExp);
+        } else {
+            Combine_temp = splitTemplate;
+            retrievedResult = Combine_temp[0].match(regExp);
+            // console.log('=========================');
+            // console.log(retrievedResult)
+        }
+    
+       
+        
+        if (retrievedResult?.length && retrievedResult?.length > 0) {
+            for (let i = 0; i < retrievedResult.length; i++) {
+                const regExp = /[^{\\}]+(?=})/g;
+                const variableName = String(retrievedResult[i].match(regExp)[0]);
+    
+                function recursion(candidate) {
+                    if (candidate) {
+                        // if (variableName.includes('.')) {
+                        //     const nestedVariable = variableName.split('.');
+                        //     const value = candidate[nestedVariable[0]][nestedVariable[1]];
+                        //     if (value) {
+                        //         template.body = template.body.replace(retrievedResult[i], value);
+                        //     }
+                        // }
+                        // console.log(candidate);
+                        if (candidate[variableName] && typeof candidate[variableName] !== 'object') {
+                            if (candidate[variableName] instanceof Date) {
+                                template.body = template.body.replace(retrievedResult[i], moment(candidate[variableName]).format("dddd, MMMM Do YYYY"));
+                            } else {
+                                template.body = template.body.replace(retrievedResult[i], candidate[variableName]);
                             }
+                        } else if (typeof candidate === 'object') {
+                            // for (const key in candidate) {
+                            //     if (typeof candidate[key] === 'object') {
+                            //         recursion(candidate[key]);
+                            //     }
+                            // }
                         }
                     }
                 }
+                recursion(candidate);
             }
-            recursion(candidate);
         }
+    
+        return template;
+    } catch (e) {
+        console.log(e);
     }
-
-    return template;
 };
 
 //* Tested Working *
@@ -513,6 +521,7 @@ exports.getHierarchy = async (associatedUsers) => {
     const users = [];
     async function getParent(user) {
         users.push(user);
+
         let parent = await user.getParent()
         if (parent) {
             await getParent(parent);
@@ -561,9 +570,9 @@ exports.sendMailNew = async (to, subject, body) => {
 };
 
 //* Tested Working *
-exports.sendMailFromGeneralTemplate = async (status, candidateOBJ) => {
+exports.sendMailFromGeneralTemplate = async (status, candidate) => {
     try {
-        let candidate = { ...candidateOBJ }, templates, associatedUsers;
+        let templates, associatedUsers;
 
         templates = await Template.findAll({
             where: {
@@ -595,7 +604,6 @@ exports.sendMailFromGeneralTemplate = async (status, candidateOBJ) => {
             ]
         });
 
-
         associatedUsers = {
             createdBy: candidate.createdBy,
             hr: candidate.hr
@@ -624,24 +632,38 @@ exports.sendMailFromGeneralTemplate = async (status, candidateOBJ) => {
 
             if (templates[i].role.roleName !== 'Candidate') {
                 const sendToUsers = users.filter((user) => user.roles.includes(templates[i].role.roleName));
-                console.log(sendToUsers);
-                const template = this.generateTemplate(templates[i], candidate);
+
                 if (sendToUsers.length && sendToUsers.length > 0) {
+                    const candidateObj = JSON.parse(JSON.stringify(candidate));
+
                     for (let i = 0; i < sendToUsers.length; i++) {
-                        console.log(sendToUsers);
-                        try {
-                            await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
-                        } catch (e) {
-                            console.log(e);
+                        console.log(sendToUsers[i].roles[0], sendToUsers[i].name);
+                        candidateObj[`${sendToUsers[i].roles[0]} Name`] = sendToUsers[i].name
+                    }
+
+                    const template = this.generateTemplate(templates[i], candidateObj);
+                    if (sendToUsers.length && sendToUsers.length > 0) {
+                        for (let i = 0; i < sendToUsers.length; i++) {
+                            try {
+                                await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                            } catch (e) {
+                                console.log(e);
+                            }
                         }
                     }
                 }
+
             } else {
-                const template = this.generateTemplate(templates[i], candidate);
-                await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
+                try {
+                    await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         }
     } catch (e) {
+        console.log(e);
         return e;
     }
 }

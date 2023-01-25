@@ -610,7 +610,7 @@ exports.uploadDocuments = async (req, res, next) => {
 
     if (req.body.documentName === 'resume' && !req.body.delete) {
         let uploadedDocument, link;
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.NODE_ENV === 'development') {
             const formData = new FormData();
 
             formData.append("document_fields.1", req.file.buffer, req.file.originalname);
@@ -620,16 +620,16 @@ exports.uploadDocuments = async (req, res, next) => {
             formData.append("standard_fields.email", candidate.candidateEmail);
             formData.append("standard_fields.firstname", candidate.candidateName);
 
-            try {
-                uplaodOnCeipal = await axios.post('https://api.ceipal.com/T2wvS251Y1BDOE9sNTFtVHJ5elZtZz09/ApplyJobWithOutRegistrationCareerPage/', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-            } catch (e) {
-                logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
-                return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
-            }
+            // try {
+            //     uplaodOnCeipal = await axios.post('https://api.ceipal.com/T2wvS251Y1BDOE9sNTFtVHJ5elZtZz09/ApplyJobWithOutRegistrationCareerPage/', formData, {
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data'
+            //         }
+            //     });
+            // } catch (e) {
+            //     logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
+            //     return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
+            // }
         }
 
         //! uploading to OneDrive
