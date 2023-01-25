@@ -632,6 +632,29 @@ const Dashboard = () => {
 
         <Grid item xs='auto'>
           <FormControl sx={{ m: 1, width: 300 }} >
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              // multiple
+              value={jobSelectedColumns}
+              options={dashboard?.data?.data.map((job) => ({ label: job.jobTitle, value: job.jobId}))}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params}
+                label="job" />}
+              onChange={handleJob}
+
+              renderOption={(props, option, { jobSelectedColumns }) => (
+                <div {...props}>
+                  <Checkbox checked={jobSelectedColumns.indexOf(dashboard?.data?.data.map((job) => (job.jobTitle) > -1))} />
+                  {/* <p>{option.label}</p> */}
+                </div>
+              )}
+            />
+          </FormControl>
+        </Grid>
+{/* 
+        <Grid item xs='auto'>
+          <FormControl sx={{ m: 1, width: 300 }} >
             <InputLabel id="select-job-columns-label">Select Job Title</InputLabel>
             <Select
               labelId="select-job-columns-label"
@@ -665,7 +688,7 @@ const Dashboard = () => {
             </Select>
           </FormControl>
 
-        </Grid>
+        </Grid> */}
       </Grid>
 
       <Grid container>

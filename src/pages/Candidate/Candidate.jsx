@@ -744,11 +744,11 @@ const Candidate = () => {
               </Grid>
             </Grid>
 
-            {currentStatus === 'a5392787-669d-43cd-ba75-773c1a8ddc02' &&
+            {/* {currentStatus === 'a5392787-669d-43cd-ba75-773c1a8ddc02' &&
               <>
                 {showOnBoarding &&
 
-                  <>
+                  <> */}
                     <h2 style={{
                       marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
                       color: "white", fontWeight: 500, fontSize: "18px",
@@ -762,7 +762,7 @@ const Candidate = () => {
                         <Select
                           labelId="demo-simple-select-label"
                           id="costCenter"
-                          name="joiningDetails.costCenter"
+                          name="costCenter"
                           defaultValue={candidate?.data?.data.joiningDetails?.costCenter}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
@@ -780,7 +780,7 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="department"
                           label="department"
-                          name="joiningDetails.department"
+                          name="department"
                           defaultValue={candidate?.data?.data.joiningDetails?.department}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
@@ -799,7 +799,7 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="joining Location"
                           label="joining Location"
-                          name="joiningDetails.joiningLocation"
+                          name="joiningLocation"
                           defaultValue={candidate?.data?.data.joiningDetails?.joiningLocation}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
@@ -817,7 +817,7 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="division"
                           label="division"
-                          name="joiningDetails.division"
+                          name="division"
                           defaultValue={candidate?.data?.data.joiningDetails?.division}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
@@ -836,7 +836,7 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="devices"
                           label="devices"
-                          name="joiningDetails.devices"
+                          name="devices"
                           defaultValue={candidate?.data?.data.joiningDetails?.devices}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
@@ -858,7 +858,7 @@ const Candidate = () => {
                           placeholder='Enter designation'
                           size='small'
                           margin='normal'
-                          name='joiningDetails.offeredDesignation'
+                          name='joiningDetails'
                           defaultValue={candidate?.data?.data.joiningDetails?.offeredDesignation}
                           onChange={(e) => handleChange(e)}
                         />
@@ -866,11 +866,11 @@ const Candidate = () => {
 
 
                     </Grid>
-                  </>
+                  {/* </>
                 }
               </>
 
-            }
+            } */}
 
 
             <h2 style={{

@@ -35,7 +35,7 @@ export const useInterviews = () => {
         },
         {
             onSuccess: (scheduledInterview) => {
-                queryClient.setQueryData(['candidate', scheduledInterview.data.candidate_id], (currentCandidate) => {
+                queryClient.setQueryData(['candidate', scheduledInterview.data.candidateId], (currentCandidate) => {
                     return {
                         status: 'success',
                         statusCode: 200,

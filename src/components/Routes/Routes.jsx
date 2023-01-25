@@ -16,13 +16,17 @@ import SpinLoader from '../SpinLoader/SpinLoader';
 import { useUsers } from '../../helpers/hooks/userHooks';
 import Remainder from '../../pages/Remainder/Remainder';
 import GeneralTemplate from '../../pages/GeneralTemplate/GeneralTemplate';
+import CardSpinloader from '../CardSpinloader/CardSpinloader';
 import Referal from '../../pages/Referral/Referral';
+import { useCandidates } from '../../helpers/hooks/candidatesHooks';
+
 
 export const UserContext = React.createContext('');
 
 const AppRoutes = () => {
     const isAuthenticated = useIsAuthenticated();
     const { user } = useUsers();
+    const { updateCandidate } = useCandidates();
     const role = window.localStorage.getItem('role');
 
     if (user.isLoading) {
@@ -38,6 +42,7 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <Header />
+                        {updateCandidate.isSuccess && <CardSpinloader />}
                     </>
                 }
                 <Routes>
@@ -65,10 +70,10 @@ const AppRoutes = () => {
                                 {/* {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
 
                                     <> */}
-                                        <Route path='/admin/users' element={<Users />} />
-                                        <Route path='admin/remainder' element={<Remainder />} />
-                                        <Route path='admin/templates' element={<GeneralTemplate />} />
-                                    {/* </>
+                                <Route path='/admin/users' element={<Users />} />
+                                <Route path='admin/remainder' element={<Remainder />} />
+                                <Route path='admin/templates' element={<GeneralTemplate />} />
+                                {/* </>
                                 } */}
                             </>
                         }
