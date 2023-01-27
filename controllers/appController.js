@@ -1588,6 +1588,7 @@ exports.getDashboard = async (req, res, next) => {
     const role = req.user.roleAssignments.role;
 
     /* Finding all child users */
+    console.log(role.roleName);
     try {
         childUsers = await req.user.getChilderens();
     } catch (e) {
@@ -1742,6 +1743,7 @@ exports.getDashboard = async (req, res, next) => {
             jobCreated: moment(job.createdDate, 'DD-MMM-YYYY'),
             jobStatus: job?.status,
             jobAge: '',
+            JobAssignment: job.jobAssignments.map((assignment) => assignment.userId),
             // assignedRecruiters: job.assignments.map((assignment) => assignment.assignedRecruiter.displayName),
             // assignedHiringManager: job.hiringManagerAssignments.map((assignment) => assignment.assignedHiringManger.display_name),
             total: job.candidates?.length

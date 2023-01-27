@@ -6,16 +6,6 @@
     "auditLog": "logs/.e9fa87fafb65e7aa8419b74e9dcdb820769c799e-audit.json",
     "files": [
         {
-            "date": 1674441770572,
-            "name": "logs/recruitement-app-2023-01-23.log",
-            "hash": "2694b3e2cd99151f642270ed84f5d5dc5eef1ec4ad9bfcad32028ebe024a8cff"
-        },
-        {
-            "date": 1674455351802,
-            "name": "logs\\recruitement-app-2023-01-23.log",
-            "hash": "d4ceb5423f9ebca6420875cffbf0c5530ad6388b4caa000bdac5b306095dacfa"
-        },
-        {
             "date": 1674540979390,
             "name": "logs\\recruitement-app-2023-01-24.log",
             "hash": "710dea51ee6d5372e3cb21dd96ac50a6a9d7690c1750fca4248b6cefe3a2291e"
@@ -24,6 +14,16 @@
             "date": 1674626425441,
             "name": "logs\\recruitement-app-2023-01-25.log",
             "hash": "032878da726075cb53f87dddbb7d62884a0ebc94e36f81869ba64da14095a529"
+        },
+        {
+            "date": 1674707746380,
+            "name": "logs/recruitement-app-2023-01-26.log",
+            "hash": "5f2d2568627fff6cdb9023dc17117fc8bff0c26aab363e1022161f0431e208ca"
+        },
+        {
+            "date": 1674766450156,
+            "name": "logs/recruitement-app-2023-01-27.log",
+            "hash": "d521add25a9b01e3740e251b68f6941ce1d05c4db16fb2c111cc2987085132d7"
         }
     ],
     "hashType": "sha256"

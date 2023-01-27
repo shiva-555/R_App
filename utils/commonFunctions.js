@@ -483,26 +483,26 @@ exports.generateTemplate = (template, candidate) => {
     
                 function recursion(candidate) {
                     if (candidate) {
-                        // if (variableName.includes('.')) {
-                        //     const nestedVariable = variableName.split('.');
-                        //     const value = candidate[nestedVariable[0]][nestedVariable[1]];
-                        //     if (value) {
-                        //         template.body = template.body.replace(retrievedResult[i], value);
-                        //     }
-                        // }
+                        if (variableName.includes('.')) {
+                            const nestedVariable = variableName.split('.');
+                            const value = candidate[nestedVariable[0]][nestedVariable[1]];
+                            if (value) {
+                                template.body = template.body.replace(retrievedResult[i], value);
+                            }
+                        }
                         // console.log(candidate);
-                        if (candidate[variableName] && typeof candidate[variableName] !== 'object') {
+                        else if (candidate[variableName] && typeof candidate[variableName] !== 'object') {
                             if (candidate[variableName] instanceof Date) {
                                 template.body = template.body.replace(retrievedResult[i], moment(candidate[variableName]).format("dddd, MMMM Do YYYY"));
                             } else {
                                 template.body = template.body.replace(retrievedResult[i], candidate[variableName]);
                             }
                         } else if (typeof candidate === 'object') {
-                            // for (const key in candidate) {
-                            //     if (typeof candidate[key] === 'object') {
-                            //         recursion(candidate[key]);
-                            //     }
-                            // }
+                            for (const key in candidate) {
+                                if (typeof candidate[key] === 'object') {
+                                    recursion(candidate[key]);
+                                }
+                            }
                         }
                     }
                 }
@@ -540,34 +540,34 @@ exports.getHierarchy = async (associatedUsers) => {
 };
 
 //* Tested Working *
-exports.sendMailNew = async (to, subject, body) => {
-    try {
-        // Getting application token
-        const token = await this.getApplicationToken();
+// exports.sendMailNew = async (to, subject, body) => {
+//     try {
+//         // Getting application token
+//         const token = await this.getApplicationToken();
 
-        const response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/helpdeskappconnections@futransolutions.com/sendMail`, {
-            "message": {
-                "subject": subject,
-                "body": {
-                    "contentType": "HTML",
-                    "content": body,
-                },
-                "toRecipients": [
-                    {
-                        "emailAddress": {
-                            "address": to
-                        }
-                    }
-                ]
-            },
-            "saveToSentItems": "true"
-        }, { headers: { Authorization: `Bearer ${token}` } });
-        return response.data;
-    } catch (e) {
-        console.log(e);
-        return e;
-    }
-};
+//         const response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/helpdeskappconnections@futransolutions.com/sendMail`, {
+//             "message": {
+//                 "subject": subject,
+//                 "body": {
+//                     "contentType": "HTML",
+//                     "content": body,
+//                 },
+//                 "toRecipients": [
+//                     {
+//                         "emailAddress": {
+//                             "address": to
+//                         }
+//                     }
+//                 ]
+//             },
+//             "saveToSentItems": "true"
+//         }, { headers: { Authorization: `Bearer ${token}` } });
+//         return response.data;
+//     } catch (e) {
+//         console.log(e);
+//         return e;
+//     }
+// };
 
 //* Tested Working *
 exports.sendMailFromGeneralTemplate = async (status, candidate) => {
@@ -629,7 +629,6 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
 
 
         for (let i = 0; i < templates.length; i++) {
-
             if (templates[i].role.roleName !== 'Candidate') {
                 const sendToUsers = users.filter((user) => user.roles.includes(templates[i].role.roleName));
 
@@ -637,7 +636,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     const candidateObj = JSON.parse(JSON.stringify(candidate));
 
                     for (let i = 0; i < sendToUsers.length; i++) {
-                        console.log(sendToUsers[i].roles[0], sendToUsers[i].name);
+                        // console.log(sendToUsers[i].roles[0], sendToUsers[i].name);
                         candidateObj[`${sendToUsers[i].roles[0]} Name`] = sendToUsers[i].name
                     }
 
@@ -645,7 +644,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     if (sendToUsers.length && sendToUsers.length > 0) {
                         for (let i = 0; i < sendToUsers.length; i++) {
                             try {
-                                await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                                // await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
                             } catch (e) {
                                 console.log(e);
                             }
@@ -656,7 +655,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
             } else {
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
-                    await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                    // await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }
