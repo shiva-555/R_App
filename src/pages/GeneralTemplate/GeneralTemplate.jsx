@@ -124,92 +124,99 @@ function GeneralTemplate() {
             </div>
 
             <div className='placeholders'>
-              <label style={{ fontSize: '14px' }}>Placeholders</label>
-              <table style={{ marginTop: '10px', border: "1px solid", width: 'auto', fontSize: '14px', background: 'rgb(252, 255, 102)' }}>
-
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Name</td>
-                  <td style={{ border: "1px solid" }}>{`{candidate_name}`}</td>
-                </tr>
-
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Email</td>
-                  <td style={{ border: "1px solid" }}>{`{candidate_email}`}</td>
-                </tr>
-
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Designation</td>
-                  <td style={{ border: "1px solid" }}>{`{job_title}`}</td>
-                </tr>
+                        <label style={{ fontSize: '14px' }}>Placeholders</label>
+                        <table style={{ marginTop: '10px', border: "1px solid", width: 'auto', fontSize: '14px', background: 'rgb(252, 255, 102)' }}>
 
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Joining Date</td>
-                  <td style={{ border: "1px solid" }}>{`{joining_date}`}</td>
-                </tr>
-
-                <tr style={{ border: "1px solid" }}>
-                                <td style={{ border: "1px solid" }}>Candidate Selected/ Rejected Date</td>
-                                <td style={{ border: "1px solid" }}>{`{joining_date}`}</td>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Name</td>
+                                <td style={{ border: "1px solid" }}>{`{candidateName}`}</td>
                             </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Onboarding Candidate Designation</td>
-                  <td style={{ border: "1px solid" }}>{`{offered_designation}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Email</td>
+                                <td style={{ border: "1px solid" }}>{`{candidateEmail}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Reporting Manager</td>
-                  <td style={{ border: "1px solid" }}>{`{reporting_manager}}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Designation</td>
+                                <td style={{ border: "1px solid" }}>{`{jobTitle}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Tentative DOJ</td>
-                  <td style={{ border: "1px solid" }}>{`{tentative_date_of_joining}`}</td>
-                </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Recruiter</td>
-                  <td style={{ border: "1px solid" }}>{`{recruiter_name}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate offer  Date</td>
+                                <td style={{ border: "1px solid" }}>{`{offerDate}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Department</td>
-                  <td style={{ border: "1px solid" }}>{`{department}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Joining Date</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDate}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Cost Center</td>
-                  <td style={{ border: "1px solid" }}>{`{cost_center}`}</td>
-                </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Division</td>
-                  <td style={{ border: "1px solid" }}>{`{division}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Selected/ Rejected Date</td>
+                                <td style={{ border: "1px solid" }}>{`{selectedRejectedDate}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Device</td>
-                  <td style={{ border: "1px solid" }}>{`{device}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Onboarding Candidate Designation</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.offeredDesgination}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Simcard</td>
-                  <td style={{ border: "1px solid" }}>{`{simcard}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Reporting Manager</td>
+                                <td style={{ border: "1px solid" }}>{`{reportingManager}}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Ceipal Access</td>
-                  <td style={{ border: "1px solid" }}>{`{ceipal_access}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Tentative DOJ</td>
+                                <td style={{ border: "1px solid" }}>{`{tentativeDateOfJoining}`}</td>
+                            </tr>
 
-                <tr style={{ border: "1px solid" }}>
-                  <td style={{ border: "1px solid" }}>Candidate Zoom Access</td>
-                  <td style={{ border: "1px solid" }}>{`{zoom_access}`}</td>
-                </tr>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Recruiter</td>
+                                <td style={{ border: "1px solid" }}>{`{}`}</td>
+                            </tr>
 
-              </table>
-            </div>
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Department</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.department}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Cost Center</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.costCenter}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Division</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.division}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Device</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.device}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Simcard</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.simcard}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Ceipal Access</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.ceipalAccess}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate Zoom Access</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.zoomAccess}`}</td>
+                            </tr>
+
+                        </table>
+                    </div>
           </div>
 
         </div >

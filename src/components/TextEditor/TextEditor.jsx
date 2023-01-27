@@ -5,6 +5,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import ReactQuill from 'react-quill';
 import { useAdmin, EmailRemainder } from '../../helpers/hooks/adminHooks';
 import JoditEditor from "jodit-react";
+import { Button } from '@mui/material';
 
 
 
@@ -45,7 +46,7 @@ const TextEditor = ({ template, templateData, label }) => {
       setSubjectValue(template.subject);
       setTemplateStatus(template.status);
     }
-  }, [template, templateData]);
+  }, [template, templateData, template.status]);
 
   const handleInput = event => {
     setOtherEmail(event.target.value);
@@ -58,10 +59,30 @@ const TextEditor = ({ template, templateData, label }) => {
   const handleStatus = event => {
     event.preventDefault();
     console.log(template?.status);
-    if (template.status === 'Active') {
-      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'InActive' } });
+    if (template?.status === 'Active') {
+      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'InActive' } },
+      {
+        onSuccess: (data) => {
+          alert('success')
+        }
+      },
+      {
+        onSuccess: (data) => {
+          alert('error')
+        }
+      });
     } else {
-      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'Active' } });
+      updateEmailRemainder.mutate({ id: template.templateId, formData: { status: 'Active' } },
+      {
+        onSuccess: (data) => {
+          alert('success')
+        }
+      },
+      {
+        onSuccess: (data) => {
+          alert('error')
+        }
+      });
     }
   }
 
@@ -76,21 +97,62 @@ const TextEditor = ({ template, templateData, label }) => {
     if (!template) {
 
       if (templateData?.templateType === 'general') {
-        createEmailRemainder.mutate(form);
+        createEmailRemainder.mutate(form,
+          {
+            onSuccess: (data) => {
+              alert('success')
+            }
+          },
+          {
+            onSuccess: (data) => {
+              alert('error')
+            }
+          }
+        );
         console.log('creating General Templte');
       }
       else if (templateData?.templateType === 'isReminder') {
-        createEmailRemainder.mutate(form);
+        createEmailRemainder.mutate(form,
+          {
+            onSuccess: (data) => {
+              alert('success')
+            }
+          },
+          {
+            onSuccess: (data) => {
+              alert('error')
+            }
+          });
 
         console.log('creating Reminder Templte');
 
       }
     } else {
       if (template?.templateType === 'general') {
-        updateEmailRemainder.mutate({ id: template.templateId, formData: form });
+        updateEmailRemainder.mutate({ id: template.templateId, formData: form },
+          {
+            onSuccess: (data) => {
+              alert('success')
+            }
+          },
+          {
+            onSuccess: (data) => {
+              alert('error')
+            }
+          });
         console.log('updating general');
       } else if (template?.templateType === 'isReminder') {
-        updateEmailRemainder.mutate({ id: template.templateId, formData: form });
+        updateEmailRemainder.mutate({ id: template.templateId, formData: form },
+          {
+            onSuccess: (data) => {
+              alert('success')
+            }
+          },
+          {
+            onSuccess: (data) => {
+              alert('error')
+            }
+          });
         console.log('updating reminder');
 
       }
@@ -99,7 +161,6 @@ const TextEditor = ({ template, templateData, label }) => {
     if (templateData?.templateType === 'isReminder') {
       alert("Please Set the Duration");
     }
-    alert('Details saved successfully');
   }
 
 
@@ -115,8 +176,8 @@ const TextEditor = ({ template, templateData, label }) => {
 
       <input name="subject" defaultValue={template?.subject} onChange={(e) => handleSubject(e)} style={{ width: '500px' }} placeholder="Enter Subject here" />
 
-      <button name='status' style={{ width: 'auto', padding: '6px 20px', background: 'dodgerblue', color: 'white', border: '1px solid #ddd', cursor: 'pointer' }} onClick={(e) => handleStatus(e)}>{template ? template?.status : 'InActive'}</button>
-
+      <button name='status' style={{ width: 'auto', padding: '6px 20px', background: 'dodgerblue', color: 'white', border: '1px solid #ddd', cursor: 'pointer' }} onClick={(e) => handleStatus(e)}>{template ? template.status : 'InActive'}</button>
+ 
       {/* <ReactQuill value={message} onChange={(message) => setMessage(message)} placeholder="Write Something" theme="snow" style={{ background: 'rgb(244, 255, 143)', height: '100% ', margin: '1% 0% 0% 0%' }} /> */}
       <JoditEditor
         ref={editor}

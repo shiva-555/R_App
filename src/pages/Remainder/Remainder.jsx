@@ -134,84 +134,89 @@ export default function Remainder() {
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Name</td>
-                                <td style={{ border: "1px solid" }}>{`{candidate_name}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{candidateName}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Email</td>
-                                <td style={{ border: "1px solid" }}>{`{candidate_email}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{candidateEmail}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Designation</td>
-                                <td style={{ border: "1px solid" }}>{`{job_title}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{jobTitle}`}</td>
                             </tr>
 
 
                             <tr style={{ border: "1px solid" }}>
+                                <td style={{ border: "1px solid" }}>Candidate offer  Date</td>
+                                <td style={{ border: "1px solid" }}>{`{offerDate}`}</td>
+                            </tr>
+
+                            <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Joining Date</td>
-                                <td style={{ border: "1px solid" }}>{`{joining_date}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDate}`}</td>
                             </tr>
 
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Selected/ Rejected Date</td>
-                                <td style={{ border: "1px solid" }}>{`{joining_date}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{selectedRejectedDate}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Onboarding Candidate Designation</td>
-                                <td style={{ border: "1px solid" }}>{`{offered_designation}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.offeredDesgination}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Reporting Manager</td>
-                                <td style={{ border: "1px solid" }}>{`{reporting_manager}}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{reportingManager}}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Tentative DOJ</td>
-                                <td style={{ border: "1px solid" }}>{`{tentative_date_of_joining}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{tentativeDateOfJoining}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Recruiter</td>
-                                <td style={{ border: "1px solid" }}>{`{recruiter_name}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Department</td>
-                                <td style={{ border: "1px solid" }}>{`{department}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.department}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Cost Center</td>
-                                <td style={{ border: "1px solid" }}>{`{cost_center}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.costCenter}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Division</td>
-                                <td style={{ border: "1px solid" }}>{`{division}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.division}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Device</td>
-                                <td style={{ border: "1px solid" }}>{`{device}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.device}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Simcard</td>
-                                <td style={{ border: "1px solid" }}>{`{simcard}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.simcard}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Ceipal Access</td>
-                                <td style={{ border: "1px solid" }}>{`{ceipal_access}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.ceipalAccess}`}</td>
                             </tr>
 
                             <tr style={{ border: "1px solid" }}>
                                 <td style={{ border: "1px solid" }}>Candidate Zoom Access</td>
-                                <td style={{ border: "1px solid" }}>{`{zoom_access}`}</td>
+                                <td style={{ border: "1px solid" }}>{`{joiningDetails.zoomAccess}`}</td>
                             </tr>
 
                         </table>

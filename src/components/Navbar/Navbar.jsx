@@ -248,8 +248,8 @@ export default function MiniDrawer() {
 
 
 
-          {/* {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
-            <> */}
+          {(window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
+            <>
               <ListItemButton onClick={handleClick} sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <AdminPanelSettingsIcon />
@@ -291,8 +291,8 @@ export default function MiniDrawer() {
                 </List>
               </Collapse>
 
-            {/* </>
-          } */}
+            </>
+          }
         </List>
 
       </Drawer>

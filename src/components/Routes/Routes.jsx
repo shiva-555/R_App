@@ -42,7 +42,6 @@ const AppRoutes = () => {
                     <>
                         <Navbar />
                         <Header />
-                        {updateCandidate.isSuccess && <CardSpinloader />}
                     </>
                 }
                 <Routes>

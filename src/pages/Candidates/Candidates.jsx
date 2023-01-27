@@ -6,6 +6,8 @@ import { useMetaData } from '../../helpers/hooks/metaDataHooks';
 import { useJobs } from '../../helpers/hooks/jobsHooks';
 import { useUsers } from '../../helpers/hooks/userHooks';
 import { UserContext } from '../../components/Routes/Routes';
+import DocumentUpload from '../../components/DocumentUpload/DocumentUpload';
+
 import ReactQuill from 'react-quill';
 //!---------------------------------------------
 import { Box } from '@mui/system';
@@ -38,12 +40,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 const Candidates = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { createCandidate } = useCandidates();
+
   const [afterSelectStatuses, setAfterSelectStatuses] = useState(null);
   const value = useContext(UserContext);
   const [search, setSearch] = useState({});
   const navigate = useNavigate();
-  const { useGetCandidates, updateCandidate } = useCandidates();
+  const { useGetCandidates, createCandidate, updateCandidate, uploadDocuments } = useCandidates();
   const candidates = useGetCandidates(search);
   const { sources, jobLocations, backoutReasons, gender, candidateStatuses } = useMetaData();
   const { recruiters } = useUsers(value.data.role);
@@ -155,10 +157,24 @@ const Candidates = () => {
 
 
     if (form?.file) {
-      console.log('Creating file');
-      console.log(form)
-      createCandidate.mutate(form)
-      alert("candidate sucessful created")
+      createCandidate.mutate(formData,
+        {
+          onSuccess: (data) => {
+            formData.append('canidateId', data.data.candidateId);
+            formData.append('documentName', 'resume');
+            uploadDocuments.mutate({ formData }, {
+              onError: (e) => {
+                alert(e.response.data.message);
+              }
+            });
+          }
+        },
+        {
+          onSuccess: (data) => {
+            alert('error')
+          }
+        }
+      )
       setOpen(false)
 
     } else {
@@ -174,7 +190,6 @@ const Candidates = () => {
         <FormControl>
 
           <Autocomplete
-
             disablePortal
             id="jobFilter"
             name="job"
@@ -228,7 +243,7 @@ const Candidates = () => {
         </FormControl>
 
 
-        <TextField type="text" name="keyword" label="" placeholder='search' value={search?.keyword ? search?.keyword : ''} variant='outlined' onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })} />
+        {/* <TextField type="text" name="keyword" label="" placeholder='search' value={search?.keyword ? search?.keyword : ''} variant='outlined' onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })} /> */}
         <Button
           variant="contained"
           endIcon={<PersonSearchTwoToneIcon />}

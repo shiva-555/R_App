@@ -170,8 +170,8 @@ const Referal = () => {
                     </Select>
                 </FormControl>
 
-                <TextField type="text" name="keyword" label="" placeholder='search' value={search?.keyword ? search?.keyword : ''}
-                    variant='outlined' onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })} />
+                {/* <TextField type="text" name="keyword" label="" placeholder='search' value={search?.keyword ? search?.keyword : ''}
+                    variant='outlined' onChange={(e) => setSearch({ ...search, [e.target.name]: e.target.value })} /> */}
 
                 <Button
                     variant="contained"
@@ -222,7 +222,8 @@ const Referal = () => {
                             <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiter Name</TableCell>
 
                             {
-                                (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
+                                (window.localStorage.getItem('role') === 'HR' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'Hiring Manager' || window.localStorage.getItem('role') === 'TA Manager') &&
+
                                 <>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Recruiters</TableCell>
                                     <TableCell style={{ fontWeight: 500, fontSize: "15px", color: "white" }}>Update</TableCell>
@@ -241,7 +242,7 @@ const Referal = () => {
                                 <TableCell>{candidate?.candidate?.candidateStatus.displayText.status}</TableCell>
                                 <TableCell>{candidate?.candidate?.createdBy?.displayName}</TableCell>
                                 {
-                                    (window.localStorage.getItem('role') === ('HR', 'Admin', 'Hiring Manager', 'TA Manager', 'Recruiter')) &&
+                                    (window.localStorage.getItem('role') === 'HR' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'Hiring Manager' || window.localStorage.getItem('role') === 'TA Manager') &&
                                     <>
                                         <TableCell>
                                             <InputLabel id="recruiter-select-label">Recruiters Name</InputLabel>

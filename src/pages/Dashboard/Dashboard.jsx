@@ -59,7 +59,8 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
       let value, value1;
       if (apiData[i][key] && typeof apiData[i][key] === 'object' && apiData[i][key].hasOwnProperty('candidates')) {
         value = apiData[i][key].candidates;
-        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.display_name, CandidateName: el.candidateName, Remark: el.remark, CreatedDate: moment(el.createdDate).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.display_text, JoiningDate: moment(el.joiningDate).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation.display_text, Company: el.company, Source: el.source?.display_text, TotalExperience: el.total_experience, RelevantExperience: el.relevant_experience }]);
+        console.log(value);
+        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.displayName, CandidateName: el.candidateName, Remark: el.remark, CreatedDate: moment(el.createdDate).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.displayText.status, JoiningDate: moment(el.joiningDate).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation.displayText.location, Company: el.company, Source: el.source?.displayText, TotalExperience: el.totalExperience, RelevantExperience: el.relevantExperience }]);
         for (let j = 0; j < value1.length; j++) {
           candidates.push(...value1[j]);
         }
@@ -513,7 +514,7 @@ const Dashboard = () => {
         <Grid item xs='auto'>
           {/* {(value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
             <> */}
-          <FormControl sx={{ m: 1, minWidth: 120 }} >
+          {/* <FormControl sx={{ m: 1, minWidth: 120 }} >
             <Autocomplete
               disablePortal
               labelId="select-hiringManager-label"
@@ -529,7 +530,7 @@ const Dashboard = () => {
               }}
 
             />
-          </FormControl>
+          </FormControl> */}
           {/* <FormControl sx={{ m: 1, minWidth: 120 }} >
             <InputLabel id="select-hiringManager-label">Hiring Manger</InputLabel>
             <Select
@@ -545,7 +546,7 @@ const Dashboard = () => {
                 <MenuItem key={manager.userId} value={manager.userId}>{manager.displayName}</MenuItem>
               )}
             </Select>
-          </FormControl> */}
+          </FormControl> 
           {/* </>
           } */}
         </Grid>
@@ -630,7 +631,7 @@ const Dashboard = () => {
           </FormControl>
         </Grid>
 
-        <Grid item xs='auto'>
+        {/* <Grid item xs='auto'>
           <FormControl sx={{ m: 1, width: 300 }} >
             <Autocomplete
               disablePortal
@@ -642,17 +643,16 @@ const Dashboard = () => {
               renderInput={(params) => <TextField {...params}
                 label="job" />}
               onChange={handleJob}
-
               renderOption={(props, option, { jobSelectedColumns }) => (
                 <div {...props}>
                   <Checkbox checked={jobSelectedColumns.indexOf(dashboard?.data?.data.map((job) => (job.jobTitle) > -1))} />
-                  {/* <p>{option.label}</p> */}
                 </div>
               )}
             />
           </FormControl>
-        </Grid>
-{/* 
+        </Grid> */}
+
+
         <Grid item xs='auto'>
           <FormControl sx={{ m: 1, width: 300 }} >
             <InputLabel id="select-job-columns-label">Select Job Title</InputLabel>
@@ -688,7 +688,7 @@ const Dashboard = () => {
             </Select>
           </FormControl>
 
-        </Grid> */}
+        </Grid>
       </Grid>
 
       <Grid container>
@@ -816,7 +816,7 @@ const Dashboard = () => {
                             }}>{data.jobTitle}</TableCell>
 
 
-                          <TableCell style={{ minWidth: 500, maxWidth: 500, border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, }}>{data?.assignedRecruiters?.map((recruiter, i, arr) => ((arr.length - 1) !== i) ? recruiter + ',' : recruiter)}</TableCell>
+                          <TableCell style={{ minWidth: 500, maxWidth: 500, border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, }}>{data?.JobAssignment?.map((recruiter, i, arr) => ((arr.length - 1) !== i) ? recruiter + ',' : recruiter)}</TableCell>
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100 }}>{data.total}</TableCell>
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100, 'cursor': data.Screening?.count > 0 ? 'pointer' : '', 'color': data.Screening?.count > 0 ? 'blue' : '' }} onClick={(e) => {
 

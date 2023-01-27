@@ -40,9 +40,10 @@ const Candidate = () => {
   const [showOnBoarding, setShowOnBoarding] = useState(false);
   const [showDocument, setshowDocument] = useState(false);
   const [showHr, setShowHr] = useState(false);
-  const [remark1, setRemark] = useState();
+  const [remark, setRemark] = useState(candidate?.data?.data?.remark);
   const { HR } = useUsers()
   const [currentStatus, setCurrentStatus] = useState(null);
+  const [joiningDetails, setJoiningDetails] = useState(candidate?.data?.data?.joiningDetails);
 
 
   const handleChange = (e) => {
@@ -66,12 +67,6 @@ const Candidate = () => {
       }
     }
 
-    // if (e.target.name === 'candidateStatusId') {
-    //   if (e.target.value === '9098ccd3-b893-4f82-bbb1-b5663a596a71') {
-
-    //     setShowOnBoarding(true);
-    //   }
-    // }
 
     setForm({
       ...form,
@@ -82,10 +77,16 @@ const Candidate = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
+
+
+    form.joiningDetails = joiningDetails;
+
+    console.log(form);
     const formData = new FormData();
     Object.keys(form).forEach(key => {
       formData.append(key, form[key]);
     });
+
     if (parseInt(form.expected_ctc) <= parseInt(form.current_ctc)) {
       alert('Current CTC should be less than Expected CTC');
       return;
@@ -157,7 +158,6 @@ const Candidate = () => {
   }
 
 
-  console.log(candidate?.data?.data);
   return (
     <>
       {showDocument &&
@@ -572,7 +572,7 @@ const Candidate = () => {
                       candidate?.data?.data.selectedRejectedDate
                         ? new Date(candidate?.data?.data.selectedRejectedDate).toISOString().split('T')[0]
                         : ''
-                    } 
+                    }
                     onChange={(e) => handleChange(e)} />
 
 
@@ -594,7 +594,7 @@ const Candidate = () => {
                       candidate?.data?.data.documentVerificationInitiatedOn
                         ? new Date(candidate?.data?.data.documentVerificationInitiatedOn).toISOString().split('T')[0]
                         : ''
-                    } 
+                    }
                     onChange={(e) => handleChange(e)} />
 
 
@@ -616,7 +616,7 @@ const Candidate = () => {
                       candidate?.data?.data.offerDate
                         ? new Date(candidate?.data?.data.offerDate).toISOString().split('T')[0]
                         : ''
-                    } 
+                    }
                     onChange={(e) => handleChange(e)} />
 
 
@@ -675,7 +675,7 @@ const Candidate = () => {
                       candidate?.data?.data.joiningDate
                         ? new Date(candidate?.data?.data.joiningDate).toISOString().split('T')[0]
                         : ''
-                    } 
+                    }
                     readOnly
                     onChange={(e) => handleChange(e)} />
 
@@ -744,11 +744,11 @@ const Candidate = () => {
               </Grid>
             </Grid>
 
-            {/* {currentStatus === 'a5392787-669d-43cd-ba75-773c1a8ddc02' &&
+            {currentStatus === 'a5392787-669d-43cd-ba75-773c1a8ddc02' &&
               <>
                 {showOnBoarding &&
 
-                  <> */}
+                  <>
                     <h2 style={{
                       marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
                       color: "white", fontWeight: 500, fontSize: "18px",
@@ -763,10 +763,10 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="costCenter"
                           name="costCenter"
-                          defaultValue={candidate?.data?.data.joiningDetails?.costCenter}
+                          value={joiningDetails?.costCenter}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => handleChange(e)}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, costCenter: e.target.value}) }}
                         >
                           {costCenter?.data && costCenter.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.costCenter}>{cc.displayText.costCenter}</MenuItem>
@@ -781,13 +781,13 @@ const Candidate = () => {
                           id="department"
                           label="department"
                           name="department"
-                          defaultValue={candidate?.data?.data.joiningDetails?.department}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => handleChange(e)}
+                          value={joiningDetails?.department}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, department: e.target.value}) }}
                         >
                           {department?.data && department.data.data.map(cc =>
-                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.department}</MenuItem>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText.department}>{cc.displayText.department}</MenuItem>
                           )}
                         </Select>
                       </FormControl>
@@ -799,14 +799,14 @@ const Candidate = () => {
                           labelId="demo-simple-select-label"
                           id="joining Location"
                           label="joining Location"
-                          name="joiningLocation"
-                          defaultValue={candidate?.data?.data.joiningDetails?.joiningLocation}
+                          name="location"
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => handleChange(e)}
+                          value={joiningDetails?.location}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, location: e.target.value}) }}
                         >
                           {jobLocations?.data && jobLocations.data.data.map(cc =>
-                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.location}</MenuItem>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText.location}>{cc.displayText.location}</MenuItem>
                           )}
                         </Select>
                       </FormControl>
@@ -818,13 +818,13 @@ const Candidate = () => {
                           id="division"
                           label="division"
                           name="division"
-                          defaultValue={candidate?.data?.data.joiningDetails?.division}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => handleChange(e)}
+                          value={joiningDetails?.division}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, division: e.target.value}) }}
                         >
                           {division?.data && division.data.data.map(cc =>
-                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.division}</MenuItem>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText.division}>{cc.displayText.division}</MenuItem>
                           )}
                         </Select>
                       </FormControl>
@@ -837,13 +837,13 @@ const Candidate = () => {
                           id="devices"
                           label="devices"
                           name="devices"
-                          defaultValue={candidate?.data?.data.joiningDetails?.devices}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => handleChange(e)}
+                          value={joiningDetails?.devices}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, devices: e.target.value}) }}
                         >
                           {devices?.data && devices.data.data.map(cc =>
-                            <MenuItem key={cc.metaDataId} value={cc.displayText}>{cc.displayText.device}</MenuItem>
+                            <MenuItem key={cc.metaDataId} value={cc.displayText.device}>{cc.displayText.device}</MenuItem>
                           )}
                         </Select>
                       </FormControl>
@@ -858,19 +858,20 @@ const Candidate = () => {
                           placeholder='Enter designation'
                           size='small'
                           margin='normal'
-                          name='joiningDetails'
-                          defaultValue={candidate?.data?.data.joiningDetails?.offeredDesignation}
-                          onChange={(e) => handleChange(e)}
+                          name='offeredDesignation'
+                          value={joiningDetails?.offeredDesignation}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, offeredDesignation: e.target.value}) }}
+                          // onChange={(e) => handleChange(e)}
                         />
                       </FormControl>
 
 
                     </Grid>
-                  {/* </>
+                  </>
                 }
               </>
 
-            } */}
+            }
 
 
             <h2 style={{
@@ -980,7 +981,13 @@ const Candidate = () => {
             } */}
 
             <Grid item xs='auto'>
-              <ReactQuill theme="snow" name='remark' value={remark1} onChange={setRemark} placeholder="Write Something"
+              <ReactQuill
+                theme="snow"
+                name='remark'
+                value={remark}
+                onChange={(e) => { handleChange(e) }}
+
+                placeholder="Write Something"
                 style={{ height: '100px', margin: "19px" }} />
               <Button
                 variant="contained"

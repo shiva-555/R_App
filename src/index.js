@@ -9,6 +9,23 @@ import { MsalProvider } from "@azure/msal-react";
 import { msalConfig } from "./authConfig";
 import { QueryClientProvider, QueryClient } from 'react-query';
 
+import { positions, Provider } from "react-alert";
+
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import CircularProgress from '@mui/material/CircularProgress';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { Box } from '@mui/system';
+import Divider from '@mui/material/Divider';
+
+
+
 const msalInstance = new PublicClientApplication(msalConfig);
 
 // Default to using the first account if no account is active on page load
@@ -38,12 +55,50 @@ const client = new QueryClient({
   });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const AlertTemplate = ({ style, options, message, close }) => (
+
+
+  <div style={style}>
+    {/* {options.type === 'info' && '!'}
+    {options.type === 'success' && ':)'}
+    {options.type === 'error' && ':('}
+    {message}
+    <button onClick={close}>X</button> */}
+
+    <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          Please Wait Candidate File Is Uploading.
+        </ListSubheader>
+      }
+    >
+      <Divider />
+      <List component="div" disablePadding>
+        <ListItemButton sx={{ pl: 4 }}>
+          <ListItemIcon>
+            <CircularProgress variant="determinate" />
+          </ListItemIcon>
+          <ListItemText primary={message} />
+        </ListItemButton>
+      </List>
+
+    </List>
+  </div>
+)
+
+
 root.render(
   <React.StrictMode>
     <MsalProvider instance={msalInstance}>
-      {/* <QueryClientProvider client={client}> */}
+      <Provider template={AlertTemplate}>
+        {/* <QueryClientProvider client={client}> */}
         <App />
-      {/* </QueryClientProvider> */}
+        {/* </QueryClientProvider> */}
+      </Provider>
     </MsalProvider>
   </React.StrictMode>
 );
