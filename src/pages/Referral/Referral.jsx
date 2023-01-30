@@ -22,6 +22,7 @@ import { useJobs } from '../../helpers/hooks/jobsHooks';
 import { useMetaData } from '../../helpers/hooks/metaDataHooks';
 import { UserContext } from '../../components/Routes/Routes';
 import { AssignRecruiter } from '../../helpers/hooks/adminHooks';
+import { useCandidates } from '../../helpers/hooks/candidatesHooks' 
 
 
 import Table from '@mui/material/Table';
@@ -30,8 +31,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 
-import CardSpinloader from '../../components/CardSpinloader/CardSpinloader';
-import { CleaningServices } from '@mui/icons-material';
+import { useAlert,  positions } from 'react-alert'
+import SpinLoader from '../../components/SpinLoader/SpinLoader';
 
 function getRecruiters(jobs, jobId) {
     let recruiters = [];
@@ -63,7 +64,8 @@ const Referal = () => {
     const [currentCandidate, setCurrentCandidate] = useState(null);
     const { assignCandidateToRecruiter } = AssignRecruiter();
     const value = useContext(UserContext);
-
+    const { uploadDocuments } = useCandidates();
+    const alert1 = useAlert()
     const { jobs, JobsWithRecruiter, jobRequisitions } = useJobs()
     // console.log(JobsWithRecruiter?.data?.data)
 
@@ -104,7 +106,7 @@ const Referal = () => {
                 onSuccess: (data) => {
                     formData.append('candidateId', data.data.candidateId);
                     formData.append('documentName', 'resume');
-                    // uploadDocuments.mutate({formData});
+                    uploadDocuments.mutate({formData});
                 }
             });
             alert(`Candidate ${form.candidateName} successfully Created`)
@@ -113,11 +115,7 @@ const Referal = () => {
             alert("Please add attachment")
         }
     }
-    if (addReferalCandidate.isLoading
-        // || uploadDocuments.isLoading   
-    ) {
-        return <CardSpinloader fileName={form?.file?.name} />
-    }
+ 
 
     const handleUpdate = (e) => {
         if (currentCandidate) {
@@ -131,8 +129,15 @@ const Referal = () => {
     }
 
 
+    if (uploadDocuments.isLoading) {
+        alert1.show(form?.file?.name, { position: positions.BOTTOM_RIGHT });
+    }
+
+    console.log(candidates?.data?.data)
     return (
         <>
+            {(addReferalCandidate.isLoading) && <SpinLoader />}
+
             <Box m={8} mt={15} sx={{ boxShadow: 1 }} >
 
                 <FormControl>
