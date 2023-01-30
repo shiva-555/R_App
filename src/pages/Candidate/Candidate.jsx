@@ -94,9 +94,7 @@ const Candidate = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
 
-
     form.joiningDetails = joiningDetails;
-
     console.log(form);
     const formData = new FormData();
     Object.keys(form).forEach(key => {
@@ -116,11 +114,18 @@ const Candidate = () => {
             if (form.file) {
               formData.append('candidateId', data.data.candidateId);
               formData.append('documentName', 'resume');
-              uploadDocuments.mutate({ formData }, {
-                onError: (e) => {
-                  alert(e.response.data.message);
+              uploadDocuments.mutate({ formData },
+                {
+                  onSuccess: (data) => {
+                    alert('success')
+                  }
+                },
+                {
+                  onError: (data) => {
+                    alert('error')
+                  }
                 }
-              });
+              );
             }
           }
         });
@@ -144,8 +149,9 @@ const Candidate = () => {
   const downloadDocument = (e) => {
     e.preventDefault();
 
+    console.log(e.target.name);
     if (candidate?.data?.data.documents) {
-      let document = candidate.documents.filter((doc) => doc.candidateDocumentName === e.target.name)[0];
+      let document = candidate?.data?.data.documents.filter((doc) => doc.candidateDocumentName === e.target.name)[0];
 
       if (document) {
         window.open(document.candidateDocumentURL, '_blank', 'noopener,noreferrer')
@@ -185,6 +191,7 @@ const Candidate = () => {
     alert1.show(form?.file?.name, { position: positions.BOTTOM_RIGHT });
   }
 
+  console.log(candidate?.data?.data.documents?.filter((doc) => doc.documentName));
   return (
     <>
       {showDocument &&
@@ -973,15 +980,11 @@ const Candidate = () => {
                 <FormControl variant="standard" sx={{ width: 300, marginTop: 2, }} size="small">
 
                   {
-                    (candidate?.documents?.filter((doc) => doc.documentName === 'Resume')[0]) ?
+                    (candidate?.data?.data.documents?.filter((doc) => doc.documentName === 'resume')[0]) ?
                       <>
-                        <Button variant='contained' name='Resume'
-                          onClick={(e) => downloadDocument(e)}
-                        >Download</Button>
-                        <Button variant='contained' name='Resume'
-                          onClick={(e) => handleDelete(e)}
-                        >Delete</Button>
-
+                        <Button variant='contained' name='resume' onClick={(e) => downloadDocument(e)} >Download</Button>
+                        <br />
+                        <Button variant='contained' name='resume' onClick={(e) => handleDelete(e)} >Delete</Button>
                       </>
                       :
                       <input id="file" type="file" name='file' accept=".doc,.docx,application/pdf"

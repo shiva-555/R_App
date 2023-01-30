@@ -37,7 +37,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                     }
                 },
                 {
-                    onSuccess: (data) => {
+                    onError: (data) => {
                         alert('error')
                     }
                 }

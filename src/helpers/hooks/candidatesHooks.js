@@ -2,6 +2,7 @@ import { useMsal } from '@azure/msal-react';
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from 'react-query';
 import axios from 'axios';
 import { acquireToken } from '../acquireToken';
+import { useAlert } from 'react-alert'
 
 let baseURL;
 
@@ -15,6 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 export const useCandidates = () => {
     const { instance, accounts } = useMsal();
     const queryClient = useQueryClient();
+    const alert1 = useAlert()
 
     const role = window.localStorage.getItem('role');
 
@@ -223,6 +225,7 @@ export const useCandidates = () => {
         },
         {
             onSuccess: (updatedCandidate) => {
+                alert1.removeAll();
                 queryClient.setQueryData(['candidate', updatedCandidate.data.candidateId], (currentCandidate) => {
                     return {
                         status: 'success',

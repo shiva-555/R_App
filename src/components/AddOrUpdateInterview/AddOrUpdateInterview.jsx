@@ -140,8 +140,6 @@ const AddOrUpdateInterview = ({ setIsModalOpen, setEditMode, isModalOpen, candid
         setOpen(false)
     };
 
-    console.log(interview);
-
     return (
         <>
             <Dialog
