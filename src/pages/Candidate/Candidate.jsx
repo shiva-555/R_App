@@ -191,7 +191,7 @@ const Candidate = () => {
     alert1.show(form?.file?.name, { position: positions.BOTTOM_RIGHT });
   }
 
-  console.log(candidate?.data?.data.documents?.filter((doc) => doc.documentName));
+
   return (
     <>
       {showDocument &&
@@ -768,7 +768,7 @@ const Candidate = () => {
                     required
                     name='candidateStatusId'
                     variant="filled"
-                    defaultValue={currentStatus}
+                    defaultValue={candidate?.data?.data?.candidateStatusId}
                     onChange={(e) => handleChange(e)}
                   >
                     {statuses && statuses.map((status) =>

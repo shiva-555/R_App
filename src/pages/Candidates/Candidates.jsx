@@ -37,6 +37,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Swal from 'sweetalert2'
 import Autocomplete from '@mui/material/Autocomplete';
+import { useAlert, positions } from 'react-alert'
+
+
 const Candidates = () => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -56,6 +59,7 @@ const Candidates = () => {
   const { jobs } = useJobs()
   const [open, setOpen] = useState();
   const [value1, setValue1] = useState();
+  const alert1 = useAlert()
 
 
   function useHookWithRefCallback() {
@@ -103,6 +107,11 @@ const Candidates = () => {
   if (candidates.isLoading || candidateStatuses.isLoading || jobs.isLoading || updateCandidate.isLoading, recruiters.isLoading) {
     return <SpinLoader />
   }
+
+  if (uploadDocuments.isLoading) {
+    alert1.show(form?.file?.name, { position: positions.BOTTOM_RIGHT });
+  }
+
 
   function Reset() {
     setSearch({});
@@ -160,7 +169,8 @@ const Candidates = () => {
       createCandidate.mutate(form,
         {
           onSuccess: (data) => {
-            formData.append('canidateId', data.data.candidateId);
+            console.log(data?.data.candidateId)
+            formData.append('candidateId', data.data.candidateId);
             formData.append('documentName', 'resume');
             uploadDocuments.mutate({ formData }, {
               onError: (e) => {

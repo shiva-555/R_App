@@ -132,25 +132,16 @@ export const useCandidates = () => {
         },
         {
             onSuccess: (updatedCandidate) => {
-                queryClient.setQueryData('candidates', (currentCandidates) => {
-
+                queryClient.setQueryData(['candidate', updatedCandidate.data.candidateId], (currentCandidate) => {
                     if (!updatedCandidate.data.isMailSent) {
                         alert('Mail not sent to candidate');
                     }
                     return {
-                        ...currentCandidates,
-                        pages: currentCandidates.pages.map((page) => {
-                            return {
-                                status: 'success',
-                                statusCode: 200,
-                                message: 'Candidates fetched successfully',
-                                data: {
-                                    count: page.data.count,
-                                    rows: page.data.rows.map((candidate) => (candidate.candidateId === updatedCandidate.data.candidateId ? updatedCandidate.data : candidate))
-                                }
-                            }
-                        })
-                    };
+                        status: 'success',
+                        statusCode: 200,
+                        message: 'Candidate fetched successfully',
+                        data: updatedCandidate.data
+                    }
                 });
             },
             onError: (e) => {
