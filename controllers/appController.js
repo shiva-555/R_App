@@ -9,6 +9,7 @@ const { JobRequisition } = db;
 const { JobAssignment } = db;
 const { Interview } = db;
 const { RoleAssignment } = db;
+const { Template } = db;
 const { Role } = db;
 const { ReferralCandidate } = db;
 const { Op } = db;
@@ -385,7 +386,6 @@ exports.updateCandidate = async (req, res) => {
     try {
         candidate = await Candidate.findByPk(req.params.candidateId, {
             include: [
-
                 {
                     model: Interview,
                     as: 'interviews'
@@ -408,6 +408,18 @@ exports.updateCandidate = async (req, res) => {
                     model: User,
                     as: 'hr'
                 },
+                {
+                    model: ReferralCandidate,
+                    as: 'referredBy',
+                    include: [
+                        {
+                            model: User,
+                            as: 'user'
+                        }
+                    ]
+
+
+                }
             ],
 
         },
@@ -417,6 +429,8 @@ exports.updateCandidate = async (req, res) => {
         logger.error('Error occurred while finding candidate in updateCandidate controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
+
+
 
     if (!candidate) {
         return res.status(404).json(responseFormatter.responseFormatter({}, 'No such candidate', 'unsuccessful', 404));
@@ -504,22 +518,7 @@ exports.updateCandidate = async (req, res) => {
     }
 
 
-    //! sending mail to HR
-    // if (req.body.hrId) {
-    //     console.log('##########################3');
-    //     console.log(req.body.hrId);
-    //     console.log(candidate.hrId);
-
-    //     if(candidate.hrId !== req.body.hrId){
-    //         try {
-    //             await commonFunctions.sendMailFromGeneralTemplate(candidate.candidateStatusId, candidate);
-    //         } catch (e) {
-    //             isMailsent = false;
-    //             logger.error('Error occurred while sending mail candidate in updateCandidate controller %s:', JSON.stringify(e));
-    //             return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
-    //         }
-    //     }
-    // }
+  
 
 
     req.body.lastModifiedById = req.user.userId;
@@ -575,6 +574,10 @@ exports.updateCandidate = async (req, res) => {
                     as: 'candidateStatus',
                     attributes: ['metaDataId', 'displayText']
                 },
+                {
+                    model: User,
+                    as: 'hr'
+                }
             ],
             raw: true,
             nest: true
@@ -583,6 +586,45 @@ exports.updateCandidate = async (req, res) => {
         logger.error('Error occurred while finding candidate in updateCandidate controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
+
+      //! sending mail to HR
+      if (req.body.hrId) {
+        let template;
+        try {
+            template = await Template.findOne({
+                where: {},
+                include: [
+                    {
+                        model: Role,
+                        as: 'role',
+                        required: true,
+                        where: {
+                            roleName: 'HR'
+                        }
+                    }
+                ]
+            })
+        } catch (e) {
+            console.log(e);
+        }
+        if (template) {
+            let generatedTemplate, hr = candidate.hr, candidateObj = JSON.parse(JSON.stringify(candidate));
+            candidateObj['HR Name'] = hr.displayName;
+            try {
+                generatedTemplate = await commonFunctions.generateTemplate(template, candidateObj);
+            } catch (e) {
+                console.log(e);
+            }
+            try {
+                await commonFunctions.sendMailNew(hr.email, generatedTemplate.subject, generatedTemplate.body);
+            } catch (e) {
+                isMailsent = false;
+                logger.error('Error occurred while sending mail candidate in updateCandidate controller %s:', JSON.stringify(e));
+                return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+            }
+        }
+    }
+
 
     candidate.isMailSent = isMailsent;
 
@@ -623,7 +665,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 }
 
                 documents = documents.filter((document) => document.documentName !== req.body.documentName);
-                await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
             } catch (e) {
                 logger.error('Error occurred while deleting document in uploadDocuments controller %s:', JSON.stringify(e));
                 return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -683,7 +725,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 let documents = candidate.documents;
                 documents.push({ documentName: 'resume', oneDriveId: uploadedDocument.id, downloadLink: link.link.webUrl });
                 try {
-                    await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                    await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
                 } catch (e) {
                     logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                     return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -691,7 +733,7 @@ exports.uploadDocuments = async (req, res, next) => {
             } else {
                 let documents = [{ documentName: 'resume', oneDriveId: uploadedDocument.id, downloadLink: link.link.webUrl }];
                 try {
-                    await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                    await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
                 } catch (e) {
                     logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                     return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -722,7 +764,7 @@ exports.uploadDocuments = async (req, res, next) => {
                     let documents = candidate.documents;
                     documents.push({ documentName: req.body.documentName, downloadLink: uploadedDocument.webUrl, sharepointId: uploadedDocument.id });
                     try {
-                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                        await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
                     } catch (e) {
                         console.log(e);
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
@@ -731,7 +773,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 } else {
                     let documents = [{ documentName: req.body.documentName, downloadLink: uploadedDocument.webUrl, sharepointId: uploadedDocument.id }];
                     try {
-                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                        await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
                     } catch (e) {
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -748,7 +790,7 @@ exports.uploadDocuments = async (req, res, next) => {
                         }
                     });
                     try {
-                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
+                        await Candidate.update({ documents: documents }, { where: { candidateId: candidate.candidateId } });
                     } catch (e) {
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));

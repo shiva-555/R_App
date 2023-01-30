@@ -211,6 +211,15 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             }
         });
 
+        Candidate.hasOne(models.ReferralCandidate, {
+            as: 'referredBy',
+            foreignKey: {
+                name: 'candidateId',
+                type: DataTypes.UUID,
+                defaultValue: null
+            }
+        });
+
         Candidate.hasMany(models.CandidateStatusHistory, {
             as: 'statusHistory',
             foreignKey: {

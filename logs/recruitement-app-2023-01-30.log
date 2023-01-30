@@ -98,3 +98,67 @@
   message: 'Error occurred while sending email to panel in updateInterview controller {}:',
   timestamp: '2023-01-30T07:06:31.736Z'
 }
+{
+  name: 'SequelizeAccessDeniedError',
+  parent: Error: Access denied for user 'root'@'localhost' (using password: YES)
+      at Packet.asError (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:456:32)
+      at PacketParser.onPacket (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:85:12)
+      at PacketParser.executeStart (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:92:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:315:12)
+      at readableAddChunk (node:internal/streams/readable:289:9)
+      at Socket.Readable.push (node:internal/streams/readable:228:10) {
+    code: 'ER_ACCESS_DENIED_ERROR',
+    errno: 1045,
+    sqlState: '28000',
+    sqlMessage: "Access denied for user 'root'@'localhost' (using password: YES)",
+    sql: undefined
+  },
+  original: Error: Access denied for user 'root'@'localhost' (using password: YES)
+      at Packet.asError (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:456:32)
+      at PacketParser.onPacket (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:85:12)
+      at PacketParser.executeStart (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (C:\Users\Sanket G\Downloads\recruitment-app-backend\node_modules\mysql2\lib\connection.js:92:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:315:12)
+      at readableAddChunk (node:internal/streams/readable:289:9)
+      at Socket.Readable.push (node:internal/streams/readable:228:10) {
+    code: 'ER_ACCESS_DENIED_ERROR',
+    errno: 1045,
+    sqlState: '28000',
+    sqlMessage: "Access denied for user 'root'@'localhost' (using password: YES)",
+    sql: undefined
+  },
+  level: 'error',
+  timestamp: '2023-01-30T08:07:02.633Z'
+}
+{
+  message: 'Error: searchCriteria is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T09:22:20.612Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred checking assignment of job requisition to recruiter in updateCandidate controller {}:',
+  timestamp: '2023-01-30T09:23:18.404Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred checking assignment of job requisition to recruiter in updateCandidate controller {}:',
+  timestamp: '2023-01-30T09:25:21.923Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while sending mail candidate in updateCandidate controller {}:',
+  timestamp: '2023-01-30T11:27:44.589Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while sending mail candidate in updateCandidate controller {}:',
+  timestamp: '2023-01-30T11:39:23.822Z'
+}
