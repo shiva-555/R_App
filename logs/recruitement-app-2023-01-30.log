@@ -28,3 +28,28 @@
   level: 'error',
   timestamp: '2023-01-30T03:10:23.097Z'
 }
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T05:39:23.604Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T05:43:35.831Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T05:45:16.260Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T05:48:42.886Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T05:52:37.572Z'
+}

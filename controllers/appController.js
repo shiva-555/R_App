@@ -593,7 +593,6 @@ exports.updateCandidate = async (req, res) => {
 exports.uploadDocuments = async (req, res, next) => {
     let candidate;
 
-
     if (!req.body.candidateId) {
         return res.status(400).json(responseFormatter.responseFormatter({}, 'candidate id is required', 'bad request', 400));
     }
@@ -624,7 +623,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 }
 
                 documents = documents.filter((document) => document.documentName !== req.body.documentName);
-                await candidate.update({ documents: documents });
+                await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
             } catch (e) {
                 logger.error('Error occurred while deleting document in uploadDocuments controller %s:', JSON.stringify(e));
                 return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -684,7 +683,7 @@ exports.uploadDocuments = async (req, res, next) => {
                 let documents = candidate.documents;
                 documents.push({ documentName: 'resume', oneDriveId: uploadedDocument.id, downloadLink: link.link.webUrl });
                 try {
-                    await candidate.update({ documents: documents });
+                    await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
                 } catch (e) {
                     logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                     return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -692,7 +691,7 @@ exports.uploadDocuments = async (req, res, next) => {
             } else {
                 let documents = [{ documentName: 'resume', oneDriveId: uploadedDocument.id, downloadLink: link.link.webUrl }];
                 try {
-                    await candidate.update({ documents: documents });
+                    await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
                 } catch (e) {
                     logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                     return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -723,15 +722,16 @@ exports.uploadDocuments = async (req, res, next) => {
                     let documents = candidate.documents;
                     documents.push({ documentName: req.body.documentName, downloadLink: uploadedDocument.webUrl, sharepointId: uploadedDocument.id });
                     try {
-                        await candidate.update({ documents: documents });
+                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
                     } catch (e) {
+                        console.log(e);
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
                     }
                 } else {
                     let documents = [{ documentName: req.body.documentName, downloadLink: uploadedDocument.webUrl, sharepointId: uploadedDocument.id }];
                     try {
-                        await candidate.update({ documents: documents });
+                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
                     } catch (e) {
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -748,7 +748,7 @@ exports.uploadDocuments = async (req, res, next) => {
                         }
                     });
                     try {
-                        await candidate.update({ documents: documents });
+                        await Candidate.update({ documents: documents }, {where: {candidateId: candidate.candidateId}});
                     } catch (e) {
                         logger.error('Error occurred while creating document entry in uploadDocuments controller %s:', JSON.stringify(e));
                         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
@@ -784,7 +784,6 @@ exports.uploadDocuments = async (req, res, next) => {
             ]
         });
     } catch (e) {
-        console.log(e);
         logger.error('Error occurred while finding candidate in uploadDocuments controller %s:', JSON.stringify(e));
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
