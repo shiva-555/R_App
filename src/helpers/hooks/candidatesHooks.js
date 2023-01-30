@@ -144,7 +144,7 @@ export const useCandidates = () => {
                                 message: 'Candidates fetched successfully',
                                 data: {
                                     count: page.data.count,
-                                    rows: page.data.rows.map((candidate) => (candidate.candidate_id === updatedCandidate.data.candidate_id ? updatedCandidate.data : candidate))
+                                    rows: page.data.rows.map((candidate) => (candidate.candidateId === updatedCandidate.data.candidateId ? updatedCandidate.data : candidate))
                                 }
                             }
                         })

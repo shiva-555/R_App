@@ -175,13 +175,13 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
         [e.target.name]: e.target.value
       });
     } else {
-      setForm({
-        ...form,
-        id: user.id,
-        displayName: user.displayName,
-        mail: user.mail,
-        [e.target.name]: e.target.value
-      });
+    setForm({
+      ...form,
+      id: user.userId,
+      displayName: user.displayName,
+      mail: user.email,
+      [e.target.name]: e.target.value
+    });
     }
 
   }
@@ -189,9 +189,9 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(form);
+    console.log(form)
     if (editMode) {
-      updateUser({ instance, accounts, formData: form, id: user.id });
+      updateUser({ instance, accounts, formData: form, id: user.userId });
     } else {
       mutate({ instance, accounts, formData: form });
     }
@@ -199,7 +199,6 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
     setEditMode(false);
   }
 
-  console.log(user?.roleAssignments[0]?.role?.roleName)
   return (
 
     <Dialog
@@ -228,7 +227,7 @@ const AddUser = ({ setIsModalOpen, user, editMode, setEditMode, isModalOpen }) =
               <Select
                 name='role'
                 id="role"
-                value={user?.roleAssignments[0]?.role?.roleName}
+                defaultValue={user?.roleAssignments[0]?.role?.roleName}
                 onChange={(e) => handleChange(e)}
               >
                 {

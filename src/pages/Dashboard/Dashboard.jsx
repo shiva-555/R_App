@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useReducer } from 'react';
 import './Dashboard.css';
 import SpinLoader from '../../components/SpinLoader/SpinLoader';
 import { UserContext } from '../../components/Routes/Routes';
@@ -38,6 +38,10 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Autocomplete from '@mui/material/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { Chip } from "@mui/material";
+
 
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -60,7 +64,7 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
       if (apiData[i][key] && typeof apiData[i][key] === 'object' && apiData[i][key].hasOwnProperty('candidates')) {
         value = apiData[i][key].candidates;
         console.log(value);
-        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.displayName, CandidateName: el.candidateName, Remark: el.remark, CreatedDate: moment(el.createdDate).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.displayText.status, JoiningDate: moment(el.joiningDate).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation.displayText.location, Company: el.company, Source: el.source?.displayText, TotalExperience: el.totalExperience, RelevantExperience: el.relevantExperience }]);
+        value1 = value?.map((el) => [{ RecruiterName: el.createdBy?.displayName, CandidateName: el.candidateName, Remark: el.remark, CreatedDate: moment(el.createdDate).utc().format('DD-MM-YYYY'), Status: el.candidateStatus?.displayText.status, JoiningDate: moment(el.joiningDate).utc().format('DD-MM-YYYY'), ScheduledDate: moment(el.interviews[0]?.interviewDate).utc().format('DD-MM-YYYY'), CallingDate: moment(el.candidateCallingDate).utc().format('DD-MM-YYYY'), CandidateEmail: el.candidateEmail, CandidatePhone: el.candidatePhone, JobTitle: el.jobTitle?.jobTitle, location: el.jobLocation?.displayText.location, Company: el.company, Source: el.source?.displayText, TotalExperience: el.totalExperience, RelevantExperience: el.relevantExperience }]);
         for (let j = 0; j < value1.length; j++) {
           candidates.push(...value1[j]);
         }
@@ -88,7 +92,7 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
             data[key] = hiringManagerNames;
           }
         }
-      } else if (key === 'total' || key === 'assignedRecruiters' || key === 'jobCode' || key === 'jobTitle' || key === 'job_type') {
+      } else if (key === 'total' || key === 'assignedRecruiters' || key === 'jobCode' || key === 'jobTitle' || key === 'jobType') {
         if (key === 'assignedRecruiters') {
           if (data[key].length > 0) {
             let recruiterNames = ''
@@ -105,7 +109,8 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
         else {
           data[key] = data[key];
         }
-      } else if (key === 'Joined' || key === 'Offered' || key === 'Selected' || key === 'Scheduled' || key === 'Scheduled' || key === 'Identified' || key === 'Screening') {
+      } else if (key === 'Joined' || key === 'Offered' || key === 'Selected' || key === 'Scheduled' || key === 'Scheduled' || key === 'Identified' || key === 'Screening' || key === ''
+        || key === 'BackOut' || key === 'BackUp' || key === 'Hold' || key === 'Disqualified') {
         data[key] = data[key]?.count
       } else {
         delete data[key];
@@ -129,7 +134,7 @@ const exportToCSV = (apiData, fileName, selectedColumns) => {
   fileSaver.saveAs(fileData, fileName + fileExtension);
 };
 
-const columnNames = [{ label: 'Job Age(Days)', value: 'job_age' }, { label: 'Priority', value: 'priority' }, { label: 'Hiring Manager', value: 'assignedHiringManager' }, { label: 'Can engage external consultants?', value: 'can_engage_external_consultants' }, { label: 'Job Status', value: 'job_status' }, { label: 'Job Created', value: 'job_created' }, { label: 'Number of Positions', value: 'no_of_positions' }, { value: 'Disqualified', label: 'Disqualified' }, { value: 'Rejected', label: 'Rejected' }, { value: 'Back Out', label: 'Back Out' }, { value: 'Back Up', label: 'Back Up' }, { value: 'Hold', label: 'Hold' }];
+const columnNames = [{ label: 'Job Age(Days)', value: 'jobAge' }, { label: 'Priority', value: 'priority' }, { label: 'Can engage external consultants?', value: 'canEngageExternalConsultants' }, { label: 'Job Status', value: 'jobStatus' }, { label: 'Job Created', value: 'jobCreated' }, { label: 'Number of Positions', value: 'noOfPositions' }, { value: 'Disqualified', label: 'Disqualified' }, { value: 'Rejected', label: 'Rejected' }, { value: 'BackOut', label: 'BackOut' }, { value: 'BackUp', label: 'BackUp' }, { value: 'Hold', label: 'Hold' }];
 
 const statusFields = [
   {
@@ -374,7 +379,6 @@ const statusFields = [
 ]
 
 const Dashboard = () => {
-
   const { candidateStatuses } = useMetaData();
   const { useGetDashboard } = useDashboard();
   const [filter, setFilter] = useState({});
@@ -386,6 +390,8 @@ const Dashboard = () => {
   const value = useContext(UserContext);
   const { HR, recruiters } = useUsers(value?.data?.assignedRoles?.assignedRole.role);
   const [jobSelectedColumns, setJobSelectedColumns] = useState([]);
+  const [jobSelectedColumn, setJobSelectedColumn] = useState([]);
+
 
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
@@ -395,6 +401,9 @@ const Dashboard = () => {
   const [showGraph, setShowGraph] = React.useState(false);
   const [showGraph1, setShowGraph1] = React.useState(false);
   const [graphCurrentRecruiter, setgraphCurrentRecruiter] = React.useState('');
+
+  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+  const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
   useEffect(() => {
 
@@ -409,7 +418,6 @@ const Dashboard = () => {
   }, [dashboard?.data?.data, JSON.stringify(filter)]);
 
 
-  console.log(dashboard?.data?.data);
   if (dashboard.isLoading || HR.isLoading || recruiters.isLoading || dashboard.isFetching) {
     return <SpinLoader />
   }
@@ -629,29 +637,8 @@ const Dashboard = () => {
               }
             </Select>
           </FormControl>
+
         </Grid>
-
-        {/* <Grid item xs='auto'>
-          <FormControl sx={{ m: 1, width: 300 }} >
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              // multiple
-              value={jobSelectedColumns}
-              options={dashboard?.data?.data.map((job) => ({ label: job.jobTitle, value: job.jobId}))}
-              sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params}
-                label="job" />}
-              onChange={handleJob}
-              renderOption={(props, option, { jobSelectedColumns }) => (
-                <div {...props}>
-                  <Checkbox checked={jobSelectedColumns.indexOf(dashboard?.data?.data.map((job) => (job.jobTitle) > -1))} />
-                </div>
-              )}
-            />
-          </FormControl>
-        </Grid> */}
-
 
         <Grid item xs='auto'>
           <FormControl sx={{ m: 1, width: 300 }} >
@@ -687,8 +674,59 @@ const Dashboard = () => {
               }
             </Select>
           </FormControl>
-
         </Grid>
+
+        <Grid item xs='auto'>
+          {/* <FormControl sx={{ m: 1, width: 300 }} >
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              // multiple
+              // value={jobSelectedColumns}
+              options={dashboard?.data?.data.map((job) => ({ label: job.jobTitle, value: job.jobId }))}
+              sx={{ width: 300 }}
+              renderInput={(params) =>
+                <TextField {...params} label="job" />}
+              onChange={handleJob}
+
+              renderOption={(props, option, { jobSelectedColumns }) => (
+                <div {...props}>
+                  <Checkbox checked={jobSelectedColumns?.indexOf(dashboard?.data?.data.map((job) => (job.jobTitle) > -1))} />
+                </div>
+              )}
+            />
+          </FormControl> */}
+
+          <FormControl>
+
+            {/* <Autocomplete
+              multiple
+              id="checkboxes-tags-demo"
+              options={dashboard?.data?.data.map((job) => ({ label: job.jobTitle, value: job.jobId }))}
+              disableCloseOnSelect
+              getOptionLabel={(option) => option.label}
+              onChange={handleJob}
+              value={jobSelectedColumns}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected} 
+                  />
+                  {option.label}
+                </li>
+              )}
+              style={{ width: 500 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Checkboxes" placeholder="Favorites" />
+              )}
+            /> */}
+
+          </FormControl>
+        </Grid>
+
       </Grid>
 
       <Grid container>
@@ -895,14 +933,12 @@ const Dashboard = () => {
                           {
                             selectedColumns && selectedColumns.map((col) => {
                               let column = columnNames.filter((el) => el.value === col)[0];
-                              if (column.label === 'Hiring Manager') {
-                                return <TableCell style={{ borderTop: 0, border: "1px solid #3b4864", borderLeft: 0, minWidth: 150, maxWidth: 150 }}>{data[column.value].map((hiringManager) => hiringManager + ',')}</TableCell>
-                              } else if (typeof data[column.label] !== 'object') {
-                                return <TableCell style={{ borderTop: 0, border: "1px solid #3b4864", borderLeft: 0, minWidth: 150, maxWidth: 150 }}>
+                              if (typeof data[column.label] !== 'object') {
+                                return <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100 }}>
                                   {data[column.value]}
                                 </TableCell>
                               } else {
-                                return <TableCell style={{ borderTop: 0, border: "1px solid #3b4864", borderLeft: 0, minWidth: 150, maxWidth: 150, 'cursor': data[column.label]?.count > 0 ? 'pointer' : '', 'color': data[column.label]?.count > 0 ? 'blue' : '' }} onClick={(e) => {
+                                return <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100, 'cursor': data[column.label]?.count > 0 ? 'pointer' : '', 'color': data[column.label]?.count > 0 ? 'blue' : '' }} onClick={(e) => {
                                   setCandidates(data[column.label]?.candidates);
                                   if (data[column.label].count > 0) {
                                     setOpen(true);

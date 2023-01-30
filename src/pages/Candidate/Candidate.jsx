@@ -6,7 +6,7 @@ import { useCandidates } from '../../helpers/hooks/candidatesHooks';
 import { useUsers } from '../../helpers/hooks/userHooks';
 import ReactQuill from 'react-quill';
 
-import OnBoardingForm from '../../components/OnBoardingForm/OnBoardingForm';
+import SpinLoader from '../../components/SpinLoader/SpinLoader';
 import DocumentUpload from '../../components/DocumentUpload/DocumentUpload';
 
 //!--------------------MUI------------
@@ -24,6 +24,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { FormControlLabel, FormControl, MenuItem, InputLabel, Select } from '@mui/material';
 import { useLocation } from 'react-router-dom';
+import { useAlert, positions } from 'react-alert'
+
 
 
 const Candidate = () => {
@@ -42,8 +44,9 @@ const Candidate = () => {
   const [showHr, setShowHr] = useState(false);
   const [remark, setRemark] = useState(candidate?.data?.data?.remark);
   const { HR } = useUsers()
-  const [currentStatus, setCurrentStatus] = useState(null);
+  const [currentStatus, setCurrentStatus] = useState(candidate?.data?.data?.candidateStatusId);
   const [joiningDetails, setJoiningDetails] = useState(candidate?.data?.data?.joiningDetails);
+  const alert1 = useAlert()
 
 
   const handleChange = (e) => {
@@ -67,7 +70,20 @@ const Candidate = () => {
       }
     }
 
-
+    // if (e.target.name === 'hrId') {
+    //   updateCandidate.mutate({ id: candidateId, formData: form },
+    //     {
+    //       onSuccess: (data) => {
+    //         alert('success')
+    //       }
+    //     },
+    //     {
+    //       onError: (data) => {
+    //         alert('error')
+    //       }
+    //     }
+    //   )
+    // }
     setForm({
       ...form,
       [e.target.name]: e.target.value
@@ -117,7 +133,7 @@ const Candidate = () => {
           }
         },
         {
-          onSuccess: (data) => {
+          onError: (data) => {
             alert('error')
           }
         }
@@ -157,6 +173,17 @@ const Candidate = () => {
 
   }
 
+  useEffect(() => {
+
+  }, [candidate?.data?.data, currentStatus])
+
+  if (sources.isLoading || jobLocations.isLoading || backoutReasons.isLoading || updateCandidate.isLoading) {
+    return <SpinLoader />
+  }
+
+  if (uploadDocuments.isLoading) {
+    alert1.show(form?.file?.name, { position: positions.BOTTOM_RIGHT });
+  }
 
   return (
     <>
@@ -297,7 +324,7 @@ const Candidate = () => {
                     id="outlined-required"
                     label="Current CTC"
                     placeholder='Enter Current CTC'
-
+                    InputProps={{ inputProps: { min: "300000", max: Infinity, step: "1" } }}
                     size='small'
                     margin='normal'
                     type='number'
@@ -340,6 +367,7 @@ const Candidate = () => {
                     size='small'
                     margin='normal'
                     name='totalExperience'
+                    type='number'
                     defaultValue={candidate?.data?.data.totalExperience}
                     variant="filled"
                     onChange={(e) => handleChange(e)}
@@ -359,7 +387,7 @@ const Candidate = () => {
                     size='small'
                     margin='normal'
                     name='relevantExperience'
-
+                    type='number'
                     defaultValue={candidate?.data?.data.relevantExperience}
                     variant="filled"
                     onChange={(e) => handleChange(e)}
@@ -733,7 +761,7 @@ const Candidate = () => {
                     required
                     name='candidateStatusId'
                     variant="filled"
-                    defaultValue={candidate?.data?.data?.candidateStatusId}
+                    defaultValue={currentStatus}
                     onChange={(e) => handleChange(e)}
                   >
                     {statuses && statuses.map((status) =>
@@ -760,13 +788,14 @@ const Candidate = () => {
                       <FormControl>
                         <InputLabel id="demo-simple-select-label">Cost Center</InputLabel>
                         <Select
+                          required
                           labelId="demo-simple-select-label"
                           id="costCenter"
                           name="costCenter"
                           value={joiningDetails?.costCenter}
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, costCenter: e.target.value}) }}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, costCenter: e.target.value }) }}
                         >
                           {costCenter?.data && costCenter.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.costCenter}>{cc.displayText.costCenter}</MenuItem>
@@ -777,6 +806,7 @@ const Candidate = () => {
                       <FormControl>
                         <InputLabel id="demo-simple-select-label">Department</InputLabel>
                         <Select
+                          required
                           labelId="demo-simple-select-label"
                           id="department"
                           label="department"
@@ -784,7 +814,7 @@ const Candidate = () => {
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
                           value={joiningDetails?.department}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, department: e.target.value}) }}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, department: e.target.value }) }}
                         >
                           {department?.data && department.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.department}>{cc.displayText.department}</MenuItem>
@@ -796,6 +826,7 @@ const Candidate = () => {
                       <FormControl>
                         <InputLabel id="demo-simple-select-label">joining Location</InputLabel>
                         <Select
+                          required
                           labelId="demo-simple-select-label"
                           id="joining Location"
                           label="joining Location"
@@ -803,7 +834,7 @@ const Candidate = () => {
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
                           value={joiningDetails?.location}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, location: e.target.value}) }}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, location: e.target.value }) }}
                         >
                           {jobLocations?.data && jobLocations.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.location}>{cc.displayText.location}</MenuItem>
@@ -814,6 +845,7 @@ const Candidate = () => {
                       <FormControl>
                         <InputLabel id="demo-simple-select-label">division</InputLabel>
                         <Select
+                          required
                           labelId="demo-simple-select-label"
                           id="division"
                           label="division"
@@ -821,7 +853,7 @@ const Candidate = () => {
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
                           value={joiningDetails?.division}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, division: e.target.value}) }}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, division: e.target.value }) }}
                         >
                           {division?.data && division.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.division}>{cc.displayText.division}</MenuItem>
@@ -833,6 +865,7 @@ const Candidate = () => {
                       <FormControl>
                         <InputLabel id="demo-simple-select-label">devices</InputLabel>
                         <Select
+                          required
                           labelId="demo-simple-select-label"
                           id="devices"
                           label="devices"
@@ -840,7 +873,7 @@ const Candidate = () => {
                           sx={{ width: 300, height: 50 }}
                           style={{ marginBottom: '20px', marginRight: "20px", borderRadius: "10px" }}
                           value={joiningDetails?.devices}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, devices: e.target.value}) }}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, devices: e.target.value }) }}
                         >
                           {devices?.data && devices.data.data.map(cc =>
                             <MenuItem key={cc.metaDataId} value={cc.displayText.device}>{cc.displayText.device}</MenuItem>
@@ -860,8 +893,8 @@ const Candidate = () => {
                           margin='normal'
                           name='offeredDesignation'
                           value={joiningDetails?.offeredDesignation}
-                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, offeredDesignation: e.target.value}) }}
-                          // onChange={(e) => handleChange(e)}
+                          onChange={(e) => { setJoiningDetails({ ...joiningDetails, offeredDesignation: e.target.value }) }}
+                        // onChange={(e) => handleChange(e)}
                         />
                       </FormControl>
 
@@ -915,7 +948,7 @@ const Candidate = () => {
                         required
                         onChange={(e) => handleChange(e)}
                         margin='normal'
-                        defaultValue={candidate?.data?.data?.hrId}>
+                        value={candidate?.data?.data?.hrId}>
                         <MenuItem key="" value=""> Select HR</MenuItem>
                         {HR?.data?.data?.map((h) => {
                           return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>

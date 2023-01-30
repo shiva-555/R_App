@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { useTheme } from '@mui/material/styles';
-
+import SpinLoader from '../SpinLoader/SpinLoader';
 import { FormControlLabel, FormControl, MenuItem, InputLabel, Select, TextField, Button } from '@mui/material';
 
 function DocumentUpload({ candidate, setshowDocument, statuses }) {
@@ -97,7 +97,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                         <Grid container m={2} gap={10}>
 
                             {
-                                uploadDocuments.isLoading && <p>Uploading...</p>
+                                uploadDocuments.isLoading &&   <> return <SpinLoader /> </>
                             }
 
                             {
@@ -126,7 +126,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Bank Statement')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Bank Statement' onClick={(e) => downloadDocument(e)}>Download</Button>
-                                                            <Button variant='contained' name='Bank Statement' onClick={(e) => handleDelete(e)}>Download</Button>
+                                                            <Button variant='contained' name='Bank Statement' onClick={(e) => handleDelete(e)}>Delete</Button>
                                                         </>
                                                         :
                                                         <input id="bank_statement" type="file" name='Bank Statement' onChange={(e) => handleUpload(e)} />
@@ -143,7 +143,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Offer Letter')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Offer Letter' onClick={(e) => downloadDocument(e)}>Download</Button>
-                                                            <Button variant='contained' name='Offer Letter' onClick={(e) => handleDelete(e)}>Download</Button>
+                                                            <Button variant='contained' name='Offer Letter' onClick={(e) => handleDelete(e)}>Delete</Button>
                                                         </>
                                                         :
                                                         <input id="offer_letter" type="file" name='Offer Letter' onChange={(e) => handleUpload(e)} />
@@ -159,7 +159,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => downloadDocument(e)}>Download</Button>
-                                                            <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Download</Button>
+                                                            <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Delete</Button>
                                                         </>
                                                         :
                                                         <input id="adhaar_card" type="file" name='Adhaar Card' onChange={(e) => handleUpload(e)} />
@@ -177,7 +177,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
                                                             <Button variant='contained' name='Adhaar Card' onClick={(e) => downloadDocument(e)}>Download</Button>
-                                                            <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Download</Button>
+                                                            <Button variant='contained' name='Adhaar Card' onClick={(e) => handleDelete(e)}>Delete</Button>
                                                         </>
                                                         :
                                                         <input id="adhaar_card" className='documentUpload-block__input' type="file" name='Adhaar Card' onChange={(e) => handleUpload(e)} />

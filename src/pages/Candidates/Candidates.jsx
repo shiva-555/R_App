@@ -157,7 +157,7 @@ const Candidates = () => {
 
 
     if (form?.file) {
-      createCandidate.mutate(formData,
+      createCandidate.mutate(form,
         {
           onSuccess: (data) => {
             formData.append('canidateId', data.data.candidateId);
@@ -170,7 +170,7 @@ const Candidates = () => {
           }
         },
         {
-          onSuccess: (data) => {
+          onError: (data) => {
             alert('error')
           }
         }
@@ -582,6 +582,7 @@ const Candidates = () => {
                     Total Experience
                     <TextField
                       required
+                      type='number'
                       labelId="input-total-experience-label"
                       id="outlined-required"
                       label="Total Experience"
@@ -597,6 +598,7 @@ const Candidates = () => {
                     Relevant Experience
                     <TextField
                       required
+                      type='number'
                       labelId="input-total-experience-label"
                       id="outlined-required"
                       label="Relevant Experience"

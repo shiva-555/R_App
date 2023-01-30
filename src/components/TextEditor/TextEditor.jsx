@@ -46,7 +46,7 @@ const TextEditor = ({ template, templateData, label }) => {
       setSubjectValue(template.subject);
       setTemplateStatus(template.status);
     }
-  }, [template, templateData, template.status]);
+  }, [template, templateData]);
 
   const handleInput = event => {
     setOtherEmail(event.target.value);
@@ -67,7 +67,7 @@ const TextEditor = ({ template, templateData, label }) => {
         }
       },
       {
-        onSuccess: (data) => {
+        onError: (data) => {
           alert('error')
         }
       });
@@ -79,7 +79,7 @@ const TextEditor = ({ template, templateData, label }) => {
         }
       },
       {
-        onSuccess: (data) => {
+        onError: (data) => {
           alert('error')
         }
       });
@@ -104,7 +104,7 @@ const TextEditor = ({ template, templateData, label }) => {
             }
           },
           {
-            onSuccess: (data) => {
+            onError: (data) => {
               alert('error')
             }
           }
@@ -119,7 +119,7 @@ const TextEditor = ({ template, templateData, label }) => {
             }
           },
           {
-            onSuccess: (data) => {
+            onError: (data) => {
               alert('error')
             }
           });
@@ -136,7 +136,7 @@ const TextEditor = ({ template, templateData, label }) => {
             }
           },
           {
-            onSuccess: (data) => {
+            onError: (data) => {
               alert('error')
             }
           });
@@ -149,7 +149,7 @@ const TextEditor = ({ template, templateData, label }) => {
             }
           },
           {
-            onSuccess: (data) => {
+            onError: (data) => {
               alert('error')
             }
           });
