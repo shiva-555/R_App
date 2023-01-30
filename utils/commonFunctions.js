@@ -686,3 +686,12 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
         return e;
     }
 }
+
+exports.getAllRoles = async () => {    
+    try {
+        const roles = await Role.findAll({where: {}});
+        return roles.map((role) => role.roleName)
+    } catch (e) {
+        console.log(e);
+    }
+};

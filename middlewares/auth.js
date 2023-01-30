@@ -64,6 +64,7 @@ exports.checkUserExistInApp = async (req, res, next) => {
 
   /* if user is not exist, creating user wihtout any role defined */
   if (!user) {
+    let role;
     dataToSave.userId = req.authInfo.oid;
     dataToSave.displayName = req.authInfo.name;
     dataToSave.email = req.authInfo.preferred_username;
@@ -74,6 +75,65 @@ exports.checkUserExistInApp = async (req, res, next) => {
       user = await User.create(dataToSave);
     } catch (e) {
       logger.error('Error occurred while creating user in checkUserExistInApp middleware %s:', JSON.stringify(e));
+      return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
+
+    try {
+      role = await Role.findOne({where: {roleName: 'Referal'}});
+    } catch (e) {
+      logger.error('Error occurred while checking role in checkUserExistInApp middleware %s:', JSON.stringify(e));
+      return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
+
+    try {
+      await RoleAssignment.create({userId: user.userId, roleId: role.roleId});
+    } catch (e) {
+      logger.error('Error occurred while assigning role to user in checkUserExistInApp middleware %s:', JSON.stringify(e));
+      return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    }
+
+    try {
+      // console.log(req.authInfo.oid);
+      user = await User.findByPk(user.userId, {
+        where: {
+          status: 'Active'
+        },
+        include: [
+          {
+            model: RoleAssignment,
+            as: 'roleAssignments',
+            required: false,
+            // attributes: [],
+            include: [
+              {
+                model: Role,
+                as: 'role',
+                attributes: ['roleId', 'roleName', 'candidatesView', 'jobsView'],
+                include: [
+                  {
+                    model: PermissionAssignment,
+                    as: 'permissionAssignments',
+                    attributes: [],
+                    include: {
+                      model: Permission,
+                      as: 'permission',
+                      attributes: ['permissionId', 'permissionName']
+                    }
+                  },
+                  {
+                    model: OrganizationTeam,
+                    as: 'organizationTeam',
+                    attributes: ['organizationTeamId', 'organizationTeamName', 'candidatesView', 'jobsView']
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+    } catch (e) {
+      console.log(e);
+      logger.error('Error occurred while finding user in checkUserExistInApp middleware %s:', JSON.stringify(e));
       return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
   }
@@ -87,7 +147,6 @@ exports.authorizeRoles = (...roles) => {
   return async (req, res, next) => {
     try {
       let userLoggedInRoleAssignment;
-
       // console.log('=========Authorize Role=================')
 
       if (req.headers['user-info']) {        

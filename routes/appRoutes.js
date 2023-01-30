@@ -8,7 +8,7 @@ const { authorizeRoles, checkUserExistInApp } = require('../middlewares/auth');
 const { Validator } = require("express-json-validator-middleware");
 const { validate } = new Validator();
 const candidateSchema = require('../middlewares/candidateValidation');
-
+const commonFunctions = require('../utils/commonFunctions');
 const multer = require('multer');
 const upload  = multer();
 
@@ -23,9 +23,9 @@ router.get('/appUsers/:userId', appController.getAppUser);
 /* Candidate Routes */
 router.get('/candidates', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getCandidates);
 
-router.post('/candidate', authorizeRoles('Recruiter','Admin', 'TA Manager', 'Admin'),
+router.post('/candidate', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR', 'Referal'),
 //  validate({body: candidateSchema}), 
- appController.createCandidate);
+appController.createCandidate);
 router.get('/candidate/:candidateId',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getCandidate)
 router.put('/candidate/:candidateId',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.updateCandidate);
 router.post('/uploadDocuments', upload.single('file'), appController.uploadDocuments);
@@ -33,14 +33,12 @@ router.post('/candidate/:candidate_id/interview', authorizeRoles('Recruiter', 'A
 router.put('/candidate/:candidate_id/interview/:interview_id', appController.updateInterview);
 router.get('/candidateReport', appController.getCandidatesReport);
 
-
-
 /* Job Requisitions*/
 //! Need to Add H Code
-router.get('/jobRequisitions', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'),appController.getJobRequisitions);
+router.get('/jobRequisitions', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR', 'Referal'), appController.getJobRequisitions);
 // router.post('/jobRequisition', upload.single('file'), appController.createJobRequisition, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
 // router.put('/jobRequisition/:job_id', upload.single('file'), appController.updateJobRequisition, authorizeRoles('Admin', 'Recruitement Manager', 'Hiring Manager'));
-router.get('/getAllJobRequisitions',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getAllJobRequisitions)
+router.get('/getAllJobRequisitions', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR' , 'Referal'), appController.getAllJobRequisitions)
 
 /* Dashboard*/
 router.get('/dashboard', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getDashboard);
@@ -52,6 +50,5 @@ router.put('/assignCandidateToRecruiter/:candidateId', appController.assignCandi
 router.get('/getJobAssignedRecruiter', appController.getJobAssignedRecruiter)
 // router.put('/assignCandidateToRecruiter/:candidate_id', appController.assignCandidateToRecruiter); 
 // router.get('/getJobAssignedRecruiter', appController.getJobAssignedRecruiter)
-
 
 module.exports = router;

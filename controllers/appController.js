@@ -1623,7 +1623,7 @@ exports.getJobRequisitions = async (req, res, next) => {
 };
 
 exports.getAllJobRequisitions = async (req, res, next) => {
-    let jobRequisitions, searchCriteria, includeCriteria = [], userIds = [req.user.userId], childUsers;
+    let jobRequisitions, searchCriteria = {}, includeCriteria = [], userIds = [req.user.userId], childUsers;
 
     /* Getting Role of requesting user */
     // const role = req.user.roleAssignments.role;
