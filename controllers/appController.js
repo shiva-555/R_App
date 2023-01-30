@@ -19,6 +19,7 @@ const logger = require('../utils/logger');
 const commonFunctions = require('../utils/commonFunctions');
 const responseFormatter = require('../utils/responseFormatter');
 const axios = require('axios');
+const FormData = require('form-data')
 
 exports.getUser = async (req, res) => {
     return res.status(200).json(responseFormatter.responseFormatter(req.user, 'user fetched successfully', 'success', 200));
@@ -518,7 +519,7 @@ exports.updateCandidate = async (req, res) => {
     }
 
 
-  
+
 
 
     req.body.lastModifiedById = req.user.userId;
@@ -587,8 +588,8 @@ exports.updateCandidate = async (req, res) => {
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
 
-      //! sending mail to HR
-      if (req.body.hrId) {
+    //! sending mail to HR
+    if (req.body.hrId) {
         let template;
         try {
             template = await Template.findOne({
@@ -633,6 +634,8 @@ exports.updateCandidate = async (req, res) => {
 
 //! need to append document details
 exports.uploadDocuments = async (req, res, next) => {
+
+
     let candidate;
 
     if (!req.body.candidateId) {
@@ -676,7 +679,10 @@ exports.uploadDocuments = async (req, res, next) => {
     if (req.body.documentName === 'resume' && !req.body.delete) {
         let uploadedDocument, link;
         if (process.env.NODE_ENV === 'production') {
+            console.log(req.file);
             const formData = new FormData();
+            let uplaodOnCeipal;
+
 
             formData.append("document_fields.1", req.file.buffer, req.file.originalname);
             formData.append("job_id", candidate.jobId);
@@ -692,6 +698,7 @@ exports.uploadDocuments = async (req, res, next) => {
                     }
                 });
             } catch (e) {
+                console.log(e);
                 logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
                 return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
             }
@@ -831,6 +838,8 @@ exports.uploadDocuments = async (req, res, next) => {
     }
 
     return res.status(200).json(responseFormatter.responseFormatter(candidate, 'documents upload successfully', 'success', 200));
+
+
 };
 
 exports.scheduleInterview = async (req, res) => {

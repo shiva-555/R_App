@@ -162,3 +162,48 @@
   message: 'Error occurred while sending mail candidate in updateCandidate controller {}:',
   timestamp: '2023-01-30T11:39:23.822Z'
 }
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T12:35:58.890Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T12:37:09.144Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T13:50:18.811Z'
+}
+{
+  message: 'Error: FormData is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T13:51:00.499Z'
+}
+{
+  message: 'Error: FormData is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T13:52:21.807Z'
+}
+{
+  message: 'Error: FormData is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T13:53:34.831Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while uploading candidate details to ceipal in createCandidate controller {}:',
+  timestamp: '2023-01-30T13:56:52.853Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T13:58:45.949Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T14:04:21.178Z'
+}
