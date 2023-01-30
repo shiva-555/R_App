@@ -1,0 +1,5 @@
+{
+  level: 'error',
+  message: 'Error occurred while finding candidate in updateCandidate controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-29T04:48:51.517Z'
+}

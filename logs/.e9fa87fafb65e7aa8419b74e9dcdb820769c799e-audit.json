@@ -6,24 +6,19 @@
     "auditLog": "logs/.e9fa87fafb65e7aa8419b74e9dcdb820769c799e-audit.json",
     "files": [
         {
-            "date": 1674540979390,
-            "name": "logs\\recruitement-app-2023-01-24.log",
-            "hash": "710dea51ee6d5372e3cb21dd96ac50a6a9d7690c1750fca4248b6cefe3a2291e"
+            "date": 1674886295124,
+            "name": "logs/recruitement-app-2023-01-28.log",
+            "hash": "f4a9c1d4183bfc012af1fdc41be39d71315411affe9ce8e1ac371df0d236b1b6"
         },
         {
-            "date": 1674626425441,
-            "name": "logs\\recruitement-app-2023-01-25.log",
-            "hash": "032878da726075cb53f87dddbb7d62884a0ebc94e36f81869ba64da14095a529"
+            "date": 1674966609468,
+            "name": "logs/recruitement-app-2023-01-29.log",
+            "hash": "5401e388fe82f541bd313de3051c05b6cffb440288faf26d52114dabd77b3d82"
         },
         {
-            "date": 1674707746380,
-            "name": "logs/recruitement-app-2023-01-26.log",
-            "hash": "5f2d2568627fff6cdb9023dc17117fc8bff0c26aab363e1022161f0431e208ca"
-        },
-        {
-            "date": 1674766450156,
-            "name": "logs/recruitement-app-2023-01-27.log",
-            "hash": "d521add25a9b01e3740e251b68f6941ce1d05c4db16fb2c111cc2987085132d7"
+            "date": 1675036053301,
+            "name": "logs/recruitement-app-2023-01-30.log",
+            "hash": "b9c4f02240192bb58d2253177508e7ffd1f359eca1a3d6be2c95c0731505c236"
         }
     ],
     "hashType": "sha256"

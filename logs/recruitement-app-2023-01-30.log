@@ -1,0 +1,30 @@
+{
+  level: 'error',
+  message: 'Error occurred while finding candidate in updateCandidate controller {"name":"SequelizeEagerLoadingError"}:',
+  timestamp: '2023-01-30T01:02:28.660Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while create role assignment in updateAppUser controller {}:',
+  timestamp: '2023-01-30T02:20:28.816Z'
+}
+{
+  message: 'Error: array is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T02:33:30.669Z'
+}
+{
+  message: 'Error: array is not defined',
+  level: 'error',
+  timestamp: '2023-01-30T02:34:29.269Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T03:04:43.645Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T03:10:23.097Z'
+}

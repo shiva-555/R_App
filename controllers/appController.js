@@ -236,7 +236,6 @@ exports.createCandidate = async (req, res) => {
     let checkJob, checkCandidate, candidate, isJobRequisitionAssinged, candidateRole;
 
     try {
-        console.log(req.body);
         checkJob = await JobRequisition.findByPk(req.body.jobId);
     } catch (e) {
         console.log(e);
@@ -383,10 +382,10 @@ exports.createCandidate = async (req, res) => {
 exports.updateCandidate = async (req, res) => {
     let candidate, isJobRequisitionAssinged, currentDate, statuses, isMailsent = true;
 
-    console.log(req.body)
     try {
         candidate = await Candidate.findByPk(req.params.candidateId, {
             include: [
+
                 {
                     model: Interview,
                     as: 'interviews'
@@ -405,8 +404,14 @@ exports.updateCandidate = async (req, res) => {
                     model: MetaData,
                     as: 'candidateStatus',
                 },
-            ]
-        });
+                {
+                    model: User,
+                    as: 'hr'
+                },
+            ],
+
+        },
+        );
     } catch (e) {
         console.log(e);
         logger.error('Error occurred while finding candidate in updateCandidate controller %s:', JSON.stringify(e));
@@ -443,7 +448,7 @@ exports.updateCandidate = async (req, res) => {
         return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
     }
 
-    //! Need to verify 
+    //! sending mail && generating dates
     if (req.body.candidateStatusId) {
         if (candidate.candidateStatusId !== req.body.candidateStatusId) {
             for (let i = 0; i < statuses.length; i++) {
@@ -497,6 +502,25 @@ exports.updateCandidate = async (req, res) => {
             }
         }
     }
+
+
+    //! sending mail to HR
+    // if (req.body.hrId) {
+    //     console.log('##########################3');
+    //     console.log(req.body.hrId);
+    //     console.log(candidate.hrId);
+
+    //     if(candidate.hrId !== req.body.hrId){
+    //         try {
+    //             await commonFunctions.sendMailFromGeneralTemplate(candidate.candidateStatusId, candidate);
+    //         } catch (e) {
+    //             isMailsent = false;
+    //             logger.error('Error occurred while sending mail candidate in updateCandidate controller %s:', JSON.stringify(e));
+    //             return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
+    //         }
+    //     }
+    // }
+
 
     req.body.lastModifiedById = req.user.userId;
 
@@ -610,7 +634,7 @@ exports.uploadDocuments = async (req, res, next) => {
 
     if (req.body.documentName === 'resume' && !req.body.delete) {
         let uploadedDocument, link;
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === 'production') {
             const formData = new FormData();
 
             formData.append("document_fields.1", req.file.buffer, req.file.originalname);
@@ -620,16 +644,16 @@ exports.uploadDocuments = async (req, res, next) => {
             formData.append("standard_fields.email", candidate.candidateEmail);
             formData.append("standard_fields.firstname", candidate.candidateName);
 
-            // try {
-            //     uplaodOnCeipal = await axios.post('https://api.ceipal.com/T2wvS251Y1BDOE9sNTFtVHJ5elZtZz09/ApplyJobWithOutRegistrationCareerPage/', formData, {
-            //         headers: {
-            //             'Content-Type': 'multipart/form-data'
-            //         }
-            //     });
-            // } catch (e) {
-            //     logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
-            //     return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
-            // }
+            try {
+                uplaodOnCeipal = await axios.post('https://api.ceipal.com/T2wvS251Y1BDOE9sNTFtVHJ5elZtZz09/ApplyJobWithOutRegistrationCareerPage/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } catch (e) {
+                logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
+                return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
+            }
         }
 
         //! uploading to OneDrive

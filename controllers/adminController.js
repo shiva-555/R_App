@@ -467,14 +467,14 @@ exports.getHr = async (req, res, next) => {
                 as: 'roleAssignments',
                 required: true,
                 include: [{
-                    
-                        model: Role,
-                        as: 'role',
-                        required: true,
-                        where: {
-                            roleName: 'HR'
-                        }
-                    
+
+                    model: Role,
+                    as: 'role',
+                    required: true,
+                    where: {
+                        roleName: 'HR'
+                    }
+
 
                 }]
             }]
