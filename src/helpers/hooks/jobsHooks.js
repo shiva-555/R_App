@@ -32,7 +32,7 @@ export const useJobs = () => {
         return data;
     });
 
-    const JobsWithRecruiter = useQuery('jobs', async() => {
+    const JobsWithRecruiter = useQuery('jobs', async () => {
         const token  = await acquireToken(instance, accounts);
         const client = axios.create({
             baseURL: baseURL,

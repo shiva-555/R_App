@@ -195,7 +195,7 @@ export const useUsers = () => {
             'Authorization': `Bearer ${token}`
             }
         });
-        const { data } = await client.get(`/getReferralByuserid?${!role ? `userId=${id}`: ''}${query ? query : ''}`);
+        const { data } = await client.get(`/getReferralByuserid?${role !== 'Admin' && role !== 'TA Manager' ? `userId=${id}`: ''}${query ? query : ''}`);
         return data;
     });
 

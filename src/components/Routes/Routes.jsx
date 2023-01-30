@@ -77,8 +77,8 @@ const AppRoutes = () => {
                             </>
                         }
 
-                        <Route path='*' element={<Home />} />
                         <Route path="/referral" element={<Referal />} isAuthorized={true} />
+                        <Route path='*' element={<Home />} />
                     </Route>
 
                 </Routes>
