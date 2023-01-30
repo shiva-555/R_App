@@ -955,11 +955,11 @@ const Candidate = () => {
                         required
                         onChange={(e) => handleChange(e)}
                         margin='normal'
-                        value={candidate?.data?.data?.hrId}>
+                        defaultValue={candidate?.data?.data?.hrId}>
                         <MenuItem key="" value=""> Select HR</MenuItem>
-                        {HR?.data?.data?.map((h) => {
-                          return <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
-                        })}
+                        {HR?.data?.data?.map((h) =>
+                          <MenuItem key={h.userId} value={h?.userId}>{h?.displayName}</MenuItem>
+                        )}
                       </Select>
                     </FormControl>
                   </Grid>
