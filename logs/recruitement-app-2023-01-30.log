@@ -53,3 +53,48 @@
   level: 'error',
   timestamp: '2023-01-30T05:52:37.572Z'
 }
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:12:48.549Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:12:48.763Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:20:29.393Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:25:52.460Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:32:15.265Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:49:37.794Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-30T06:51:26.077Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while sending email to panel in updateInterview controller {}:',
+  timestamp: '2023-01-30T07:05:50.551Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while sending email to panel in updateInterview controller {}:',
+  timestamp: '2023-01-30T07:06:31.736Z'
+}

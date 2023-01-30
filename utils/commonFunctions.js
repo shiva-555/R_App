@@ -144,7 +144,6 @@ exports.sendMailToPanel = async (candidate, sendTo, interviewBody) => {
         }]
     }
 
-    console.log(recepients);
 
     try {
         response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/${candidate.createdBy.email}/sendMail`, {
@@ -164,7 +163,7 @@ exports.sendMailToPanel = async (candidate, sendTo, interviewBody) => {
                 <li>Notice Period: ${candidate.noticePeriodInDays}</li>
               </ul>
               <br>
-              <a href='${candidate.documents}' download>Download Candidate Resume</a>
+              <a href='${candidate.documents[0].downloadLink}' download>Download Candidate Resume</a>
             `
                 },
                 "toRecipients": recepients
@@ -446,7 +445,6 @@ exports.sendMail = async (to, subject, template, table) => {
 //* Tested Working *
 exports.generateTemplate = (template, candidate) => {
     try {
-
         const regExp = /{(.*?)}/g;
         // const retrievedResult = template.body.match(regExp);    
         let reg1 = /\?(.*?)\?/g;
@@ -473,8 +471,6 @@ exports.generateTemplate = (template, candidate) => {
             // console.log('=========================');
             // console.log(retrievedResult)
         }
-
-
 
         if (retrievedResult?.length && retrievedResult?.length > 0) {
             for (let i = 0; i < retrievedResult.length; i++) {
@@ -540,34 +536,34 @@ exports.getHierarchy = async (associatedUsers) => {
 };
 
 //* Tested Working *
-// exports.sendMailNew = async (to, subject, body) => {
-//     try {
-//         // Getting application token
-//         const token = await this.getApplicationToken();
+exports.sendMailNew = async (to, subject, body) => {
+    try {
+        // Getting application token
+        const token = await this.getApplicationToken();
 
-//         const response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/helpdeskappconnections@futransolutions.com/sendMail`, {
-//             "message": {
-//                 "subject": subject,
-//                 "body": {
-//                     "contentType": "HTML",
-//                     "content": body,
-//                 },
-//                 "toRecipients": [
-//                     {
-//                         "emailAddress": {
-//                             "address": to
-//                         }
-//                     }
-//                 ]
-//             },
-//             "saveToSentItems": "true"
-//         }, { headers: { Authorization: `Bearer ${token}` } });
-//         return response.data;
-//     } catch (e) {
-//         console.log(e);
-//         return e;
-//     }
-// };
+        const response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/helpdeskappconnections@futransolutions.com/sendMail`, {
+            "message": {
+                "subject": subject,
+                "body": {
+                    "contentType": "HTML",
+                    "content": body,
+                },
+                "toRecipients": [
+                    {
+                        "emailAddress": {
+                            "address": to
+                        }
+                    }
+                ]
+            },
+            "saveToSentItems": "true"
+        }, { headers: { Authorization: `Bearer ${token}` } });
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return e;
+    }
+};
 
 //* Tested Working *
 exports.sendMailFromGeneralTemplate = async (status, candidate) => {
@@ -648,11 +644,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     if (sendToUsers.length && sendToUsers.length > 0) {
                         for (let i = 0; i < sendToUsers.length; i++) {
                             try {
-                                // console.log('################################');
-                                // console.log(template.subject);
-                                // console.log(sendToUsers[i].email);
-                                // console.log(template.body);
-                                // await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                                await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
                             } catch (e) {
                                 console.log(e);
                             }
@@ -661,30 +653,15 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                 }
 
             }
-            else if(candidate.isReferal === true) {
-                const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
-                try {
-
-                    console.log('################################');
-                    console.log(candidate?.user?.displayName);
-                    // console.log(template.subject);
-                    // console.log(candidate.candidateEmail);
-                    // console.log(template.body);
-
-                    // await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
-                } catch (e) {
-                    console.log(e);
-                }
-            }
             else {
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
-                    // console.log('################################');
-                    // console.log(template.subject);
-                    // console.log(candidate.candidateEmail);
-                    // console.log(template.body);
+                    console.log('################################');
+                    console.log(template.subject);
+                    console.log(candidate.candidateEmail);
+                    console.log(template.body);
 
-                    // await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                    await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }
