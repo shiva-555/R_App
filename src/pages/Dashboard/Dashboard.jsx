@@ -560,9 +560,9 @@ const Dashboard = () => {
         </Grid>
 
         <Grid item xs='auto'>
-          {/* {
+          {
             (value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Admin') || value?.data?.assignedRoles?.some((assignedRole) => assignedRole.assignedRole.role === 'Hiring Manager')) &&
-            <> */}
+            <>
           <FormControl sx={{ m: 1, minWidth: 120 }} >
             <InputLabel id="select-recruiter-label">Recruiter</InputLabel>
             <Select
@@ -578,8 +578,8 @@ const Dashboard = () => {
               )}
             </Select>
           </FormControl>
-          {/* </>
-          } */}
+          </>
+          }
         </Grid>
 
         <Grid item xs='auto'>
