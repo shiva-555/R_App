@@ -91,3 +91,43 @@
   message: 'Error occurred while sending calendar invite in updateInterview controller {}:',
   timestamp: '2023-01-31T10:27:54.662Z'
 }
+{
+  level: 'error',
+  message: 'Error occurred while upadting role assignment in updateAppUser controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T12:36:40.612Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while upadting role assignment in updateAppUser controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T12:37:18.920Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while upadting role assignment in updateAppUser controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T12:38:43.938Z'
+}
+{
+  message: "Error: Cannot read properties of null (reading 'roleAssignmentId')",
+  level: 'error',
+  timestamp: '2023-01-31T12:41:40.321Z'
+}
+{
+  message: "Error: Cannot read properties of null (reading 'roleAssignmentId')",
+  level: 'error',
+  timestamp: '2023-01-31T12:42:14.234Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while upadting role assignment in updateAppUser controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T12:42:58.769Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while upadting role assignment in updateAppUser controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T12:43:44.047Z'
+}
+{
+  level: 'error',
+  message: 'Error occurred while updating role in updateCandidate controller {"generatedMessage":false,"code":"ERR_ASSERTION","expected":true,"operator":"=="}:',
+  timestamp: '2023-01-31T13:03:15.512Z'
+}

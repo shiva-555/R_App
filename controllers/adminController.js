@@ -106,6 +106,9 @@ exports.updateAppUser = async (req, res) => {
                 return res.status(400).json(responseFormatter.responseFormatter({}, 'role already assigned', 'bad request', 400));
             }
 
+             RoleAssignment.destroy({
+                where: { userId: user.userId, }})
+
             try {
                 assignment = await RoleAssignment.create({
                     userId: user.userId,
