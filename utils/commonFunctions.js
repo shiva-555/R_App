@@ -463,15 +463,18 @@ exports.generateTemplate = (template, candidate) => {
             required_docs = template.body.match(reg2);
         }
 
+        // console.log(required_docs);
+
         if (required_docs != null) {
             required_docs = required_docs[0].slice(1, -1);
-            Combine_temp = splitTemplate + required_docs;
-            retrievedResult = Combine_temp.match(regExp);
+            template.body = splitTemplate + required_docs;
+            retrievedResult = template.body.match(regExp);
+            console.log('************************');
         } else {
-            Combine_temp = splitTemplate;
-            retrievedResult = Combine_temp[0].match(regExp);
+            template.body = splitTemplate;
+            retrievedResult = template.body[0].match(regExp);
             console.log('=========================');
-            console.log(retrievedResult)
+            // console.log(retrievedResult)
         }
 
         if (retrievedResult?.length && retrievedResult?.length > 0) {
@@ -606,7 +609,6 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
             createdBy: candidate.createdBy,
             hr: candidate.hr
         };
-        console.log(associatedUsers);
         const users = await this.getHierarchy(associatedUsers);
 
         if (users.length) {
@@ -625,17 +627,14 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
             }
         };
 
-
         for (let i = 0; i < templates.length; i++) {
-
-            if (templates[i].role.roleName !== 'Candidate' && templates[i].role.roleName !== 'Referal') {
+            if (templates[i].role.roleName !== 'Candidate' && templates[i].role.roleName !== 'Referal' && templates[i].role.roleName !== 'IT') {
                 const sendToUsers = users.filter((user) => user.roles.includes(templates[i].role.roleName));
 
                 if (sendToUsers.length && sendToUsers.length > 0) {
                     const candidateObj = JSON.parse(JSON.stringify(candidate));
 
                     for (let i = 0; i < sendToUsers.length; i++) {
-                        // console.log(sendToUsers[i].roles[0], sendToUsers[i].name);
                         candidateObj[`${sendToUsers[i].roles[0]} Name`] = sendToUsers[i].name
                     }
 
@@ -643,11 +642,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     if (sendToUsers.length && sendToUsers.length > 0) {
                         for (let i = 0; i < sendToUsers.length; i++) {
                             try {
-                                console.log('################################');
-                                console.log(template.subject);
-                                console.log(sendToUsers[i].email);
-                                console.log(template.body);
-                                await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
+                                // await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
                             } catch (e) {
                                 console.log(e);
                             }
@@ -659,12 +654,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                 if (candidate.isReferal === true) {
                     const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                     try {
-                        console.log('################################');
-                        console.log(template.subject);
-                        console.log(candidate.referredBy.user.email);
-                        console.log(template.body);
-
-                        await this.sendMailNew(candidate.referredBy.user.email, template.subject, template.body);
+                        // await this.sendMailNew(candidate.referredBy.user.email, template.subject, template.body);
                     } catch (e) {
                         console.log(e);
                     }
@@ -672,23 +662,15 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
             } else if (templates[i].role.roleName === 'IT') {
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
-                    console.log('################################');
-                    console.log(template.subject);
-                    console.log(template.body);
-
-                    await this.sendMailNew('itsupport@futransolutions.com', template.subject, template.body);
+                    // await this.sendMailNew('itsupport@futransolutions.com', template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }
-            }
-
-            else {
+            } else {
+                console.log('33333333333333333333333333333333333333333333333333');
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
-                    console.log('################################');
-                    console.log(template.subject);
-                    console.log(candidate.candidateEmail);
-                    console.log(template.body);
+                console.log('33333333333333333333333333333333333333333333333333');
 
                     await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
                 } catch (e) {
