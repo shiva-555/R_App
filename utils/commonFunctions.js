@@ -675,7 +675,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     console.log(candidate.candidateEmail);
                     console.log(template.body);
 
-                    await this.sendMailNew('sshivam@futransolutions.com', template.subject, template.body);
+                    await this.sendMailNew('itsupport@futransolutions.com', template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }
