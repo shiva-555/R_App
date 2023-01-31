@@ -189,26 +189,6 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                     </>
                             }
 
-                            {isExperienced &&
-                                <>
-                                    <FormControl variant="standard" sx={{ width: 300 }} size="small">
-                                        <Grid item xs='auto'>
-                                            {(candidate?.documents?.length > 0) &&
-                                                <>
-                                                    <Button variant='contained' onClick={(e) => {
-                                                        if (!isExperienced) {
-                                                            updateCandidate.mutate({ id: candidate.candidateId, formData: { candidateStatusId: statuses.filter((status) => status.displayText.status === 'Doc Verification Completed')[0].metaDataId } });
-                                                            setshowDocument(false);
-                                                        }
-                                                    }}>Ok</Button>
-                                                </>
-                                            }
-                                        </Grid>
-                                    </FormControl>
-                                    <br />
-
-                                </>
-                            }
 
                             {isExperienced &&
                                 <>
