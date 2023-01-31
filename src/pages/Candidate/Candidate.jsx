@@ -136,7 +136,7 @@ const Candidate = () => {
         {
           onSuccess: (data) => {
             alert('success')
-            window.location.reload(false);
+            // window.location.reload(false);
           }
         },
         {

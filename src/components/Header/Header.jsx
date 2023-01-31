@@ -27,9 +27,12 @@ const Header = () => {
  }, [location.pathname]);
 
   function handleLogout(instance) {
-    instance.logoutRedirect().catch(e => {
+    instance.logoutRedirect().then(() => {
+    }).catch(e => {
       console.error(e);
     });
+    window.localStorage.removeItem('role');
+    window.localStorage.removeItem('token');
   };
 
   return (
