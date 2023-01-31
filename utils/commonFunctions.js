@@ -87,12 +87,14 @@ exports.sendCalendarInvite = async (candidate, recruiterEmail, candidateEmail, p
     // ].concat(attendees));
     // sending calendate invite to panel and candidate
     try {
-        console.log(candidate.dataValues);
+        console.log(body);
         response = await axios.post(`${process.env.GRAPH_API_ENDPOINT}v1.0/users/${recruiterEmail}/calendar/events`, {
             subject: `Interview is scheduled for ${candidate.dataValues.candidateName}(${candidate.dataValues.jobTitle.jobTitle.split('-')[0]})`,
             body: {
                 contentType: "HTML",
-                content: `${body}`
+                content: `${body} 
+                            <br>
+                           `
             },
             start: {
                 dateTime: `${startTime}`,
@@ -654,33 +656,32 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                 }
 
             } else if (templates[i].role.roleName === 'Referal') {
-                if(candidate.isReferal === true){
+                if (candidate.isReferal === true) {
                     const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                     try {
                         console.log('################################');
                         console.log(template.subject);
                         console.log(candidate.referredBy.user.email);
                         console.log(template.body);
-    
+
                         await this.sendMailNew(candidate.referredBy.user.email, template.subject, template.body);
                     } catch (e) {
                         console.log(e);
                     }
                 }
-            } else if (templates[i].role.roleName === 'IT'){
+            } else if (templates[i].role.roleName === 'IT') {
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
                     console.log('################################');
                     console.log(template.subject);
-                    console.log(candidate.candidateEmail);
                     console.log(template.body);
 
                     await this.sendMailNew('itsupport@futransolutions.com', template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }
-            } 
-            
+            }
+
             else {
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
@@ -701,9 +702,9 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
     }
 }
 
-exports.getAllRoles = async () => {    
+exports.getAllRoles = async () => {
     try {
-        const roles = await Role.findAll({where: {}});
+        const roles = await Role.findAll({ where: {} });
         return roles.map((role) => role.roleName)
     } catch (e) {
         console.log(e);

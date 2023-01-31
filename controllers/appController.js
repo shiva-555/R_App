@@ -908,8 +908,15 @@ exports.scheduleInterview = async (req, res) => {
             return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
         }
 
-        let inviteBody = req.body.interviewBody + `<br><a href='${candidate.documents}' download>Download Candidate Resume</a>`;
-        + `<br> Current CTC: ${candidate.currentCTC}` + `<br> Expected CTC: ${candidate.expectedCTC}` + `<br> Notice Period: ${candidate.noticePeriodInDays}` + `<br><a href='${candidate.documents}' download>Download Candidate Resume</a>`;
+
+        console.log('############################');
+        console.log(candidate.documents[0].downloadLink);
+        console.log(candidate.documents[0]);
+        console.log(candidate.documents);
+
+
+        let inviteBody = req.body.interviewBody + `<br><a href='${candidate.documents[0].downloadLink}' download>Download Candidate Resume</a>`;
+        + `<br> Current CTC: ${candidate.currentCTC}` + `<br> Expected CTC: ${candidate.expectedCTC}` + `<br> Notice Period: ${candidate.noticePeriodInDays}` + `<br><a href='${candidate.documents[0].downloadLink}' download>Download Candidate Resume</a>`;
 
 
         try {
@@ -1063,8 +1070,8 @@ exports.updateInterview = async (req, res) => {
             return res.status(500).json(responseFormatter.responseFormatter({}, 'An error occurred', 'error', 500));
         }
 
-        let inviteBody = req.body.interviewBody ? `<p>${req.body.interviewBody}</p>` : `<p>${interview.interviewBody}</p>` + `<br><a href='${candidate.documents}' download>Download Candidate Resume</a>`;
-        + `<br> candidate current ctc: ${candidate.currentCTC}` + `<br> candidate.expected_ctc: ${candidate.expectedCTC}` + `<br> candidate.notice_period_in_days: ${candidate.noticePeriodInDays}` + `<br><a href='${candidate.documents}' download>Download Candidate Resume</a>`;
+        let inviteBody = req.body.interviewBody ? `<p>${req.body.interviewBody}</p>` : `<p>${interview.interviewBody}</p>` + `<br><a href='${candidate.documents[0].downloadLink}' download>Download Candidate Resume</a>`;
+        + `<br> candidate current ctc: ${candidate.currentCTC}` + `<br> candidate.expected_ctc: ${candidate.expectedCTC}` + `<br> candidate.notice_period_in_days: ${candidate.noticePeriodInDays}` + `<br><a href='${candidate.documents[0].downloadLink}' download>Download Candidate Resume</a>`;
 
         try {
             invite = await commonFunctions.sendCalendarInvite(candidate, candidate.createdBy.email, candidate.candidateEmail, req.body.panelEmail ? req.body.panelEmail : interview.panelEmail, inviteBody, start, end, token);
