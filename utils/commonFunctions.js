@@ -468,8 +468,8 @@ exports.generateTemplate = (template, candidate) => {
         } else {
             Combine_temp = splitTemplate;
             retrievedResult = Combine_temp[0].match(regExp);
-            // console.log('=========================');
-            // console.log(retrievedResult)
+            console.log('=========================');
+            console.log(retrievedResult)
         }
 
         if (retrievedResult?.length && retrievedResult?.length > 0) {
@@ -641,10 +641,10 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                     if (sendToUsers.length && sendToUsers.length > 0) {
                         for (let i = 0; i < sendToUsers.length; i++) {
                             try {
-                                // console.log('################################');
-                                // console.log(template.subject);
-                                // console.log(sendToUsers[i].email);
-                                // console.log(template.body);
+                                console.log('################################');
+                                console.log(template.subject);
+                                console.log(sendToUsers[i].email);
+                                console.log(template.body);
                                 await this.sendMailNew(sendToUsers[i].email, template.subject, template.body);
                             } catch (e) {
                                 console.log(e);
@@ -662,18 +662,32 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                         console.log(candidate.referredBy.user.email);
                         console.log(template.body);
     
-                        await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                        await this.sendMailNew(candidate.referredBy.user.email, template.subject, template.body);
                     } catch (e) {
                         console.log(e);
                     }
                 }
-            } else {
+            } else if (templates[i].role.roleName === 'IT'){
                 const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
                 try {
-                    // console.log('################################');
-                    // console.log(template.subject);
-                    // console.log(candidate.candidateEmail);
-                    // console.log(template.body);
+                    console.log('################################');
+                    console.log(template.subject);
+                    console.log(candidate.candidateEmail);
+                    console.log(template.body);
+
+                    await this.sendMailNew('sshivam@futransolutions.com', template.subject, template.body);
+                } catch (e) {
+                    console.log(e);
+                }
+            } 
+            
+            else {
+                const template = this.generateTemplate(templates[i], JSON.parse(JSON.stringify(candidate)));
+                try {
+                    console.log('################################');
+                    console.log(template.subject);
+                    console.log(candidate.candidateEmail);
+                    console.log(template.body);
 
                     await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
                 } catch (e) {

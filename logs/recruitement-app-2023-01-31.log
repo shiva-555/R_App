@@ -1,0 +1,10 @@
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-31T06:12:38.309Z'
+}
+{
+  message: 'Error: Request failed with status code 404',
+  level: 'error',
+  timestamp: '2023-01-31T06:13:50.367Z'
+}
