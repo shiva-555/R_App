@@ -118,6 +118,7 @@ const Candidate = () => {
                 {
                   onSuccess: (data) => {
                     alert('success')
+                    window.location.reload(false);
                   }
                 },
                 {
@@ -135,6 +136,7 @@ const Candidate = () => {
         {
           onSuccess: (data) => {
             alert('success')
+            window.location.reload(false);
           }
         },
         {
@@ -149,13 +151,12 @@ const Candidate = () => {
   const downloadDocument = (e) => {
     e.preventDefault();
 
-    console.log(e.target.name);
-    if (candidate?.data?.data.documents) {
-      let document = candidate?.data?.data.documents.filter((doc) => doc.candidateDocumentName === e.target.name)[0];
+    if (candidate?.data?.data?.documents) {
+        let document = candidate?.data?.data?.documents.filter((doc) => doc.documentName === e.target.name)[0];
 
-      if (document) {
-        window.open(document.candidateDocumentURL, '_blank', 'noopener,noreferrer')
-      }
+        if (document) {
+            window.open(document.downloadLink, '_blank', 'noopener,noreferrer')
+        }
     }
   }
 
@@ -176,12 +177,11 @@ const Candidate = () => {
     statuses = candidateStatuses?.data?.data.filter(el => el.order !== 0 && el.order !== 1 && el.order !== 2 && el.order !== 3)
   } else {
     statuses = candidateStatuses?.data?.data
-
   }
 
   useEffect(() => {
 
-  }, [candidate?.data?.data, currentStatus])
+  }, [candidate?.data?.data])
 
   if (sources.isLoading || jobLocations.isLoading || backoutReasons.isLoading || updateCandidate.isLoading) {
     return <SpinLoader />

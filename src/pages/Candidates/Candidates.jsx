@@ -93,11 +93,6 @@ const Candidates = () => {
   const [ref] = useHookWithRefCallback();
 
   useEffect(() => {
-    // document.body.style.zoom = "80%";
-    if (candidateStatuses?.data?.data) {
-      console.log(candidateStatuses?.data?.data.slice(0, 2));
-      // setAfterSelectStatuses(candidateStatuses.data.data.filter((status) => (status.display_text === 'Offered' || status.display_text === 'Doc Verification In Progress' || status.display_text === 'Disqualified' || status.display_text === 'Hold' || status.display_text === 'Selected')));
-    }
   }, [candidateStatuses?.data?.data]);
 
   if (candidates.isFetching && !candidates.isFetchingNextPage) {
@@ -138,9 +133,6 @@ const Candidates = () => {
       ...form,
       [e.target.name]: e.target.value
     });
-
-    console.log(form);
-
   }
 
   const handlesubmit = (e) => {

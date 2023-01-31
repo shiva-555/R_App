@@ -30,6 +30,7 @@ const JobRequisition = () => {
     return <SpinLoader />
   }
 
+  console.log(jobs?.data && jobs?.data.data.map((job) => job));
   return (
 
     <div style={{ height: 'auto', margin: '50px', marginTop: '10px' }}>
@@ -57,8 +58,8 @@ const JobRequisition = () => {
                   <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>No of Positions</TableCell>
                   <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Can Engage External Consultants </TableCell>
                   <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Status </TableCell>
-                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Hiring Manager </TableCell>
-                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Recruiter </TableCell>
+                  {/* <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Hiring Manager </TableCell>
+                  <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Recruiter </TableCell> */}
                   <TableCell style={{ fontWeight: 500, fontSize: "15px" }}>Edit </TableCell>
                 </TableRow>
 
@@ -70,7 +71,7 @@ const JobRequisition = () => {
 
                   return <TableRow
                     hover
-                    key={job?.job_id}>
+                    key={job?.jobId}>
                     <TableCell>{job?.jobCode}</TableCell>
                     <TableCell>{job?.jobType?.displayText}</TableCell>
                     <TableCell>{job?.jobTitle}</TableCell>
@@ -78,19 +79,19 @@ const JobRequisition = () => {
                     <TableCell>{job?.noOfPositions}</TableCell>
                     <TableCell>{job?.canEngageExternalConsultants}</TableCell>
                     <TableCell>{job?.status}</TableCell>
-                    <TableCell>{job?.users.map((assingment, i, arr) => {
+                    {/* <TableCell>{job?.users.map((assingment, i, arr) => {
 
-                      if (assingment.user.roleAssignments.some((roleAssignments) => roleAssignments.role.roleName === 'Hiring Manager')) {
+                      if (assingment?.user.roleAssignments.some((roleAssignments) => roleAssignments.role.roleName === 'Hiring Manager')) {
                         return ((arr.length - 1) !== i) ? assingment.user.displayName + ', ' : assingment.user.displayName
                       }
 
                     })}</TableCell>
 
-                    <TableCell>{job.users.map((assingment, i, arr) => {
+                    <TableCell>{job?.users.map((assingment, i, arr) => {
                       if (assingment.user.roleAssignments.some((roleAssignments) => roleAssignments.role.roleName === 'Recruiter')) {
                         return ((arr.length - 1) !== i) ? assingment.user.displayName + ', ' : assingment.user.displayName
                       }
-                    })}</TableCell>
+                    })}</TableCell> */}
 
                     <TableCell>
 

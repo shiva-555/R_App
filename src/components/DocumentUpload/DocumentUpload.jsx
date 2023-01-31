@@ -61,11 +61,12 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
     const downloadDocument = (e) => {
         e.preventDefault();
 
-        if (candidate.documents) {
-            let document = candidate.documents.filter((doc) => doc.candidateDocumentName === e.target.name)[0];
+
+        if (candidate?.documents) {
+            let document = candidate.documents.filter((doc) => doc.documentName === e.target.name)[0];
 
             if (document) {
-                window.open(document.candidateDocumentURL, '_blank', 'noopener,noreferrer')
+                window.open(document.downloadLink, '_blank', 'noopener,noreferrer')
             }
         }
     }
@@ -97,7 +98,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                         <Grid container m={2} gap={10}>
 
                             {
-                                uploadDocuments.isLoading &&   <> return <SpinLoader /> </>
+                                uploadDocuments.isLoading && <> return <SpinLoader /> </>
                             }
 
                             {
@@ -153,8 +154,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                         <br />
                                         <FormControl variant="standard" sx={{ width: 300 }} size="small">
                                             <Grid item xs='auto'>
-
-                                                <label>Adhaar Card</label>
+                                                <label>Adhaar Card</label><br />
                                                 {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
@@ -172,7 +172,7 @@ function DocumentUpload({ candidate, setshowDocument, statuses }) {
                                     <>
                                         <FormControl variant="standard" sx={{ width: 300 }} size="small">
                                             <Grid item xs='auto'>
-                                                <label>Adhaar Card</label>
+                                                <label>Adhaar Card</label><br />
                                                 {
                                                     candidate?.documents?.filter((doc) => doc.documentName === 'Adhaar Card')[0] ?
                                                         <>
