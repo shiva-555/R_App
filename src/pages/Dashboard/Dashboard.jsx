@@ -57,6 +57,7 @@ import Grid from '@mui/material/Grid';
 const exportToCSV = (apiData, fileName, selectedColumns) => {
   let excelData = [...apiData];
 
+
   const candidates = [];
   for (let i = 0; i < apiData.length; i++) {
     for (const key in apiData[i]) {
@@ -139,6 +140,19 @@ const columnNames = [{ label: 'Job Age(Days)', value: 'jobAge' }, { label: 'Prio
 const statusFields = [
   {
     Status: 'Screening',
+    Fields: [
+      { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
+      { fieldName: 'Email', fieldValue: 'candidateEmail' },
+      { fieldName: 'Mobile', fieldValue: 'candidatePhone' },
+      { fieldName: 'Job Location', fieldValue: 'jobLocation' },
+      { fieldName: 'Recruiter Name', fieldValue: 'createdBy' },
+      { fieldName: 'Calling date', fieldValue: 'candidateCallingDate' },
+      { fieldName: 'Current CTC', fieldValue: 'currentCTC' },
+      { fieldName: 'Screening Date', fieldValue: 'createdDate' }
+    ]
+  },
+  {
+    Status: 'DocVerificationCompleted',
     Fields: [
       { fieldName: 'Candidate Name', fieldValue: 'candidateName' },
       { fieldName: 'Email', fieldValue: 'candidateEmail' },
@@ -405,6 +419,8 @@ const Dashboard = () => {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
+
+
   useEffect(() => {
 
     if (dashboard?.data?.data) {
@@ -512,6 +528,10 @@ const Dashboard = () => {
   //     count.push(obj);
   //   }
   // });
+
+console.log(dashboard?.data?.data)
+// console.log(recruiters?.data?.data?.map((e)=> e.displayName)[0])
+// console.log(recruiters?.data?.data)
 
 
   return (
@@ -803,6 +823,7 @@ const Dashboard = () => {
                     <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Selected</TableCell>
                     <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Offered</TableCell>
                     <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Joined</TableCell>
+                    <TableCell style={{ minWidth: 100, maxWidth: 100 }}>Document verification</TableCell>
                     {
                       selectedColumns && selectedColumns.map((column) => {
                         let cell = columnNames.filter((col) => col.value === column)[0];
@@ -855,6 +876,7 @@ const Dashboard = () => {
 
 
                           <TableCell style={{ minWidth: 500, maxWidth: 500, border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, }}>{data?.JobAssignment?.map((recruiter, i, arr) => ((arr.length - 1) !== i) ? recruiter + ',' : recruiter)}</TableCell>
+                          
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100 }}>{data.total}</TableCell>
                           <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100, 'cursor': data.Screening?.count > 0 ? 'pointer' : '', 'color': data.Screening?.count > 0 ? 'blue' : '' }} onClick={(e) => {
 
@@ -929,6 +951,21 @@ const Dashboard = () => {
                               });
                             }
                           }}>{data.Joined?.count}</TableCell>
+
+
+                          <TableCell style={{ border: "1px solid #3b4864", borderTop: 0, borderLeft: 0, minWidth: 100, maxWidth: 100, 'cursor': data.Joined?.count > 0 ? 'pointer' : '', 'color': data.Joined?.count > 0 ? 'blue' : '' }} 
+                          onClick={(e) => {
+                            setCandidates(data.DocVerificationCompleted?.candidates);
+                            if(data.DocVerificationCompleted?.count > 0){
+
+                              setOpen(true);
+                              setJobDetails({
+                                status: 'DocVerificationCompleted',
+                                jobCode: data.jobCode,
+                                jobTitle: data.jobTitle
+                              });
+                            }
+                          }}>{data.DocVerificationCompleted?.count}</TableCell>
 
                           {
                             selectedColumns && selectedColumns.map((col) => {
