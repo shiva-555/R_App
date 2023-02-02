@@ -672,7 +672,7 @@ exports.sendMailFromGeneralTemplate = async (status, candidate) => {
                 try {
                 console.log('33333333333333333333333333333333333333333333333333');
 
-                    await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
+                    // await this.sendMailNew(candidate.candidateEmail, template.subject, template.body);
                 } catch (e) {
                     console.log(e);
                 }

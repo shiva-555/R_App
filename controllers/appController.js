@@ -1804,6 +1804,7 @@ exports.getDashboard = async (req, res, next) => {
             //             where: { status: 'Active' },
             // attributes: ['job_title', 'job_code', 'job_type_id', 'priority', 'can_engage_external_consultants', 'created_date', 'no_of_positions'],
             include: includeCriteria,
+         
             // order: [["createdDate", 'DESC'], [{ model: Candidate, as: 'candidates' }, { model: Interview, as: 'interviews' }, 'interviewRound', 'DESC']]
         });
     } catch (e) {
