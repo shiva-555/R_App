@@ -64,7 +64,7 @@ const Referal = () => {
     const [currentCandidate, setCurrentCandidate] = useState(null);
     const { assignCandidateToRecruiter } = AssignRecruiter();
     const value = useContext(UserContext);
-    const { uploadDocuments } = useCandidates();
+    const { uploadDocuments } = useCandidates(); 
     const alert1 = useAlert()
     const { jobs, JobsWithRecruiter, jobRequisitions } = useJobs()
     // console.log(JobsWithRecruiter?.data?.data)
@@ -290,7 +290,7 @@ const Referal = () => {
 
                 <Dialog open={open} onClose={handleClose}>
                     <DialogContent>
-                        <Box m={2} p={2} marginLeft={5} overflow="hidden">
+                        <Box m={10} p={20} marginLeft={5} overflow="hidden">
                             <Grid container spacing={{ xs: 5, md: 2 }} columns={{ xs: 50, sm: 50, md: 50 }}>
                                 <Typography gutterBottom variant='h5' align='center' fontFamily={'sans-serif'}>
                                     Referal-Form

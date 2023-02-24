@@ -173,6 +173,19 @@ export const useMetaData = () => {
         return data;
     });
 
+    const salaryDetails = useQuery('salaryDetails', async () => {
+        const token = await acquireToken(instance, accounts);
+        const client = axios.create({
+            baseURL: baseURL,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'user-info': role
+            }
+        });
+        const { data } = await client.get('/metaData?type=salary');
+        return data;
+    });
+
     return {
         candidateStatuses,
         interviewStatuses,
@@ -185,6 +198,7 @@ export const useMetaData = () => {
         department,
         division,
         devices,
-        gender
+        gender,
+        salaryDetails
     }
 };

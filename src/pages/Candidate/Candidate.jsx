@@ -212,7 +212,7 @@ const Candidate = () => {
               marginTop: '80px', padding: '10px', backgroundColor: "#243c80",
               color: "white", fontWeight: 500, fontSize: "18px",
             }} > Personal Details </h2>
-            <hr />
+            <h2 />
             <Grid container m={2} gap={5}>
               <Grid Item xs='auto'>
                 <FormControl variant="standard" sx={{ width: 300 }} size="small">

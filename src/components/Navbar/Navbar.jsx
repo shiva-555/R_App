@@ -14,7 +14,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-
+import PaidIcon from '@mui/icons-material/Paid';
 
 // //**********************************************Drawer**************************************************************************
 
@@ -152,7 +152,7 @@ export default function MiniDrawer() {
 
       <Drawer variant="permanent" open={open} sx={{ width: '20px' }} onMouseOver={handleDrawerOpen} onMouseOut={handleDrawerClose}>
         <DrawerHeader>
-          {open ?
+          {/* {open ?
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
@@ -166,7 +166,7 @@ export default function MiniDrawer() {
               edge="start"
 
             > <MenuIcon /></IconButton>
-          }
+          } */}
         </DrawerHeader>
         <Divider />
 
@@ -290,6 +290,18 @@ export default function MiniDrawer() {
 
                 </List>
               </Collapse>
+
+
+              <ListItem divider>
+            <ListItemButton>
+              <NavLink to={'/offerLetter'} style={{ 'textDecoration': 'none', display: 'flex', alignItems: 'center', color: 'black' }}>
+                <ListItemIcon>
+                  <PaidIcon />
+                </ListItemIcon>
+                <h3>Salary Details</h3>
+              </NavLink>
+            </ListItemButton>
+          </ListItem>
 
             </>
           }

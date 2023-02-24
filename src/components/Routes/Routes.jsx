@@ -19,7 +19,7 @@ import GeneralTemplate from '../../pages/GeneralTemplate/GeneralTemplate';
 import CardSpinloader from '../CardSpinloader/CardSpinloader';
 import Referal from '../../pages/Referral/Referral';
 import { useCandidates } from '../../helpers/hooks/candidatesHooks';
-
+import Offerletter from '../../pages/Offer Letter/Offerletter'
 
 export const UserContext = React.createContext('');
 
@@ -47,9 +47,10 @@ const AppRoutes = () => {
                 <Routes>
 
                     <Route path="/login" element={<Login />} />
+                    <Route path='/offerLetter' element={<Offerletter />} />
                     <Route element={<ProtectedRoutes isAuthenticated={isAuthenticated} />}>
                         <Route path="/" element={<Home />} isAuthorized={true} />
-
+ 
 
                         {(window.localStorage.getItem('role') === 'HR' || window.localStorage.getItem('role') === 'Recruiter' || window.localStorage.getItem('role') === 'TA Manager' || window.localStorage.getItem('role') === 'Admin' || window.localStorage.getItem('role') === 'HR Manager') &&
 
@@ -79,6 +80,7 @@ const AppRoutes = () => {
 
                         <Route path="/referral" element={<Referal />} isAuthorized={true} />
                         <Route path='*' element={<Home />} />
+                        
                     </Route>
 
                 </Routes>

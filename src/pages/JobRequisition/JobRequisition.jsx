@@ -87,11 +87,11 @@ const JobRequisition = () => {
 
                     })}</TableCell>
 
-                    <TableCell>{job?.users.map((assingment, i, arr) => {
+                    {/* <TableCell>{job?.users.map((assingment, i, arr) => {
                       if (assingment.user.roleAssignments.some((roleAssignments) => roleAssignments.role.roleName === 'Recruiter')) {
                         return ((arr.length - 1) !== i) ? assingment.user.displayName + ', ' : assingment.user.displayName
                       }
-                    })}</TableCell> */}
+                    })}</TableCell>  */}
 
                     <TableCell>
 

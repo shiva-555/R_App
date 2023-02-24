@@ -125,7 +125,7 @@ const AddOrUpdateJobRequisition = ({ setIsModalOpen, setEditMode, editMode, job 
             <label htmlFor="skills">Primary Skills</label>
             <input type="text" id='skills' defaultValue={job?.primarySkills} name='primarySkills' onChange={(e) => handleChange(e)} readOnly />
 
-            [11:47] Shivam Sharma
+            {/* [11:47] Shivam Sharma */}
             <label htmlFor="assignmentContainer">Assigned Recruiters</label>
             <div id='assignmentContainer' className='jobRequisiton-block__assignmentContainer' onDragOver={(e) => {
               e.preventDefault();
