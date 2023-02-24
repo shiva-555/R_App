@@ -11,6 +11,7 @@ const candidateSchema = require('../middlewares/candidateValidation');
 const commonFunctions = require('../utils/commonFunctions');
 const multer = require('multer');
 const upload  = multer();
+const path = require('path');
 
 /* Middleware to check whether requesting user exist in app or not */
 router.use(passport.authenticate('oauth-bearer', {session: false}), checkUserExistInApp);
@@ -23,9 +24,9 @@ router.get('/appUsers/:userId', appController.getAppUser);
 /* Candidate Routes */
 router.get('/candidates', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getCandidates);
 
-router.post('/candidate', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR', 'Referal'),
+router.post('/candidate', authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR', 'Referal'),appController.createCandidate);
 //  validate({body: candidateSchema}), 
-appController.createCandidate);
+
 router.get('/candidate/:candidateId',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.getCandidate)
 router.put('/candidate/:candidateId',authorizeRoles('Recruiter', 'Admin', 'TA Manager', 'HR'), appController.updateCandidate);
 router.post('/uploadDocuments', upload.single('file'), appController.uploadDocuments);

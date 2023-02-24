@@ -324,6 +324,7 @@ exports.sendMail = async (to, subject, template, table) => {
     // Getting application token
     try {
         token = await this.getApplicationToken();
+        
     } catch (e) {
         return e;
     }

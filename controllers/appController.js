@@ -12,6 +12,7 @@ const { RoleAssignment } = db;
 const { Template } = db;
 const { Role } = db;
 const { ReferralCandidate } = db;
+const {Salary} =db;
 const { Op } = db;
 const { sequelize } = db;
 const moment = require('moment');
@@ -19,7 +20,12 @@ const logger = require('../utils/logger');
 const commonFunctions = require('../utils/commonFunctions');
 const responseFormatter = require('../utils/responseFormatter');
 const axios = require('axios');
-const FormData = require('form-data')
+const FormData = require('form-data');
+
+// package for to convert it into pdf
+const pdf = require('pdf-creator-node');
+const path = require('path');
+const fs = require('fs');
 
 exports.getUser = async (req, res) => {
     return res.status(200).json(responseFormatter.responseFormatter(req.user, 'user fetched successfully', 'success', 200));
@@ -657,6 +663,7 @@ exports.uploadDocuments = async (req, res, next) => {
         if (candidate.documents && candidate.documents.length > 0) {
             try {
                 let documents = candidate.documents;
+                //1????????????????????????????????
                 const document = documents.filter((document) => document.documentName === req.body.documentName);
 
                 if (document[0].sharepointId) {
@@ -675,14 +682,14 @@ exports.uploadDocuments = async (req, res, next) => {
             }
         }
     }
-
+    //??????????????????????????????????????????????????????
     if (req.body.documentName === 'resume' && !req.body.delete) {
         let uploadedDocument, link;
         if (process.env.NODE_ENV === 'production') {
             console.log(req.file);
             const formData = new FormData();
             let uplaodOnCeipal;
-
+            let ezJob
 
             formData.append("document_fields.1", req.file.buffer, req.file.originalname);
             formData.append("job_id", candidate.jobId);
@@ -702,6 +709,22 @@ exports.uploadDocuments = async (req, res, next) => {
                 logger.error('Error occurred while uploading candidate details to ceipal in createCandidate controller %s:', JSON.stringify(e));
                 return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
             }
+
+
+
+            //---------------------------------uploading resume on ez jobs--------------------------------------------------------
+            try {
+                ezJob = await axios.post('https://testapi.ezjobs.io/documentation#!/user/postUser', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } catch (e) {
+                console.log(e);
+                logger.error('Error occurred while uploading candidate details to ezjobs in createCandidate controller %s:', JSON.stringify(e));
+                return res.status(500).json(responseFormatter.responseFormatter(e, 'Error occurred while uploading candidate details to ceipal', 'bad request', 500));
+            }
+            //-----------------------------------------------------------------------------------------
         }
 
         //! uploading to OneDrive
@@ -1804,7 +1827,7 @@ exports.getDashboard = async (req, res, next) => {
             //             where: { status: 'Active' },
             // attributes: ['job_title', 'job_code', 'job_type_id', 'priority', 'can_engage_external_consultants', 'created_date', 'no_of_positions'],
             include: includeCriteria,
-         
+
             // order: [["createdDate", 'DESC'], [{ model: Candidate, as: 'candidates' }, { model: Interview, as: 'interviews' }, 'interviewRound', 'DESC']]
         });
     } catch (e) {
@@ -1853,3 +1876,158 @@ exports.getDashboard = async (req, res, next) => {
     /* success */
     return res.status(200).json(responseFormatter.responseFormatter(dashboardData, 'fetched successfully', 'success', 200));
 };
+
+
+// convert offer letter html file into pdf 
+exports.generateOfferLetter = async (req, res, next) => {
+    try {
+        let offerLetter;
+
+
+        let html = fs.readFileSync(path.resolve(__dirname, '../public/template/template.html'), 'utf8');
+        const logo = fs.readFileSync(path.resolve(__dirname, '../public/template/futranLogo.png'), 'base64');
+        const footer = fs.readFileSync(path.resolve(__dirname, '../public/template/footer.png'), 'base64');
+        const signature = fs.readFileSync(path.resolve(__dirname, '../public/template/signature.png'), 'base64')
+        let document = {
+            html: html,
+            path: path.resolve(__dirname, '../public/invoice.pdf'),
+            data: {
+                name: 'sayyed yusuf',
+                logo: logo,
+                footer: footer,
+                signature: signature,
+                
+            },
+        };
+        
+        //  cost to company
+            document.data.CostToCompany= 1000000,
+
+             //with pf//
+             document.data.basicYearly = document.data.CostToCompany * 0.50;
+             document.data.basicMothly = document.data.basicYearly /12;
+             document.data.HraYearly=document.data.basicYearly*0.40,
+             document.data.HraMonthly=document.data.HraYearly/12,
+             document.data.EmployerCtoPfMonthly=1800,
+             document.data.EmployerCtoPfYearly=1800*12,
+             document.data.spAllowwithpfMonth=document.data.CostToCompany/12-document.data.basicMothly-document.data.HraMonthly-document.data.EmployerCtoPfMonthly,
+             document.data.spAllowwithpfYear=document.data.CostToCompany-document.data.basicYearly-document.data.HraYearly-document.data.EmployerCtoPfYearly,
+             document.data.GrossSalaryMonthly=document.data.basicMothly+document.data.HraMonthly+document.data.EmployerCtoPfMonthly+document.data.spAllowwithpfMonth,
+             document.data.GrossSalaryYearly=document.data.basicYearly+document.data.HraYearly+document.data.EmployerCtoPfYearly+document.data.spAllowwithpfYear,
+            
+
+            
+            // without pf//
+        // Emloyer contribution to pf 
+             document.data.EmpContWithoutpfYearly=0,
+            document.data.EmpContWithoutpfMonthly=document.data.EmpContWithoutpfYearly/12,
+        
+            
+            // special allowance //
+          document.data.SpAllowWithoutPFMonth=document.data.CostToCompany/12-document.data.basicMothly-document.data.HraMonthly-document.data.EmpContWithoutpfMonthly,
+
+          document.data.SpAllowWithoutPFYear=document.data.CostToCompany-document.data.basicYearly-document.data.HraYearly-document.data.EmpContWithoutpfYearly,
+
+        //   gross salary
+          document.data.GrSalaryMonth=document.data.basicMothly+document.data.HraMonthly+document.data.EmpContWithoutpfMonthly+document.data.SpAllowWithoutPFMonth,
+          document.data.GrSalaryYear=document.data.basicYearly+document.data.HraYearly+document.data.EmpContWithoutpfYearly+document.data.SpAllowWithoutPFYear,
+
+        //   after less employeecontribution to pf //
+
+        document.data.employeeContriToPFYear=21600,
+        document.data.employeeContriToPFMonth=document.data.employeeContriToPFYear/12,
+
+        // Net Pay before Taxes with pf 
+        document.data.NetpaybtaxeWithPF=document.data.GrossSalaryMonthly-document.data.empContrtoPfM-document.data.empContrtoPfM,
+        
+
+         // Net Pay before Taxes without pf 
+         document.data.NetpaybtaxWithoutPF=document.data.GrSalaryMonth,
+
+
+        console.log(document.data);
+        let pdfOptions = {
+            format: 'A4'
+        }
+        
+        offerLetter = await pdf.create(document, pdfOptions);
+        // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        return res.status(200).download(path.resolve(__dirname, '../public/invoice.pdf'), 'Invoice.pdf');
+    } catch (e) {
+        console.log(e);
+    }
+
+};
+
+//  calculation for the variable pay 
+
+//  variable pay :- Gross salary * 0.10%
+
+//  quaterly pay : - varible pay *3 || 6 || 12
+
+
+
+
+// generate salary //
+exports.generateSalary =async(req,res,next)=>{
+    try{
+  
+      let Salarydata = req.body
+      let salaryGen = await Salary.create(Salarydata)
+
+      return res.status(201).send(salaryGen)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+// get all salary of the candidate which are present in out db
+exports.getAllCandidateSalary = async(req,res,next)=>{
+    try{
+
+       let getAllSalary = await Salary.findAll()
+       return res.status(200).send({status:true,data:getAllSalary})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+// get salary of the candidate by its id 
+
+exports.getSalarybyId = async (req,res,next)=>{
+    try{
+        let data = req.params.CandidateSalaryId
+
+        let getSalaryCandidate = await Salary.findByPk(data)
+        return res.status(200).send({status:true,data:getSalaryCandidate})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+exports.updateCandidateSalary = async(req,res,next)=>{
+    try{
+        let _id = req.params.CandidateSalaryId
+        let {Template} = req.body
+        let salaryupdate = await Salary.update(
+            { Template },
+            { where: { id:_id } }
+        )
+   
+
+        return res.status(200).send({status:true,data:salaryupdate})
+    }
+    catch(e){
+        console.log(e)
+    }
+    
+}
+
+ 
+

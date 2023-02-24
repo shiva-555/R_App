@@ -91,6 +91,16 @@ exports.getMetaData = async (req, res) => {
             status: 'Active'
         }
     } 
+
+    if (req.query.type === 'salary') {
+        searchCriteria = {
+            metaDataType: 'salary',
+            status: 'Active'
+        }
+    } 
+
+    console.log(searchCriteria);
+
     try {
         metaData = await MetaData.findAll({
             where: searchCriteria,
